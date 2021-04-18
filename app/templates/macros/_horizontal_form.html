@@ -1,0 +1,113 @@
+{% macro render_field_with_errors(field) %}
+  <div class="form-group row">
+    <label for="{{ field.id }}" class="col-6 col-form-label">{{ field.label }}
+    {% if field.description is not none and field.description != "" %}
+      <i class="fa fa-question-circle-o" data-toggle="tooltip" data-placement="right" title="{{ field.description }}"></i>
+    {% endif %}
+    </label>
+    <div class="col-6">
+      {% if field.type == 'RadioField' %}
+        {% for subfield in field %}
+        <div class="{% if field.inline is defined %}form-check form-check-inline{% else %}radio radio-primary{% endif %}">
+          {{ subfield }}
+          {{ subfield.label }}
+        </div>
+        {% endfor %}
+      {% else %}
+        {{ field(**kwargs)|safe }}
+      {% endif %}
+      {% if field.errors %}
+        {% for error in field.errors %}
+        <div class="invalid-feedback d-block">
+          {{ error }}
+        </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro render_static(field) %}
+  <div class="form-group row">
+    <label for="{{ field.id }}" class="col-6 col-form-label">{{ field.label }}
+      {% if field.description is not none %}
+        <i class="fa fa-question-circle-o" data-toggle="tooltip" data-placement="right" title="{{ field.description }}"></i>
+      {% endif %}
+    </label>
+    <div class="col-6">
+      {{ field(readonly="1", **kwargs)|safe }}
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro render_monetary_field_with_errors(field) %}
+<div class="form-group row">
+  <label for="{{ field.id }}" class="col-6 col-form-label">{{ field.label }}
+    {% if field.description is not none %}
+      <i class="fa fa-question-circle-o" data-toggle="tooltip" data-placement="right" title="{{ field.description }}"></i>
+    {% endif %}</label>
+  <div class="col-6">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">$</span>
+      </div>
+      {{ field(**kwargs)|safe }}
+    </div>
+    {% if field.errors %}
+      {% for error in field.errors %}
+      <div class="invalid-feedback d-block">
+        {{ error }}
+      </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+{% endmacro %}
+
+{% macro render_percent_field_with_errors(field) %}
+<div class="form-group row">
+  <label for="{{ field.id }}" class="col-6 col-form-label">{{ field.label }}
+    {% if field.description is not none %}
+      <i class="fa fa-question-circle-o" data-toggle="tooltip" data-placement="right" title="{{ field.description }}"></i>
+    {% endif %}</label>
+  <div class="col-6">
+    <div class="input-group">
+        {{ field(**kwargs)|safe }}
+        <div class="input-group-append">
+          <span class="input-group-text">%</span>
+        </div>
+    </div>
+    {% if field.errors %}
+      {% for error in field.errors %}
+      <div class="invalid-feedback d-block">
+        {{ error }}
+      </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+{% endmacro %}
+
+{% macro render_year_field_with_errors(field) %}
+<div class="form-group row">
+  <label for="{{ field.id }}" class="col-6 col-form-label">{{ field.label }}
+    {% if field.description is not none %}
+      <i class="fa fa-question-circle-o" data-toggle="tooltip" data-placement="right" title="{{ field.description }}"></i>
+    {% endif %}</label>
+  <div class="col-6">
+    <div class="input-group">
+        {{ field(**kwargs)|safe }}
+        <div class="input-group-append">
+          <span class="input-group-text">Years</span>
+        </div>
+    </div>
+    {% if field.errors %}
+      {% for error in field.errors %}
+      <div class="invalid-feedback d-block">
+        {{ error }}
+      </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+{% endmacro %}

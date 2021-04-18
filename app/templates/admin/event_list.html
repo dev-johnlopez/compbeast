@@ -1,0 +1,25 @@
+{% extends 'admin/model/list.html' %}
+{% block list_row_actions %}
+    {{ super() }}
+  <form class="icon" method="POST" action="/admin/event/action/">
+    <input id="action" name="action" value="open_registration" type="hidden">
+    <input name="rowid" value="{{ get_pk_value(row) }}" type="hidden">
+    <button onclick="return confirm('Are you sure you want to begin registration for the selected events?');" title="Begin Registration">
+      <span class="fa fa-ok glyphicon glyphicon-ok"></span>
+    </button>
+  </form>
+  <form class="icon" method="POST" action="/admin/event/action/">
+    <input id="action" name="action" value="activate" type="hidden">
+    <input name="rowid" value="{{ get_pk_value(row) }}" type="hidden">
+    <button onclick="return confirm('Are you sure you want to close registration for selected events?');" title="Close Registration">
+      <span class="fa fa-play glyphicon glyphicon-play"></span>
+    </button>
+  </form>
+  <form class="icon" method="POST" action="/admin/event/action/">
+    <input id="action" name="action" value="close" type="hidden">
+    <input name="rowid" value="{{ get_pk_value(row) }}" type="hidden">
+    <button onclick="return confirm('Are you sure you want to close the tournament?');" title="Close Event">
+      <span class="fa fa-stop glyphicon glyphicon-stop"></span>
+    </button>
+  </form>
+{% endblock %}

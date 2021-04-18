@@ -1,0 +1,20 @@
+{% macro activate_row(action, row_id, row) %}
+<form class="icon" method="POST" action="{{ get_url('.register_row') }}">
+  <input type="hidden" name="rowid" value="{{ get_pk_value(row) }}"/>
+  <button type="submit" title="{{ _gettext('Register record') }}">
+    <span class="fa fa-ok glyphicon glyphicon-ok"></span>
+  </button>
+</form>
+<form class="icon" method="POST" action="{{ get_url('.activate_row') }}">
+  <input type="hidden" name="rowid" value="{{ get_pk_value(row) }}"/>
+  <button type="submit" title="{{ _gettext('Activate record') }}">
+    <span class="fa fa-play glyphicon glyphicon-play"></span>
+  </button>
+</form>
+<form class="icon" method="POST" action="{{ get_url('.close_row') }}">
+  <input type="hidden" name="rowid" value="{{ get_pk_value(row) }}"/>
+  <button type="submit" title="{{ _gettext('Close record') }}">
+    <span class="fa fa-stop glyphicon glyphicon-stop"></span>
+  </button>
+</form>
+{% endmacro %}

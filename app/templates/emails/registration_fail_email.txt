@@ -1,0 +1,8 @@
+{{ player.name }} - We were not able to confirm your account. Please confirm your account by going to {{ url_for('public.update_player', player_id=player.id) }}.
+
+Your team will not be eligible to play in our event until your account is confirmed. Need additional help? Join our discord server and speak with our mods.
+
+Join our discord server here: https://vsqg5BWzJt
+
+Thanks,
+CompBeast.gg

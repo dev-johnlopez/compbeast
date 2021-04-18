@@ -1,0 +1,7 @@
+{{ player.name }} - Have you tried updating your account? Your team team will not be eligible to play in our event until your account is confirmed.
+Confirm your account here: {{ url_for('public.update_player', player_id=player.id) }}
+
+Need additional support? Post in our discord's support channel here: https://vsqg5BWzJt
+
+Thanks,
+CompBeast.gg

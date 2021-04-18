@@ -1,0 +1,4 @@
+flask/
+*pycache*
+*.pyc
+.flaskenv

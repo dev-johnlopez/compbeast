@@ -1,0 +1,22 @@
+{% extends "layout/layout.html" %}
+{% set show_header = 1 %}
+{% set show_footer = 1 %}
+{% from "macros/_vertical_form.html" import render_field_with_errors, render_monetary_field_with_errors %}
+{% block content %}
+<div class="row-fluid mt-5 justify-content-center d-flex">
+  <h2>Update your info here</h2>
+</div>
+<div class="row-fluid mt-3 justify-content-center d-flex">
+  <div class="col-9 mx-auto">
+    <div class="card border-0 p-3">
+      <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ render_field_with_errors(form.username, class="form-control", required=True) }}
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

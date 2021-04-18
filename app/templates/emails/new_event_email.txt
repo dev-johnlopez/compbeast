@@ -1,0 +1,1 @@
+Hi {{ player.name }}, check out our new event! {{ event.id }}

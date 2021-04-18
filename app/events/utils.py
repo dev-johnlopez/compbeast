@@ -1,0 +1,92 @@
+import requests
+import json
+from app.events.models import PlayerStat, Match
+from datetime import timezone
+
+class MatchManager():
+
+    def __init__(self, team, mode):
+        self.team = team
+        self.mode = mode
+
+    def get_matches(self):
+        matches = []
+        possible_matches = self.get_possible_matches_from_activision()
+        filtered_matches = self.filter_possible_matches(possible_matches)
+        for match in filtered_matches:
+            self.team.add_match(self.adapt_match(match))
+
+    def filter_possible_matches(self, possible_matches):
+        matches = []
+        player_ids = [player.external_id for player in self.team.players]
+        for match in possible_matches:
+            #print(match['allPlayers'][0]['mode'])
+            if match['allPlayers'][0]['mode'] != self.mode:
+                #print("invalid mode")
+                continue
+
+            all_players = match['allPlayers']
+            possible_players = []
+            team_names = []
+            for player in all_players:
+                #print(player)
+                player_info = player['player']
+                username = player_info['username']
+                player_id = player_info['uno']
+                team_name = player_info['team']
+                #print("{} in {}: {}".format(player_id, player_ids, player_id in player_ids))
+                for id in player_ids:
+                    if int(id) - int(player_id) == 0:
+                        #print("testing...")
+                        possible_players.append(player)
+                        team_names.append(team_name)
+                        break
+
+            valid_players = []
+            valid_player_stats = []
+            for team_name in team_names:
+                valid_player_count = 0
+                valid_matches = []
+                for player in possible_players:
+                    if player['player']['team'] == team_name:
+                        valid_players.append(player)
+                if len(valid_players) == len(self.team.players):
+                    #print(json.dumps(valid_players, indent=10))
+
+                    valid_player_stats = valid_players
+                    break
+
+            if len(valid_player_stats) == len(self.team.players):
+                matches.append({
+                    "id": match['allPlayers'][0]['matchID'],
+                    "stats": valid_player_stats
+                })
+        return matches
+
+    def get_possible_matches_from_activision(self):
+        if self.team.players is None or len(self.team.players) == 0:
+            # TODO:  - throw exception
+            return
+        player = self.team.players[0]
+        url = 'https://frozen-island-36052.herokuapp.com/stats?username={}'.format(player.username.replace("#", "%23"))
+        url += '&start={}'.format(to_timestamp(self.team.event.start_time))
+        url += '&end={}'.format(to_timestamp(self.team.event.end_time))
+        r = requests.get(url)
+        #print(r.text)
+        data = json.loads(r.text)
+        all_matches = data['matches']
+        return all_matches
+
+    def adapt_match(self, match):
+        player_stats = []
+        for stat in match['stats']:
+            player_stat = PlayerStat(username=stat['player']['uno'],
+                                    kills=int(stat['playerStats']['kills']),
+                                    placement=int(stat['playerStats']['teamPlacement']))
+            player_stats.append(player_stat)
+        match = Match(external_id=str(match['id']), player_stats=player_stats)
+        return match
+
+
+def to_timestamp(datetime):
+    return int(datetime.replace(tzinfo=timezone.utc).timestamp()) * 1000
