@@ -32,6 +32,9 @@ MAIL_PASSWORD = 'Saintviator1??'
 MAIL_DEFAULT_SENDER = 'admin@compbeast.gg'
 MAIL_DEBUG = os.environ.get('MAIL_DEBUG') or 1
 SERVER_NAME = 'localhost:5000'
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL')
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
+SECURITY_PASSWORD_SALT = os.environ.get('SECURITY_PASSWORD_SALT')
 
 #CELERYBEAT_SCHEDULE = {
 #    'registration-reminder': {

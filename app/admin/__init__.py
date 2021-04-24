@@ -1,15 +1,25 @@
-from app.extensions import admin, db
+from app.extensions import admin, db, security
 from app.events.models import Event, Team, Player, Task
 from flask_admin.actions import action
 from flask_admin.contrib.sqla import ModelView
 from flask_admin.contrib.sqla.ajax import QueryAjaxModelLoader
-from flask import flash
+from flask import flash, current_app
 from flask_admin.model.template import EndpointLinkRowAction, TemplateLinkRowAction
-from flask_admin.base import expose
+from flask_admin.base import expose, BaseView
 from flask import request, redirect, url_for
 from flask_admin.contrib import rediscli
+from flask_security import current_user
 
-class EventView(ModelView):
+class CustomModelView(ModelView):
+
+    def is_accessible(self):
+        return current_user.is_authenticated
+
+    def inaccessible_callback(self, name, **kwargs):
+        # redirect to login page if user doesn't have access
+        return current_app.login_manager.unauthorized()
+
+class EventView(CustomModelView):
     list_template = "admin/my_list.html"  # Override the default template
     form_ajax_refs = {
         'team': QueryAjaxModelLoader('team', db.session, Team, fields=['name'], page_size=10)
@@ -123,7 +133,7 @@ class EventView(ModelView):
 def register_admin(app, db):
     admin.init_app(app)
     admin.add_view(EventView(Event, db.session))
-    admin.add_view(ModelView(Team, db.session))
-    admin.add_view(ModelView(Player, db.session))
-    admin.add_view(ModelView(Task, db.session))
-    admin.add_view(rediscli.RedisCli(app.redis))
+    admin.add_view(CustomModelView(Team, db.session))
+    admin.add_view(CustomModelView(Player, db.session))
+    admin.add_view(CustomModelView(Task, db.session))
+    #admin.add_view(rediscli.RedisCli(app.redis))

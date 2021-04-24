@@ -35,7 +35,10 @@ class EventQuery(object):
 def home():
     current_app.logger.info("Hello from the home page!")
     events = EventQuery.get_open_events(limit=1)
-    event = events[0]
+    if len(events) == 0:
+        event = None
+    else:
+        event = events[0]
     return render_template("public/home.html", event=event)
 
 @blueprint.route('/<event_id>/register', methods=['GET', 'POST'])

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: af07c9f1025e
+Revision ID: 8e9096592712
 Revises: 
-Create Date: 2021-03-26 17:20:56.037786
+Create Date: 2021-04-19 18:35:55.742056
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'af07c9f1025e'
+revision = '8e9096592712'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -28,6 +28,28 @@ def upgrade():
     sa.Column('end_time', sa.DateTime(), nullable=True),
     sa.Column('status', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('role',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=80), nullable=True),
+    sa.Column('description', sa.String(length=255), nullable=True),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('name')
+    )
+    op.create_table('user',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('email', sa.String(length=255), nullable=True),
+    sa.Column('password', sa.String(length=255), nullable=True),
+    sa.Column('active', sa.Boolean(), nullable=True),
+    sa.Column('confirmed_at', sa.DateTime(), nullable=True),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('email')
+    )
+    op.create_table('roles_users',
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('role_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['role_id'], ['role.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], )
     )
     op.create_table('task',
     sa.Column('id', sa.String(length=36), nullable=False),
@@ -87,5 +109,8 @@ def downgrade():
     op.drop_table('team')
     op.drop_index(op.f('ix_task_name'), table_name='task')
     op.drop_table('task')
+    op.drop_table('roles_users')
+    op.drop_table('user')
+    op.drop_table('role')
     op.drop_table('event')
     # ### end Alembic commands ###
