@@ -8,7 +8,6 @@ import os
 from flask import Flask, render_template
 from redis import Redis
 from celery import Celery
-from werkzeug.contrib.fixers import ProxyFix
 
 #from app import commands, public, user, event
 from app import events
@@ -33,7 +32,6 @@ def create_app(config_object="app.settings", **kwargs):
     :param config_object: The configuration object to use.
     """
     app = Flask(__name__)
-    app.wsgi_app = ProxyFix(app.wsgi_app)
     app.config.from_object(config_object)
     app.redis = Redis.from_url(app.config['REDIS_URL'])
     celery = make_celery(app)

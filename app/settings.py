@@ -38,6 +38,8 @@ SERVER_NAME = 'localhost:5000'
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL')
 ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
 SECURITY_PASSWORD_SALT = os.environ.get('SECURITY_PASSWORD_SALT')
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
 
 #CELERYBEAT_SCHEDULE = {
 #    'registration-reminder': {
