@@ -12,7 +12,10 @@ from celery.schedules import crontab
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 DEBUG = 1
-SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+uri = os.getenv("DATABASE_URL")
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+SQLALCHEMY_DATABASE_URI = uri or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
 SECRET_KEY = os.environ.get('SECRET_KEY') or 'asdfl;kh35128udafasdfasdf123'
 BCRYPT_LOG_ROUNDS = 13
