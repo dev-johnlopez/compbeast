@@ -20,7 +20,7 @@ if uri is not None and uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
 SQLALCHEMY_DATABASE_URI = uri or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
-SECRET_KEY = os.environ.get('SECRET_KEY') or 'asdfl;kh35128udafasdfasdf123'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 BCRYPT_LOG_ROUNDS = os.environ.get("BCRYPT_LOG_ROUNDS")
 DEBUG_TB_ENABLED = DEBUG
 DEBUG_TB_INTERCEPT_REDIRECTS = DEBUG
