@@ -3,7 +3,7 @@ import os
 from app import celery, create_app
 
 from app.tasks import remind_pending_registrations
-
+print(os.getenv('REDIS_URL'))
 app = create_app()
 app.app_context().push()
 

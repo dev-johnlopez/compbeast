@@ -35,7 +35,7 @@ def create_app(config_object="app.settings", **kwargs):
     app.config.from_object(config_object)
     app.redis = Redis.from_url(app.config['REDIS_URL'])
     celery = make_celery(app)
-    #celery.conf.update(app.config)
+    celery.conf.update(app.config)
 
     #if kwargs.get("celery"):
     #    init_celery(kwargs.get("celery"), app)
