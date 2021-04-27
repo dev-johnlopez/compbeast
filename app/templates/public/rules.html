@@ -1,0 +1,458 @@
+{% extends "layout/layout.html" %}
+{% block content %}
+
+    <!-- Terms Content Section -->
+    <div class="container mt-1 space-2 space-bottom-lg-3 text-left">
+      <div class="row">
+        <div id="stickyBlockStartPoint" class="col-md-4 col-lg-3 mb-7 mb-md-0">
+          <!-- Nav -->
+          <nav class="bordered">
+            <div class="card-body">
+              <ul class="js-scroll-nav nav nav-sm nav-x-0 flex-column">
+                <li class="nav-item">
+                  <a class="nav-link font-weight-bold mb-2" href="#general">1. General</a>
+
+                  <!--<ol class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#tournament">1.1 Tournament</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#administration">1.2 Administration</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#participants">1.3 Participants &amp; Commitment</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#communication">1.4 Communication</a>
+                    </li>
+                  </ol>-->
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link font-weight-bold mb-2" href="#format_and_schedule">2. Format &amp; Schedule</a>
+
+                  <!--<ol class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#format">2.1 Tournament Format</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#registration">2.2 Registration</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#schedule">2.3 Schedule</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#restrictions">2.4 Tournament Restrictions</a>
+                    </li>
+                  </ol>-->
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link font-weight-bold mb-2" href="#match_times">3. Match Times</a>
+
+                  <!--<ol class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#times">3.1 Match Times</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#rescheduling">3.2 Rescheduling / Postponing</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#punctuality">3.3 Punctuality</a>
+                    </li>
+                  </ol>-->
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link font-weight-bold mb-2" href="#before_match">4. Before the match</a>
+
+                  <!--<ol class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#availability">4.1 Availability</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#mode">4.2 Match Mode</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#metrics">4.3 Score metrics</a>
+                    </li>
+                  </ol>-->
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link font-weight-bold mb-2" href="#during_match">5. During the match</a>
+
+                  <!--<ol class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#streams">5.1 Streams</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#crossplay">5.2 Crossplay</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#starts">5.3 Match Starts &amp; Restarts</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#breach">5.4 Breach of Terms of Use</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#replays">5.5 Replays</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#griefing">5.6 Griefing</a>
+                    </li>
+                  </ol>-->
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link font-weight-bold mb-2" href="#after_match">6. After the match</a>
+
+                  <!--<ol class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#reporting">6.1 Reporting the score</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#protests">6.2 Protests</a>
+                    </li>
+                  </ol>-->
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link font-weight-bold mb-2" href="#rule_violation">7. Rule Violation and Punishment</a>
+
+                  <!--<ol class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#punishments">7.1 Possible Punishments</a>
+                    </li>
+                  </ol>-->
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link font-weight-bold mb-2" href="#prizes">8. Prizes</a>
+
+                  <!--<ol class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#qualifier_prizes">8.1 Qualifiers: Week 1-3</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#final_prizes">8.2 Finals: Week 4</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#community_prizes">8.3 Community Prizes</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#currency">8.4 Currency</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link mb-2" href="#payment">8.5 Payment &amp; community prize fulfillment details</a>
+                    </li>
+                  </ol>-->
+                </li>
+              </ul>
+            </div>
+          </nav>
+          <!-- End Nav -->
+        </div>
+
+        <div class="col-md-8 col-lg-9">
+          <div id="services" class="space-bottom-1">
+            <!-- Title -->
+            <div class="mb-3">
+              <h3>1. General Rules</h3>
+            </div>
+            <!-- End Title -->
+
+            <!-- Title -->
+            <div id="tournament" class="mb-3">
+              <h4>1.1 Tournament</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>Tournaments are intended for Call of Duty: Warzone and hosted by CompBeast.gg. The game mode "BR Duos" in Battle Royale will be used throughout the entire competition. The tournament is an open registration tournament but limited to players who are residents of the following jurisdictions:</p>
+            <ul>
+              <li>United States</li>
+              <li>Canada</li>
+              <li>EMEA</li>
+              <li>United Kingdom</li>
+            </ul>
+
+            <!-- Title -->
+            <div id="administration" class="mb-3">
+              <h4>1.2 Administration</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>Everybody who is authorized by John Lopez to administrate CompBeast.gg tournaments based on its rules and regulations will be called an "admin" in the following, the collection of all admins will be called the "administration".</p>
+
+            <!-- Title -->
+            <div id="participants" class="mb-3">
+              <h4>1.3 Participants &amp; Commitment</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>1.3.1 Only real persons with a valid Activision Account are allowed to participate in our events. The team captains will be called “player” in the following. Every participant must fulfil the following conditions:</p>
+            <ul>
+              <li>Participants must be at least 18 years old as of the start of the tournament</li>
+              <li>Participants must be a citizen or be a resident of the United States, Canada, EMEA, United Kingdom</li>
+              <li>Participants must not be employees of CompBeast.gg</li>
+            </ul>
+            <p>1.3.2 By participating in our tournaments, players acknowledge without limitation to comply with the rules and regulations and with the statements and decisions made by the administration.</p>
+            <p>1.3.3 Every player acknowledges the right for the administration to modify the rules and regulations for adjustments at any time without notice and if necessary overrule those to ensure fair play and integrity throughout each round.</p>
+            <p>1.3.4 Every player has to show the needed respect towards admins and other participants. Insults and unfair or disrespectful behavior towards anyone are not tolerated and will be punished in accordance with these rules.</p>
+            <p>1.3.5 Every player must join the required Discord server in order to be registered for the tournament. The link to the Discord server will be provided to participants at a later time.</p>
+            <p>1.3.6 Every player has to try to win every round at every event hosted by CompBeast.gg. Purposefully losing for any reason is strictly forbidden.</p>
+            <p>1.3.7 Vulgar, racist, sexist or otherwise offensive player names are forbidden. This will be at the sole discretion of the tournament admins.</p>
+            <p>1.3.8 Every player acknowledges the right for the administration to edit players’ names if names are deemed unfit for display.</p>
+            <p>1.3.9 Every player in our events consents to the collected footage of photo- and audio material displaying or voicing them during the tournament to be stored and used for announcements, website content and other publications by CompBeast.gg unrestricted and unlimited in terms of time and place.</p>
+
+            <!-- Title -->
+            <div id="communication" class="mb-3">
+              <h4>1.4 Communication</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>1.4.1 All communication between players and the administration has to be held in English at any time and at any stage of the event.</p>
+            <p>1.4.2 The administration may only be contacted via the following e-mail address: admin@compbeast.gg or the Tournament Discord. This helps admins to coordinate as a team and work faster on issues than with the help of other platforms. Any other form of communication shall be ignored.</p>
+
+            <!-- Title -->
+            <div id="format_and_schedule" class="mb-3">
+              <h4>2 Format &amp; Schedule</h4>
+            </div>
+            <!-- End Title -->
+
+            <!-- Title -->
+            <div id="format" class="mb-3">
+              <h4>2.1 Tournament format</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>Tournaments are intended for Call of Duty: Warzone and hosted by CompBeast.gg. The game mode "BR Duos" in Battle Royale will be used throughout the entire competition.</p>
+
+            <!-- Title -->
+            <div id="registration" class="mb-3">
+              <h4>2.2 Registration</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>Participation in our events is at the sole discretion of the tournament organizers. Team participation will be via invitation from Tournament administration only.</p>
+
+            <!-- Title -->
+            <div id="schedule" class="mb-3">
+              <h4>2.3 Schedule</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>CompBeast.gg will host weekly events from 10:00 AM to 12:00 PM PST.</p>
+
+            <!-- Title -->
+            <div id="restrictions" class="mb-3">
+              <h4>2.4 Tournament Restrictions</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>The player's must commit to playing in any event they are registered.</p>
+
+            <!-- Title -->
+            <div id="match_times" class="mb-3">
+              <h4>3 Match Times</h4>
+            </div>
+            <!-- End Title -->
+
+            <!-- Title -->
+            <div id="times" class="mb-3">
+              <h4>3.1 Match Times</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>Each tournament round will start at 10:00 AM PST on the respective tournament day.</p>
+
+            <!-- Title -->
+            <div id="rescheduling" class="mb-3">
+              <h4>3.2 Rescheduling / Postponing</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>Matches cannot be postponed or rescheduled to another date or time unless determined by the Administration at its sole discretion for any reason.</p>
+
+            <!-- Title -->
+            <div id="punctuality" class="mb-3">
+              <h4>3.3 Punctuality (Head-To-Head Only)</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>3.3.1 If one team is not ready to start and enter their first match 15 minutes after the official match time, this team forfeits one of their two matches. If one team is not ready 30 minutes after the official match time the team loses the bracket by default. This is at the Administration’s sole discretion.</p>
+            <p>3.3.2 If a team or participant does not join the match in time as described in 3.3.1., the opponent may claim a default win by raising with an Admin via the Tournament discord. Each participant is obliged to attach necessary evidence to the claim, which is then to be approved of by an admin at its sole discretion. Admins may extend the punctuality deadline in exceptional circumstances to get the match played at its sole discretion.</p>
+
+            <!-- Title -->
+            <div id="before_match" class="mb-3">
+              <h4>4 Before the match</h4>
+            </div>
+            <!-- End Title -->
+
+            <!-- Title -->
+            <div id="availability" class="mb-3">
+              <h4>4.1 Registration</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>4.1.1 All participants must confirm their Activision ID by registering through compbeast.gg's website.</p>
+
+            <!-- Title -->
+            <div id="mode" class="mb-3">
+              <h4>4.2 Match mode</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>4.2.1 Players will queue into "BR Duos" with their respective teammate.</p>
+            <p>4.2.2 Matches played without both teammembers and without playing in "BR Duos" will not count toward the teams rating.</p>
+
+            <!-- Title -->
+            <div id="metrics" class="mb-3">
+              <h4>4.3 Score metrics</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>4.3.1 Each match is decided by a score metric as described in rules 4.3.2. The first point in these lists decides the standard scoring and the following will describe tie-breakers.</p>
+            <p>4.3.2 Players will be scored as follows:</p>
+            <ul>
+              <li>Most combined kills in two games</li>
+              <li>Highest combined score in two games</li>
+              <li>Highest combined damage in two games</li>
+              <li>Highest single team member score</li>
+              <li>Highest single team member damage</li>
+            </ul>
+
+            <!-- Title -->
+            <div id="during_match" class="mb-3">
+              <h4>4 During the match</h4>
+            </div>
+            <!-- End Title -->
+
+            <!-- Title -->
+            <div id="streams" class="mb-3">
+              <h4>5.1 Streams</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>All players who stream must add a stream delay of at least 60 seconds to their stream, and it is strongly recommended that all match participants also hide their screens and mute their audio when queuing in the lobby for a hosted game.</p>
+            <p>As a matter of professional courtesy to remaining players in the match, if you believe the game is being affected by stream sniping, we’d ask that you limit spectating of remaining players, so as not to put them at a competitive disadvantage.</p>
+
+            <!-- Title -->
+            <div id="crossplay" class="mb-3">
+              <h4>5.2 Crossplay</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>During the tournament games crossplay must be enabled for each team to create an even playing field. This must be enabled within the account section of the party host before searching for a game.</p>
+
+            <!-- Title -->
+            <div id="starts" class="mb-3">
+              <h4>5.3 Match Start & Restarts</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>A match will be considered to have started as soon as the warmup phase has ended and all players are inside of the plane. From the time a match begins, players are prohibited from intentionally disconnecting from the game. If a player or team disconnects intentionally after the game has started, the game will continue with the remaining players and will not be restarted.</p>
+            <p>Restarts are not granted but teams may start a new "BR Duos" mode at any time as long as they start their match before the end of the tournament.</p>
+
+            <!-- Title -->
+            <div id="breach" class="mb-3">
+              <h4>5.4 Breach of Terms of Use.</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>If participants are found guilty of Bug Abuse or in breach of Activision's Terms of Use, they may face consequences including automatic disqualification. All punishment will be at the sole discretion of the administration.</p>
+
+            <!-- Title -->
+            <div id="replays" class="mb-3">
+              <h4>5.5 Replays</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>Every player must save their own replays of all tournament games for at least seven (7) days. Upon request by an admin, each participant must submit the replay to the administration within 24 hours. Failing to comply with this request may result in punishment.</p>
+
+            <!-- Title -->
+            <div id="griefing" class="mb-3">
+              <h4>5.6 Griefing</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>It is prohibited to intentionally negatively impact your opponent's gameplay in an attempt to sabotage their chances of winning a match. With regard to vehicles, unoccupied vehicles are not considered to be the property of any player, and destroying them is not to be considered griefing.</p>
+
+            <!-- Title -->
+            <div id="after_match" class="mb-3">
+              <h4>6. After the match</h4>
+            </div>
+            <!-- End Title -->
+
+            <!-- Title -->
+            <div id="reporting" class="mb-3">
+              <h4>6.1 Reporting the score</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>Teams are not required to report their score but it is recommended to maintain screenshots of all matches in case CompBeast.gg is not able to validate the team's matches.</p>
+
+            <!-- Title -->
+            <div id="protests" class="mb-3">
+              <h4>6.2 Protests</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>Protest against any other sort of rule violation by another player can only be reported with video evidence. The protest must include a specific timestamp when the violation took place, the name of the player who committed the violation, as well as a clear description of what happened. Protests that either lack evidence or details such as timestamp and description will be discarded. All protests must be sent to an Admin via the tournament Discord server or through the tournament email address: admin@compbeast.gg</p>
+
+            <!-- Title -->
+            <div id="rule_violation" class="mb-3">
+              <h4>7. Rule Violation and Punishment</h4>
+            </div>
+            <!-- End Title -->
+
+            <!-- Title -->
+            <div id="punishments" class="mb-3">
+              <h4>7.1 Possible Punishments</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>The punishments for any rule violations include but are not limited to:</p>
+            <ul>
+              <li>Disqualification from the tournament</li>
+              <li>Disqualification from future tournaments</li>
+              <li>Prize Money Reduction</li>
+            </ul>
+            <p>Punishments shall be at the Administration’s sole discretion.</p>
+
+            <!-- Title -->
+            <div id="prizes" class="mb-3">
+              <h4>8. Prizes</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>Cash prizes will be available for the following placements:</p>
+            <ul>
+              <li><strong>First Place:</strong> $100</li>
+            </ul>
+
+            <!-- Title -->
+            <div id="community_prizes" class="mb-3">
+              <h4>8.3 Community Prizes</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>Community prizes will be awarded based on Adminstrator descretion.</p>
+
+            <!-- Title -->
+            <div id="currency" class="mb-3">
+              <h4>8.4 Currency</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>The league will award prizes based on United States Dollar.</p>
+
+            <!-- Title -->
+            <div id="payment" class="mb-3">
+              <h4>8.5 Payment & Community Prize fulfillment details</h4>
+            </div>
+            <!-- End Title -->
+
+            <p>CompBeast admins will email players who are eligible to receive prizes within five (5) business days.</p>
+
+          <!-- Sticky Block End Point -->
+          <div id="stickyBlockEndPoint"></div>
+        </div>
+      </div>
+    </div>
+    <!-- End Terms Content Section -->
+
+{% endblock %}

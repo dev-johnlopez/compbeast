@@ -90,3 +90,7 @@ def update_player(player_id):
         confirm_player.si(player.id, player.team.event.id).delay(player_id=player.id, event_id=player.team.event.id)
         return redirect(url_for('public.confirm', event_id=player.team.event.id))
     return render_template("public/update_player.html", form=form)
+
+@blueprint.route('/rules', methods=['GET', 'POST'])
+def rules():
+    return render_template("public/rules.html")
