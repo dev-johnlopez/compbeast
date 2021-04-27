@@ -66,6 +66,7 @@ def register(event_id):
 
     # if we get here, either validation failed or we're just loading the page
     # we can use append_entry to add up to the total number we want, if necessary
+    print("**** {}".format(form.errors))
     for i in range(len(form.players.entries), event.team_size):
         form.players.append_entry()
 
