@@ -22,7 +22,6 @@ from app.extensions import (
 from app.admin import register_admin
 from app.email import *
 #from app.tasks import make_celery
-from app import settings
 from config import config, Config
 
 celery = Celery(__name__, broker=Config.CELERY_BROKER_URL)
