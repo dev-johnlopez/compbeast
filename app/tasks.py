@@ -6,6 +6,15 @@ from app.email import send_notification_email
 from app.events.models import Team, Player, Event
 
 @celery.task
+def refresh_event_stats():
+    events = Event.query.filter_by(status='Active').all()
+    print("refreshing status for events")
+    for event in events:
+        print("refreshing stats for event id: {}".format(event.id))
+        event.refresh_stats()
+        event.save()
+
+@celery.task
 def confirm_player(player_id, event_id=None):
     try:
         player = None

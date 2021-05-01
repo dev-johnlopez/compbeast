@@ -155,9 +155,17 @@ class Team(PkModel):
     @property
     def rating(self):
         rating = 0
+        match_rating = []
         for match in self.matches:
             for stat in match.player_stats:
-                rating += stat.kills
+                mRating += stat.kills
+            match_rating.append(mRating)
+        match_rating.sort(reverse=True)
+        max_index = len(match_rating) - 1
+        if max_index > self.event.num_games:
+            max_index = self.event.num_games
+        for i in range(max_index):
+            rating += match_rating[i]
         return rating
 
 
