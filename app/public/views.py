@@ -33,7 +33,6 @@ class EventQuery(object):
 
 @blueprint.route("/", methods=["GET", "POST"])
 def home():
-    current_app.logger.info("Hello from the home page!")
     events = EventQuery.get_open_events(limit=1)
     if len(events) == 0:
         event = None

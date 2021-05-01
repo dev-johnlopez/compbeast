@@ -21,6 +21,19 @@ class Config:
     DEBUG = True
     FLASK_DEBUG = True
     SERVER_NAME="localhost:5000"
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    BCRYPT_LOG_ROUNDS = os.environ.get("BCRYPT_LOG_ROUNDS")
+    DEBUG_TB_ENABLED = DEBUG
+    DEBUG_TB_INTERCEPT_REDIRECTS = DEBUG
+    CACHE_TYPE = os.environ.get("CACHE_TYPE")
+    MAIL_DEFAULT_SENDER = os.environ.get("MAIL_DEFAULT_SENDER")
+    MAIL_DEBUG = os.environ.get('MAIL_DEBUG') or 0
+    #SERVER_NAME = os.getenv('SERVER_NAME')
+    ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL')
+    ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
+    SECURITY_PASSWORD_SALT = os.environ.get('SECURITY_PASSWORD_SALT')
+    SECURE_PROXY_SSL_HEADER = os.environ.get("SECURE_PROXY_SSL_HEADER")
+    SECURE_SSL_REDIRECT = os.environ.get("SECURE_SSL_REDIRECT")
 
     @staticmethod
     def init_app(app):
