@@ -7,7 +7,6 @@ from flask_migrate import Migrate
 from flask_moment import Moment
 from flask_security import Security, SQLAlchemyUserDatastore, current_user
 from flask_sqlalchemy import SQLAlchemy
-from celery import Celery
 from flask_admin.base import AdminIndexView, expose
 
 # Create customized index view class that handles login & registration
@@ -34,19 +33,3 @@ migrate = Migrate()
 mail = Mail()
 security = Security()
 moment = Moment()
-
-def make_celery(app):
-    celery = Celery(
-        app.import_name,
-        backend=app.config['CELERY_RESULT_BACKEND'],
-        broker=app.config['CELERY_BROKER_URL']
-    )
-    celery.conf.update(app.config)
-
-    class ContextTask(celery.Task):
-        def __call__(self, *args, **kwargs):
-            with app.app_context():
-                return self.run(*args, **kwargs)
-
-    celery.Task = ContextTask
-    return celery

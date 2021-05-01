@@ -21,11 +21,9 @@ from app.extensions import (
 
 from app.admin import register_admin
 from app.email import *
-#from app.tasks import make_celery
 from config import config, Config
 
-celery = Celery(__name__, BROKER_URL=os.environ['REDIS_URL'],
-                CELERY_RESULT_BACKEND=os.environ['REDIS_URL'])
+celery = Celery(__name__, broker=Config.CELERY_BROKER_URL)
 #scheduler.add_job(job1, 'interval', seconds=1)
 
 def create_app(config_name, **kwargs):
@@ -37,12 +35,8 @@ def create_app(config_name, **kwargs):
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
     app.redis = Redis.from_url(app.config['REDIS_URL'])
-    celery = make_celery(app)
     celery.conf.update(app.config)
 
-    #if kwargs.get("celery"):
-    #    init_celery(kwargs.get("celery"), app)
-    #app.task_queue = rq.Queue('compbeast-tasks', connection=app.redis)
     register_extensions(app)
     register_admin(app, db)
     register_blueprints(app)
@@ -51,26 +45,6 @@ def create_app(config_name, **kwargs):
 #    register_commands(app)
     configure_logger(app)
     return app
-
-def make_celery(app):
-    celery = Celery(
-        app.import_name,
-        backend=app.config['CELERY_RESULT_BACKEND'],
-        broker=app.config['CELERY_BROKER_URL']
-    )
-    celery.conf.update(app.config)
-
-    class ContextTask(celery.Task):
-        def __call__(self, *args, **kwargs):
-            with app.app_context():
-                return self.run(*args, **kwargs)
-
-    celery.Task = ContextTask
-    return celery
-
-#def make_celery(app_name=__name__):
-    #redis_uri='redis://127.0.0.1:6379'
-    #return Celery(app_name, backend=redis_uri, broker=redis_uri, include=['app.tasks'])
 
 def register_extensions(app):
     """Register Flask extensions."""

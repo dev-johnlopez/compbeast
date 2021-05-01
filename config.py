@@ -13,14 +13,14 @@ class Config:
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     REDIS_URL = 'redis://localhost:6379'
-    CELERY_BROKER_URL = REDIS_URL
-    CELERY_RESULT_BACKEND = REDIS_URL
+    CELERY_BROKER_URL='redis://localhost:6379'
+    CELERY_RESULT_BACKEND='redis://localhost:6379'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL')
     ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
     DEBUG = True
     FLASK_DEBUG = True
-    SERVER_NAME="localhost:5000"
+    SERVER_NAME='localhost:5000'
     SECRET_KEY = os.environ.get('SECRET_KEY')
     BCRYPT_LOG_ROUNDS = os.environ.get("BCRYPT_LOG_ROUNDS")
     DEBUG_TB_ENABLED = DEBUG
@@ -69,7 +69,7 @@ class HerokuConfig(ProductionConfig):
         uri = uri.replace("postgres://", "postgresql://", 1)
     SQLALCHEMY_DATABASE_URI = uri
     REDIS_URL = os.environ.get('REDIS_URL')
-    SERVER_NAME=os.environ.get('SERVER_NAME')
+    SERVER_NAME = os.environ.get('SERVER_NAME')
 
     @classmethod
     def init_app(cls, app):
