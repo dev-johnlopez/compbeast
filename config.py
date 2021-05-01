@@ -21,9 +21,6 @@ class Config:
     DEBUG = True
     FLASK_DEBUG = True
     SERVER_NAME="localhost:5000"
-    uri = os.environ.get("DATABASE_URL")
-    if uri is not None and uri.startswith("postgres://"):
-        uri = uri.replace("postgres://", "postgresql://", 1)
 
     @staticmethod
     def init_app(app):
@@ -32,20 +29,20 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+        'sqlite:///' + os.path.join(basedir, 'app/app.db')
 
 
 class TestingConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'data-test.sqlite')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+        'sqlite:///' + os.path.join(basedir, 'app/app.db')
     WTF_CSRF_ENABLED = False
 
 
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'data.sqlite')
+        'sqlite:///' + os.path.join(basedir, 'app/app.db')
 
     @classmethod
     def init_app(cls, app):
