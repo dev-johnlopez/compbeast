@@ -9,10 +9,11 @@ app.app_context().push()
 
 @celery.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
+    print("adding tasks to beat!")
     sender.add_periodic_task(crontab(hour=14),
                              remind_pending_registrations.s(),
                              name='Send Registration Reminders')
-
+    print("adding tasks to beat!")
     sender.add_periodic_task(10.0,
                              refresh_event_stats.s(),
                              name='Refresh Event Stats')
