@@ -13,7 +13,7 @@ def setup_periodic_tasks(sender, **kwargs):
                              remind_pending_registrations.s(),
                              name='Send Registration Reminders')
 
-    sender.add_periodic_task(crontab(minute='*/15'),
+    sender.add_periodic_task(10.0,
                              refresh_event_stats.s(),
                              name='Refresh Event Stats')
 
