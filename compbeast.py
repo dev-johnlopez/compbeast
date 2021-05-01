@@ -5,7 +5,7 @@ from app import create_app
 from app.extensions import security, db
 
 #app = create_app(celery=app.celery)
-app = create_app(os.getenv('FLASK_CONFIG') or 'development')
+app = create_app(os.getenv('FLASK_CONFIG'))
 app.app_context().push()
 
 @app.before_first_request
