@@ -12,7 +12,7 @@ class Config:
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS')
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    REDIS_URL = 'redis://localhost:6379'
+    REDIS_URL = os.environ.get('REDIS_URL') or 'redis://localhost:6379'
     CELERY_BROKER_URL=REDIS_URL
     CELERY_RESULT_BACKEND=REDIS_URL
     SQLALCHEMY_TRACK_MODIFICATIONS = False
