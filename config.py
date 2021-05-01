@@ -20,6 +20,7 @@ class Config:
     ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
     DEBUG = True
     FLASK_DEBUG = True
+    SERVER_NAME="localhost:5000"
     uri = os.environ.get("DATABASE_URL")
     if uri is not None and uri.startswith("postgres://"):
         uri = uri.replace("postgres://", "postgresql://", 1)
@@ -58,6 +59,7 @@ class HerokuConfig(ProductionConfig):
         uri = uri.replace("postgres://", "postgresql://", 1)
     SQLALCHEMY_DATABASE_URI = uri
     REDIS_URL = os.environ.get('REDIS_URL')
+    SERVER_NAME=os.environ.get('SERVER_NAME')
 
     @classmethod
     def init_app(cls, app):
