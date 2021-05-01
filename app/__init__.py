@@ -24,7 +24,8 @@ from app.email import *
 #from app.tasks import make_celery
 from config import config, Config
 
-celery = Celery(__name__, broker=Config.CELERY_BROKER_URL)
+celery = Celery(__name__, BROKER_URL=os.environ['REDIS_URL'],
+                CELERY_RESULT_BACKEND=os.environ['REDIS_URL'])
 #scheduler.add_job(job1, 'interval', seconds=1)
 
 def create_app(config_name, **kwargs):
