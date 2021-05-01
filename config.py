@@ -57,6 +57,7 @@ class HerokuConfig(ProductionConfig):
     if uri is not None and uri.startswith("postgres://"):
         uri = uri.replace("postgres://", "postgresql://", 1)
     SQLALCHEMY_DATABASE_URI = uri
+    REDIS_URL = os.environ.get('REDIS_URL')
 
     @classmethod
     def init_app(cls, app):
