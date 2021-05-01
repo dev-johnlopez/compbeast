@@ -26,7 +26,7 @@ def confirm_player(player_id, event_id=None):
             _update_cod_info_for_player(player)
             send_notification_email(player, event, email="register")
     except:
-        print(sys.exc_info())
+        print("Error!") #print(sys.exec_info())
         #app.logger.error('Unhandled exception', exc_info=sys.exc_info())
 
 @celery.task
@@ -40,7 +40,7 @@ def new_event_notification(player_id, event_id=None):
         if player is not None:
             send_notification_email(player, event, email="new_event")
     except:
-        print(sys.exc_info())
+        print("Error!") #print(sys.exec_info())
         #app.logger.error('Unhandled exception', exc_info=sys.exc_info())
 
 @celery.task
@@ -55,7 +55,7 @@ def remind_pending_registrations():
                     if player.is_confirmed() == False:
                         registration_reminder_notification.si(player.id, event.id).delay(player_id=player.id, event_id=event.id)
     except:
-        print(sys.exc_info())
+        print("Error!") #print(sys.exec_info())
         #app.logger.error('Unhandled exception', exc_info=sys.exc_info())
 
 @celery.task
@@ -68,7 +68,7 @@ def generate_leaderboards(event_id):
                 print("success!")
                 leaderboard_notification.si(player_id=player.id, event_id=event.id).delay(player_id=player.id, event_id=event.id)
     except:
-        print(sys.exec_info())
+        print("Error!") #print(sys.exec_info())
 
 @celery.task
 def registration_reminder_notification(player_id, event_id=None):
@@ -81,7 +81,7 @@ def registration_reminder_notification(player_id, event_id=None):
         if player is not None:
             send_notification_email(player, event, email="reminder")
     except:
-        print(sys.exc_info())
+        print("Error!") #print(sys.exec_info())
         #app.logger.error('Unhandled exception', exc_info=sys.exc_info())
 
 @celery.task
@@ -95,7 +95,7 @@ def leaderboard_notification(player_id, event_id=None):
         if player is not None:
             send_notification_email(player, event, email="leaderboard")
     except:
-        print(sys.exc_info())
+        print("Error!") #print(sys.exec_info())
         #app.logger.error('Unhandled exception', exc_info=sys.exc_info())
 
 @celery.task
