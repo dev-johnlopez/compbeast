@@ -23,7 +23,7 @@ from app.admin import register_admin
 from app.email import *
 from config import config, Config
 
-celery = Celery(__name__, broker=Config.CELERY_BROKER_URL)
+celery = Celery(__name__, broker=Config.REDIS_URL)
 #scheduler.add_job(job1, 'interval', seconds=1)
 
 def create_app(config_name, **kwargs):
