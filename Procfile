@@ -1,3 +1,3 @@
 web: flask db upgrade; gunicorn compbeast:app
-worker: celery -A celery_worker.celery worker -E -B --loglevel=INFO
-beat: celery -A celery_worker.celery beat -E -B --loglevel=INFO
+worker: celery -A celery_worker.celery worker -E -B --loglevel=DEBUG
+beat: celery -A celery_worker.celery beat -E -B --loglevel=DEBUG
