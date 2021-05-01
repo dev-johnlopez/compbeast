@@ -27,7 +27,7 @@ from config import config, Config
 celery = Celery(__name__, broker=Config.CELERY_BROKER_URL)
 #scheduler.add_job(job1, 'interval', seconds=1)
 
-def create_app(config_name, **kwargs):
+def create_app(config_name="development", **kwargs):
     """Create application factory, as explained here: http://flask.pocoo.org/docs/patterns/appfactories/.
 
     :param config_object: The configuration object to use.
