@@ -23,17 +23,19 @@ from app.admin import register_admin
 from app.email import *
 #from app.tasks import make_celery
 from app import settings
+from config import config, Config
 
-celery = Celery(__name__, broker=settings.CELERY_BROKER_URL)
+celery = Celery(__name__, broker=Config.CELERY_BROKER_URL)
 #scheduler.add_job(job1, 'interval', seconds=1)
 
-def create_app(config_object="app.settings", **kwargs):
+def create_app(config_name, **kwargs):
     """Create application factory, as explained here: http://flask.pocoo.org/docs/patterns/appfactories/.
 
     :param config_object: The configuration object to use.
     """
     app = Flask(__name__)
-    app.config.from_object(config_object)
+    app.config.from_object(config[config_name])
+    config[config_name].init_app(app)
     app.redis = Redis.from_url(app.config['REDIS_URL'])
     celery = make_celery(app)
     celery.conf.update(app.config)
