@@ -6,7 +6,7 @@
 <h2 class="lead">Check back soon for new tournament announcements!</h2>
 {% else %}
 <h1 class="cover-heading">$100 Warzone Tournament</h1>
-<h2 class="lead">{{ event.start_time.strftime("%A @ %I:%M %p") }} to {{ event.end_time.strftime("%I:%M %p") }}</h2>
+<h2 class="lead">{{ moment(event.start_time).format('dddd MMM Do @ h:mm a') }} to {{ moment(event.end_time).format('h:mm a') }}</h2>
 <p class="lead">Duo kill race tournament. Click <a href="{{ url_for('public.rules') }}">here</a> for all rules.</p>
 <p class="lead">
   {% if event is defined %}

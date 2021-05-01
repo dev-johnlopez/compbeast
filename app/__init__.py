@@ -15,6 +15,7 @@ from app.extensions import (
     db,
     migrate,
     mail,
+    moment,
     security
 )
 
@@ -76,6 +77,7 @@ def register_extensions(app):
     db.init_app(app)
     migrate.init_app(app, db)
     mail.init_app(app)
+    moment.init_app(app)
 
     from flask_security import SQLAlchemyUserDatastore
     from app.auth.models import User, Role

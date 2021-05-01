@@ -4,6 +4,7 @@ from flask import url_for, request, current_app
 from flask_admin import Admin
 from flask_mail import Mail
 from flask_migrate import Migrate
+from flask_moment import Moment
 from flask_security import Security, SQLAlchemyUserDatastore, current_user
 from flask_sqlalchemy import SQLAlchemy
 from celery import Celery
@@ -32,6 +33,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 mail = Mail()
 security = Security()
+moment = Moment()
 
 def make_celery(app):
     celery = Celery(
