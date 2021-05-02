@@ -165,6 +165,7 @@ class Team(PkModel):
         max_index = len(match_rating) - 1
         if max_index > self.event.num_games:
             max_index = self.event.num_games
+        print(max_index)
         for i in range(max_index):
             rating += match_rating[i]
         return rating
