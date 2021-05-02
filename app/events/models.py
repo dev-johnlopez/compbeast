@@ -151,6 +151,11 @@ class Team(PkModel):
             self.players = []
         self.players.append(player)
 
+    @property
+    def games_played(self):
+        if self.matches is None:
+            return 0
+        return len(self.matches)
 
     @property
     def rating(self):

@@ -12,6 +12,7 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Team</th>
+            <th scope="col">Games Played</th>
             <th scope="col">Score</th>
           </tr>
         </thead>
@@ -20,6 +21,7 @@
             <tr>
               <th scope="row">{{ loop.index }}</th>
               <td>{{ team.name }}</td>
+              <td>{{ team.games_played }}</td>
               <td>{{ team.rating }}</td>
             </tr>
           {% endfor %}
