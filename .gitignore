@@ -2,3 +2,5 @@ flask/
 *pycache*
 *.pyc
 .flaskenv
+celerybeat-schedule
+*.rdb

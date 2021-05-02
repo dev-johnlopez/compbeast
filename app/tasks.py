@@ -46,6 +46,7 @@ def new_event_notification(player_id, event_id=None):
 @celery.task
 def remind_pending_registrations():
     try:
+        print("sending remind registration tasks")
         events = Event.query.all()
         print(events)
         events = [event for event in events if event.state == "Registering"]

@@ -14,7 +14,7 @@ class Config:
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     REDIS_URL = os.environ.get('REDIS_URL') or 'redis://localhost:6379'
     CELERY_BROKER_URL=REDIS_URL
-    CELERY_RESULT_BACKEND=REDIS_URL
+    RESULT_BACKEND=REDIS_URL
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL')
     ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
