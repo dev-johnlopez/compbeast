@@ -9,7 +9,7 @@ app.app_context().push()
 celery.conf.beat_schedule = {
     "refresh-stats-in-all-events-task": {
         "task": "app.tasks.refresh_event_stats",
-        "schedule": 10.0
+        "schedule": crontab(minute='*/15')
     },
     "send-registration-reminders-task": {
         "task": "app.tasks.remind_pending_registrations",
