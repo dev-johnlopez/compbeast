@@ -100,7 +100,7 @@ class Team(PkModel):
     def refresh_stats(self, event, startTimestamp=None, endTimestamp=None):
 
         mode = None
-        if event.team_size == 1: mode = "br_brsingles"
+        if event.team_size == 1: mode = "br_brsolo"
         elif event.team_size == 2: mode = "br_brduos"
         elif event.team_size == 3: mode = "br_brtrios"
         elif event.team_size == 4: mode = "br_brquads"
