@@ -63,6 +63,7 @@ class Match(PkModel):
     __tablename__ = "match"
     id = Column(db.Integer, primary_key=True)
     external_id = Column(db.String(80))
+    start_time = Column(db.Integer)
     player_stats = relationship("PlayerStat", backref="match", lazy=True)
     team_id = db.Column(db.Integer, db.ForeignKey('team.id'),
         nullable=True)

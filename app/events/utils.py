@@ -69,8 +69,8 @@ class MatchManager():
             return
         player = self.team.players[0]
         url = 'https://frozen-island-36052.herokuapp.com/stats?username={}'.format(player.username.replace("#", "%23"))
-        url += '&start={}'.format(to_timestamp(self.team.event.start_time))
-        url += '&end={}'.format(to_timestamp(self.team.event.end_time))
+        url += '&start={}'.format(get_start_time(self.team))
+        url += '&end={}'.format(get_end_time(self.team))
         r = requests.get(url)
         #print(r.text)
         data = json.loads(r.text)
@@ -84,8 +84,21 @@ class MatchManager():
                                     kills=int(stat['playerStats']['kills']),
                                     placement=int(stat['playerStats']['teamPlacement']))
             player_stats.append(player_stat)
-        match = Match(external_id=str(match['id']), player_stats=player_stats)
+        match = Match(external_id=str(match['id']), player_stats=player_stats, start_time=int(match['utcStartSeconds']))
         return match
+
+    def get_start_time(team):
+        if team.matches is None or len(team.matches) == 0:
+            return team.event.start_time
+        else:
+            sorted_matches = sorted(team.matches, key=lambda match: match.start_time, reverse=True)
+            recent_start_time = sorted_matches[0].start_time
+            if recent_start_time is None: return team.event.start_time
+            else: sorted_matches[0].start_time
+
+    def get_end_time(team):
+        return to_timestamp(self.team.event.end_time)
+
 
 
 def to_timestamp(datetime):
