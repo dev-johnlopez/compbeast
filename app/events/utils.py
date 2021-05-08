@@ -101,7 +101,7 @@ class MatchManager():
             sorted_matches = sorted(team.matches, key=lambda match: match.start_time, reverse=True)
             recent_start_time = sorted_matches[0].start_time
             if recent_start_time is None: return to_timestamp(team.event.start_time)
-            else: to_timestamp(sorted_matches[0].start_time)
+            else: sorted_matches[0].start_time
 
     def get_end_time(self, team):
         return to_timestamp(self.team.event.end_time)
