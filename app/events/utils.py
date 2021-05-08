@@ -20,7 +20,7 @@ class MatchManager():
 
     def filter_possible_matches(self, possible_matches):
         matches = []
-        player_ids = [player.external_id for player in self.team.players]
+        player_ids = [player.external_id for player in self.team.players if player.external_id is not None]
         for match in possible_matches:
             #print(match['allPlayers'][0]['mode'])
             if match['allPlayers'][0]['mode'] != self.mode:
@@ -38,6 +38,8 @@ class MatchManager():
                 team_name = player_info['team']
                 #print("{} in {}: {}".format(player_id, player_ids, player_id in player_ids))
                 for id in player_ids:
+                    print(id)
+                    print(player_id)
                     if int(id) - int(player_id) == 0:
                         #print("testing...")
                         possible_players.append(player)
@@ -93,14 +95,14 @@ class MatchManager():
 
     def get_start_time(self, team):
         if team.matches is None or len(team.matches) == 0:
-            return team.event.start_time
+            return to_timestamp(team.event.start_time)
         else:
             sorted_matches = sorted(team.matches, key=lambda match: match.start_time, reverse=True)
             recent_start_time = sorted_matches[0].start_time
-            if recent_start_time is None: return team.event.start_time
-            else: sorted_matches[0].start_time
+            if recent_start_time is None: return to_timestamp(team.event.start_time)
+            else: to_timestamp(sorted_matches[0].start_time)
 
-    def get_end_time(team):
+    def get_end_time(self, team):
         return to_timestamp(self.team.event.end_time)
 
 

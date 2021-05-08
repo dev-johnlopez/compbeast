@@ -9,6 +9,7 @@ from flask_admin.base import expose, BaseView
 from flask import request, redirect, url_for
 from flask_admin.contrib import rediscli
 from flask_security import current_user
+#from app.tasks import _update_cod_info_for_player
 
 class CustomModelView(ModelView):
 
@@ -130,10 +131,84 @@ class EventView(CustomModelView):
 
             flash('Failed to progress event. %(error)s', 'error')
 
+class TeamView(CustomModelView):
+    list_template = "admin/my_list.html"  # Override the default template
+
+    @expose('/action/refresh_row', methods=('POST',))
+    def close_row(self, *args, **kwargs):
+        team_id = request.form['rowid']
+        #event_id = request.args.get('id')
+        try:
+            team = Team.query.get(team_id)
+            team.refresh_stats(team.event)
+            team.save()
+
+        except Exception as ex:
+            if not self.handle_view_exception(ex):
+                raise
+            flash('Failed to progress event. %(error)s', 'error')
+
+        return redirect(self.get_save_return_url(Event))
+
+    @action('refresh', 'Refresh stats', 'Are you sure you want to refresh stats?')
+    def action_refresh(self, ids):
+        try:
+            query = Team.query.filter(Team.id.in_(ids))
+
+            count = 0
+            teams = query.all()
+            for team in teams:
+                team.refresh_stats(team.event)
+                team.save()
+                count += 1
+            flash('{} of {} teams(s) were had their stats refreshed'.format(count, len(ids)))
+        except Exception as ex:
+            if not self.handle_view_exception(ex):
+                raise
+
+            flash('Failed to refresh stats. %(error)s', 'error')
+
+class PlayerView(CustomModelView):
+    list_template = "admin/my_list.html"  # Override the default template
+
+    @expose('/action/refresh_row', methods=('POST',))
+    def close_row(self, *args, **kwargs):
+        player_id = request.form['rowid']
+        #event_id = request.args.get('id')
+        try:
+            player = Player.query.get(player_id)
+            #_update_cod_info_for_player(player)
+            player.save()
+
+        except Exception as ex:
+            if not self.handle_view_exception(ex):
+                raise
+            flash('Failed to progress event. %(error)s', 'error')
+
+        return redirect(self.get_save_return_url(Event))
+
+    @action('refresh', 'Refresh ID', 'Are you sure you want to refresh Activision ID?')
+    def action_refresh(self, ids):
+        try:
+            query = Player.query.filter(Player.id.in_(ids))
+
+            count = 0
+            players = query.all()
+            for player in players:
+                #_update_cod_info_for_player(player)
+                player.save()
+                count += 1
+            flash('{} of {} players(s) were had their ID refreshed'.format(count, len(ids)))
+        except Exception as ex:
+            if not self.handle_view_exception(ex):
+                raise
+
+            flash('Failed to refresh stats. %(error)s', 'error')
+
 def register_admin(app, db):
     admin.init_app(app)
     admin.add_view(EventView(Event, db.session))
-    admin.add_view(CustomModelView(Team, db.session))
-    admin.add_view(CustomModelView(Player, db.session))
+    admin.add_view(TeamView(Team, db.session))
+    admin.add_view(PlayerView(Player, db.session))
     admin.add_view(CustomModelView(Task, db.session))
     #admin.add_view(rediscli.RedisCli(app.redis))
