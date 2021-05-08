@@ -99,7 +99,7 @@ class Team(PkModel):
         return "Team {}, {} Rating".format(self.name, self.rating)
 
     def refresh_stats(self, event, startTimestamp=None, endTimestamp=None):
-
+        print("** refreshing status")
         mode = None
         if event.team_size == 1: mode = "br_brsolo"
         elif event.team_size == 2: mode = "br_brduos"
@@ -107,6 +107,7 @@ class Team(PkModel):
         elif event.team_size == 4: mode = "br_brquads"
 
         from .utils import MatchManager
+        print("** getting stats for mode: {}".format(mode))
         stats_manager = MatchManager(team=self, mode=mode)
         stats_manager.get_matches()
         self.save()

@@ -10,8 +10,10 @@ class MatchManager():
         self.mode = mode
 
     def get_matches(self):
+        print("** getting matches")
         matches = []
         possible_matches = self.get_possible_matches_from_activision()
+        print("** pre-filter")
         filtered_matches = self.filter_possible_matches(possible_matches)
         for match in filtered_matches:
             self.team.add_match(self.adapt_match(match))
@@ -64,6 +66,7 @@ class MatchManager():
         return matches
 
     def get_possible_matches_from_activision(self):
+        print("** getting matches from activision")
         if self.team.players is None or len(self.team.players) == 0:
             # TODO:  - throw exception
             return
