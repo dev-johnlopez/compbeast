@@ -102,8 +102,8 @@ class MatchManager():
             recent_start_time = sorted_matches[0].start_time
             if recent_start_time is None: return to_timestamp(team.event.start_time)
             else:
-                print(sorted_matches[0].start_time)
-                return sorted_matches[0].start_time #match is already in correct format. Don't need to convert to timestamp
+                print(recent_start_time)
+                return recent_start_time #match is already in correct format. Don't need to convert to timestamp
 
     def get_end_time(self, team):
         return to_timestamp(self.team.event.end_time)
