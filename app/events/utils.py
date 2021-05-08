@@ -63,6 +63,7 @@ class MatchManager():
             if len(valid_player_stats) == len(self.team.players):
                 matches.append({
                     "id": match['allPlayers'][0]['matchID'],
+                    "utcStartSeconds": match['allPlayers'][0]['utcStartSeconds'],
                     "stats": valid_player_stats
                 })
         return matches
