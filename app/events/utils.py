@@ -69,8 +69,9 @@ class MatchManager():
             return
         player = self.team.players[0]
         url = 'https://frozen-island-36052.herokuapp.com/stats?username={}'.format(player.username.replace("#", "%23"))
-        url += '&start={}'.format(get_start_time(self.team))
-        url += '&end={}'.format(get_end_time(self.team))
+        url += '&start={}'.format(self.get_start_time(self.team))
+        url += '&end={}'.format(self.get_end_time(self.team))
+        print("** GETTING URL: {}".format(url))
         r = requests.get(url)
         #print(r.text)
         data = json.loads(r.text)
@@ -87,7 +88,7 @@ class MatchManager():
         match = Match(external_id=str(match['id']), player_stats=player_stats, start_time=int(match['utcStartSeconds']))
         return match
 
-    def get_start_time(team):
+    def get_start_time(self, team):
         if team.matches is None or len(team.matches) == 0:
             return team.event.start_time
         else:
