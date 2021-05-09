@@ -93,3 +93,7 @@ def update_player(player_id):
 @blueprint.route('/rules', methods=['GET', 'POST'])
 def rules():
     return render_template("public/rules.html")
+
+@blueprint.route('/discord', methods=['GET', 'POST'])
+def discord():
+    return redirect('https://discord.gg/vsqg5BWzJt')
