@@ -8,14 +8,16 @@
 <h1 class="cover-heading">$100 Warzone Tournament</h1>
 <h2 class="lead">{{ moment(event.start_time).format('dddd MMM Do @ h:mm a') }} to {{ moment(event.end_time).format('h:mm a') }}</h2>
 <p class="lead">Duo kill race tournament - best three games win!</p>
-<p class="lead">
+<p>
   {% if event is defined %}
   <a href="{{ url_for('public.register', event_id=event.id) }}" class="btn btn-lg btn-danger">Register Here</a>
   {% else %}
   Check back tomorrow to regsiter
   {% endif %}
+  <a href="{{ url_for('public.discord') }}" class="btn btn-lg btn-light"><img src="{{ url_for('static', filename='img/discord.svg') }}" /> Join our Discord</a>
 </p>
 <p><a href="{{ url_for('public.rules') }}">Click here for all rules.</a></p>
+<img surc="{{ url_for('static', filename='img/Discord-Logo-Black.png') }}" />
 {% endif %}
 
 {% endblock %}
