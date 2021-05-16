@@ -74,9 +74,10 @@ class MatchManager():
             # TODO:  - throw exception
             return
         player = self.team.players[0]
+        username= "oFewk%236235807"
         print(player.username)
         print(player.username.replace("#", "%23"))
-        url = 'https://frozen-island-36052.herokuapp.com/stats?username={}'.format(player.username.replace("#", "%23"))
+        url = 'https://frozen-island-36052.herokuapp.com/stats?username=oFewk%236235807')
         url += '&start={}'.format(self.get_start_time(self.team))
         url += '&end={}'.format(self.get_end_time(self.team))
         print("** GETTING URL: {}".format(url))
