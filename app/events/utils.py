@@ -14,6 +14,8 @@ class MatchManager():
         matches = []
         possible_matches = self.get_possible_matches_from_activision()
         print("** pre-filter")
+        if possible_matches is None:
+            return
         filtered_matches = self.filter_possible_matches(possible_matches)
         for match in filtered_matches:
             self.team.add_match(self.adapt_match(match))
@@ -70,21 +72,22 @@ class MatchManager():
 
     def get_possible_matches_from_activision(self):
         print("** getting matches from activision")
-        if self.team.players is None or len(self.team.players) == 0:
-            # TODO:  - throw exception
-            return
-        player = self.team.players[0]
-        username= "oFewk%236235807"
-        print(player.username)
-        print(player.username.replace("#", "%23"))
-        url = 'https://frozen-island-36052.herokuapp.com/stats?username=oFewk%236235807'
-        url += '&start={}'.format(self.get_start_time(self.team))
-        url += '&end={}'.format(self.get_end_time(self.team))
-        print("** GETTING URL: {}".format(url))
-        r = requests.get(url)
-        #print(r.text)
-        data = json.loads(r.text)
-        all_matches = data['matches']
+        try:
+            if self.team.players is None or len(self.team.players) == 0:
+                # TODO:  - throw exception
+                return
+            player = self.team.players[0]
+            url = 'https://frozen-island-36052.herokuapp.com/stats?username={}'.format(player.username.replace("#", "%23"))
+            url += '&start={}'.format(self.get_start_time(self.team))
+            url += '&end={}'.format(self.get_end_time(self.team))
+            print("** GETTING URL: {}".format(url))
+            r = requests.get(url)
+            #print(r.text)
+            data = json.loads(r.text)
+            all_matches = data['matches']
+        except:
+            print('error getting status for team: {} - player: {}'.format(self.team, self.team.players[0]))
+            return None
         return all_matches
 
     def adapt_match(self, match):
