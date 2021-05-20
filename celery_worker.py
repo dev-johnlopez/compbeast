@@ -11,6 +11,10 @@ celery.conf.beat_schedule = {
         "task": "app.tasks.refresh_event_stats",
         "schedule": crontab(minute='*/15')
     },
+    "progress_all_events": {
+        "task": "app.tasks.progress_events",
+        "schedule": crontab(minute='*/1')
+    },
     "send-registration-reminders-task": {
         "task": "app.tasks.remind_pending_registrations",
         "schedule": crontab(hour=14)

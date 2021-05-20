@@ -1,6 +1,8 @@
 import sys
 import requests
 import json
+import datetime
+from datetime import date
 from app import celery, create_app
 from app.email import send_notification_email
 from app.events.models import Team, Player, Event
@@ -13,6 +15,31 @@ def refresh_event_stats():
         print("refreshing stats for event id: {}".format(event.id))
         event.refresh_stats()
         event.save()
+
+@celery.task
+def progress_events():
+    events = Event.query.filter(Event.status != 'Closed').all()
+    print("updating status for events")
+    for event in events:
+        if event.status == "Registering":
+            day_change = datetime.timedelta(days=1)
+            next_day = date.today() + day_change
+            if event.start_time.date() == next_day:
+                event.activate()
+                event.save()
+        if event.status == "Active":
+            day_change = datetime.timedelta(days=1)
+            day_after_event = event.end_time.date() + day_change
+            print("{} = {} + {}".format(day_after_event, event.end_time.date(), day_change))
+            print("{} == {}".format(date.today(), day_after_event))
+            if date.today() == day_after_event:
+                event.close()
+                event.save()
+                next_draft_event = Event.query.filter(Event.status == 'Draft').order_by(Event.start_time).first()
+                if next_draft_event is not None:
+                    next_draft_event.open_registration()
+                    next_draft_event.save()
+    print("done updating status")
 
 @celery.task
 def confirm_player(player_id, event_id=None):
