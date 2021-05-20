@@ -1,4 +1,10 @@
 {% macro activate_row(action, row_id, row) %}
+<form class="icon" method="POST" action="{{ get_url('.copy_row') }}">
+  <input type="hidden" name="rowid" value="{{ get_pk_value(row) }}"/>
+  <button type="submit" title="{{ _gettext('Copy record') }}">
+    <span class="fa fa-copy glyphicon glyphicon-copy"></span>
+  </button>
+</form>
 <form class="icon" method="POST" action="{{ get_url('.register_row') }}">
   <input type="hidden" name="rowid" value="{{ get_pk_value(row) }}"/>
   <button type="submit" title="{{ _gettext('Register record') }}">

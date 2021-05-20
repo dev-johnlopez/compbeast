@@ -1,3 +1,4 @@
+import datetime
 from app.extensions import admin, db, security
 from app.events.models import Event, Team, Player, Task
 from flask_admin.actions import action
@@ -28,6 +29,29 @@ class EventView(CustomModelView):
     column_extra_row_actions = [  # Add a new action button
         TemplateLinkRowAction("custom_row_actions.activate_row", "Activate Record"),
     ]
+
+    @expose('/action/copy_row', methods=('POST',))
+    def copy_row(self, *args, **kwargs):
+        event_id = request.form['rowid']
+        #event_id = request.args.get('id')
+        try:
+            event = Event.query.get(event_id)
+            new_event = Event()
+            new_event.name = event.name
+            new_event.team_size = event.team_size
+            new_event.teams_per_division = event.teams_per_division
+            new_event.num_games = event.num_games
+            new_event.start_time = event.start_time + datetime.timedelta(days=7)
+            new_event.end_time = event.end_time + datetime.timedelta(days=7)
+            new_event.state = 'Draft'
+            new_event.save()
+
+        except Exception as ex:
+            if not self.handle_view_exception(ex):
+                raise
+            flash('Failed to copy event. %(error)s', 'error')
+
+        return redirect(self.get_save_return_url(Event))
 
     @expose('/action/register_row', methods=('POST',))
     def register_row(self, *args, **kwargs):
