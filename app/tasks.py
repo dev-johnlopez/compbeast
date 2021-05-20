@@ -32,7 +32,7 @@ def progress_events():
             day_after_event = event.end_time.date() + day_change
             print("{} = {} + {}".format(day_after_event, event.end_time.date(), day_change))
             print("{} == {}".format(date.today(), day_after_event))
-            if date.today() == day_after_event:
+            if date.today() >= day_after_event:
                 event.close()
                 event.save()
                 next_draft_event = Event.query.filter(Event.status == 'Draft').order_by(Event.start_time).first()
