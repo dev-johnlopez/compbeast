@@ -8,6 +8,7 @@ from flask import (
     render_template,
     request,
     url_for,
+    abort,
 )
 from app.events.models import Event, Team, Player
 from app.events.forms import TeamForm, ConfirmPlayerForm
@@ -43,6 +44,7 @@ def home():
 @blueprint.route('/<event_id>/register', methods=['GET', 'POST'])
 def register(event_id):
     event = Event.query.get_or_404(event_id)
+    if event.state != "Registering": abort(404)
     form = TeamForm()
     if form.validate_on_submit():
         team = Team()
