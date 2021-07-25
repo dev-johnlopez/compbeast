@@ -1,0 +1,202 @@
+{% extends "layout/layout.html" %}
+{% block content %}
+
+<!--====== Banner Area Start ======-->
+<section>
+  <div class="banner-main">
+    <div class="banner-bg-left"></div>
+    <div class="banner-bg-right"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-12">
+          <div class="banner-inner-area">
+            <h1 class="banner-heading">Weekly Warzone Tournaments</h1>
+            <p class="banner-text">
+              Lorem ipsum dolor sit amet, consetetur sadipscing
+            </p>
+            {#<a href="{{ url_for('events.index') }}" class="btn-custom-primary">Tournaments</a>#}
+            <a href="{{ url_for('public.discord') }}" class="btn-custom-icon">
+              <img src="{{ url_for('static', filename='img/icons/discord.png') }}" alt="Discord" />
+              Join our discord</a
+            >
+            <div class="banner-bottom">
+              <div class="row">
+                <div class="col-6">
+                  <div class="banner-left">
+                    <a href="#">
+                      <img
+                        src="{{ url_for('static', filename='img/icons/arrow-down.png') }}"
+                        alt="Arrow"
+                      />
+                      <span>Learn how</span>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="social-link">
+                    <a href="#">
+                      <img
+                        src="{{ url_for('static', filename='img/icons/telegram.png') }}"
+                        alt="telegram"
+                      />
+                    </a>
+                    <a href="#">
+                      <img
+                        src="{{ url_for('static', filename='img/icons/message.png') }}"
+                        alt="message"
+                      />
+                    </a>
+                    <a href="#">
+                      <img
+                        src="{{ url_for('static', filename='img/icons/twitter.png') }}"
+                        alt="twitter"
+                      />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--====== Banner Area End ======-->
+<!--====== Partners Area Start ======-->
+<section>
+  <div class="partners-section">
+    <div class="container">
+      <div class="partner-inner">
+        <div class="partner-img">
+          <img src="{{ url_for('static', filename='img/partners/logitech.png') }}" alt="" />
+        </div>
+        <div class="partner-img">
+          <img src="{{ url_for('static', filename='img/partners/hyperx.png') }}" alt="" />
+        </div>
+        <div class="partner-img">
+          <img src="{{ url_for('static', filename='img/partners/twitch.png') }}" alt="" />
+        </div>
+        <div class="partner-img">
+          <img src="{{ url_for('static', filename='img/partners/asus.png') }}" alt="" />
+        </div>
+        <div class="partner-img">
+          <img src="{{ url_for('static', filename='img/partners/sennheiser.png') }}" alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--====== Partners Area End ======-->
+
+<!--====== Tournaments History Area Start ======-->
+<section>
+  <div class="history">
+    <div class="container">
+      <h2 class="heading">Tournaments made <span>simple</span></h2>
+      <div class="row">
+        <div class="col-md-4 col-12 mb-3">
+          <div class="card-history text-center">
+            <h3>25,000+</h3>
+            <p>total match played</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-12 mb-3">
+          <div class="card-history active text-center">
+            <h3>$100,000+</h3>
+            <p>winnings payed out</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-12 mb-3">
+          <div class="card-history text-center">
+            <h3>5,000+</h3>
+            <p>players competing</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-12 mb-3">
+          <div class="card-history">
+            <img
+              src="{{ url_for('static', filename='img/icons/engineering.png') }}"
+              alt="engineering"
+            />
+            <h3>Automated scoring!</h3>
+            <p>
+              Slayout automatically tracks your score! There is no need for
+              sending screenshots or streaming anymore.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-12">
+          <div class="card-history">
+            <img
+              src="{{ url_for('static', filename='img/icons/guaranteed.png') }}"
+              alt="guaranteed"
+            />
+            <h3>Guaranteed payouts!</h3>
+            <p>
+              If you've won your prize fair and square, we will pay it out
+              in 48 hours after the event, guaranteed!
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--====== Tournaments History Area End ======-->
+
+<!--====== Upcoming Tournaments Area End ======-->
+<section>
+  <div class="tournaments">
+    <div class="container-fluid">
+      <h2 class="heading">Upcoming tournaments</h2>
+      <div class="row">
+        {% for event in events %}
+        <div class="col-md-4 col-12">
+          <div class="card-tournament">
+            <div class="card-img">
+              <img src="{{ url_for('static', filename='img/cod1.jpeg') }}" alt="Cod" />
+            </div>
+            <div class="card-body">
+              <div class="card-heading">
+                <h3>{{ event.name }}</h3>
+                <p>{{ event.start_time|format_datetime('%B %d') }}</p>
+              </div>
+              <ul class="card-list">
+                <li class="list-item">Prize Pool: <span>{{ "${:,.0f}".format(event.prize_pool) }}</span></li>
+                <li class="list-item">Team Size:
+                  {% if event.team_size == 1 %}
+                    <span>Solos</span>
+                  {% elif event.team_size == 2 %}
+                    <span>Duos</span>
+                  {% elif event.team_size == 3 %}
+                    <span>Trios</span>
+                  {% else %}
+                    <span>Quads</span>
+                  {% endif %}
+                </li>
+                <li class="list-item">Length: <span>{{ event.start_time|timedelta(event.end_time) }}</li>
+                <li class="list-item">Scoring mode: <span>Kill Race</span></li>
+                <li class="list-item">Entry Fee: <span>Free</span></li>
+              </ul>
+              <div class="card-footer">
+                <a href="{{ url_for('public.register', event_id=event.id) }}"
+                  class="btn-custom-primary w-100 d-block text-center"
+                >
+                  Resgister today
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+<!--====== Upcoming Tournaments Area End ======-->
+
+{% include 'public/connect.html' %}
+{% endblock %}

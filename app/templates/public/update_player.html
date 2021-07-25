@@ -1,21 +1,70 @@
 {% extends "layout/layout.html" %}
-{% set show_header = 1 %}
-{% set show_footer = 1 %}
-{% from "macros/_vertical_form.html" import render_field_with_errors, render_monetary_field_with_errors %}
+{% from "macros/_vertical_form.html" import render_simple_field %}
 {% block content %}
-<div class="row-fluid mt-5 justify-content-center d-flex">
-  <h2>Update your info here</h2>
-</div>
-<div class="row-fluid mt-3 justify-content-center d-flex">
-  <div class="col-9 mx-auto">
-    <div class="card border-0 p-3">
-      <form method="POST">
-        {{ form.hidden_tag() }}
-        {{ render_field_with_errors(form.username, class="form-control", required=True) }}
-        <div class="d-flex justify-content-end">
-          <button type="submit" class="btn btn-primary">Save changes</button>
+<div class="register-main">
+  <div class="row no-gutters d-flex">
+    <div class="col-md-6 col-12">
+      <div class="register-left">
+        {#<div class="back-link text-center d-block d-sm-none">
+          <a href="#">
+            <img src="{{ url_for('static', filename='img/icons/arrow-back.png') }}" alt="back" />
+            Go Back
+          </a>
+        </div>#}
+        <div class="register-box">
+          <div class="register-inner">
+            <div class="card-tournament active">
+              <div class="card-img">
+                <img src="{{ url_for('static', filename='img/cod1.jpeg') }}" alt="Cod" />
+              </div>
+              <div class="card-body">
+                <div class="card-heading">
+                  <h3>{{ event.name }}</h3>
+                  <p>{{ event.start_time|format_datetime('%B %d') }}</p>
+                </div>
+                <ul class="card-list">
+                  <li class="list-item">
+                    Prize Pool: <span>{{ "${:,.0f}".format(event.prize_pool) }}</span>
+                  </li>
+                  <li class="list-item">Team Size:
+                    {% if event.team_size == 1 %}
+                      <span>Solos</span>
+                    {% elif event.team_size == 2 %}
+                      <span>Duos</span>
+                    {% elif event.team_size == 3 %}
+                      <span>Trios</span>
+                    {% else %}
+                      <span>Quads</span>
+                    {% endif %}
+                  </li>
+                  <li class="list-item">Length: <span>{{ event.start_time|timedelta(event.end_time) }}</li>
+                  <li class="list-item">Scoring mode: <span>Kill Race</span></li>
+                  <li class="list-item">Entry Fee: <span>Free</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
-      </form>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="register-right">
+        <div class="register-box">
+          <div class="register-inner m-0 p-0">
+            <h3 class="text-white mb-3">Oops! We couldn't confirm your account</h3>
+            <form method="POST" class="register-form">
+              {{ form.hidden_tag() }}
+              <p class="banner-text mb-0"><span>Enter your Activision ID to confirm your account.</span></p>
+              {{ render_simple_field(form.username, class="text-white mt-0", required=True, value=player.username) }}
+              <div class="col-12 mt-2 bm-5">
+                <button class="btn-custom-primary w-100" type="submit">
+                  Confirm Activision ID
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

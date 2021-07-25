@@ -34,12 +34,13 @@ class EventQuery(object):
 
 @blueprint.route("/", methods=["GET", "POST"])
 def home():
-    events = EventQuery.get_open_events(limit=1)
-    if len(events) == 0:
-        event = None
-    else:
-        event = events[0]
-    return render_template("public/home.html", event=event)
+    events = EventQuery.get_open_events(limit=3)
+    return render_template("public/index.html", events=events)
+
+@blueprint.route("/theme", methods=["GET", "POST"])
+def theme():
+    events = EventQuery.get_open_events(limit=3)
+    return render_template("public/theme.html", events=events)
 
 @blueprint.route('/<event_id>/register', methods=['GET', 'POST'])
 def register(event_id):
@@ -71,17 +72,17 @@ def register(event_id):
     for i in range(len(form.players.entries), event.team_size):
         form.players.append_entry()
 
-    return render_template("public/register.html", form=form)
+    return render_template("public/register.html", form=form, event=event)
 
 @blueprint.route('/<event_id>/confirm', methods=['GET', 'POST'])
 def confirm(event_id):
     event = Event.query.get_or_404(event_id)
-    return render_template("public/confirm.html")
+    return render_template("public/confirm.html", event=event)
 
 @blueprint.route('/<player_id>/confirm/p', methods=['GET', 'POST'])
 def update_player(player_id):
     form = ConfirmPlayerForm()
-    event = Event.query.get_or_404(1)
+    #event = Event.query.get_or_404(1)
     player = Player.query.get_or_404(player_id)
     if form.validate_on_submit():
         player = Player.query.get_or_404(player_id)
@@ -90,7 +91,7 @@ def update_player(player_id):
         from app.tasks import confirm_player
         confirm_player.si(player.id, player.team.event.id).delay(player_id=player.id, event_id=player.team.event.id)
         return redirect(url_for('public.confirm', event_id=player.team.event.id))
-    return render_template("public/update_player.html", form=form)
+    return render_template("public/update_player.html", form=form, event=player.team.event, player=player)
 
 @blueprint.route('/rules', methods=['GET', 'POST'])
 def rules():

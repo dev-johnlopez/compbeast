@@ -213,12 +213,22 @@ class Event(PkModel, EventStateMixin):
     num_games = Column(db.Integer, default=1)
     start_time = Column(DateTime, nullable=True)
     end_time = Column(DateTime, nullable=True)
+    prize_pool = Column(db.Integer, default=0)
 
     @property
     def num_divisions(self):
         if len(self.teams) == 0:
             return 0
         return sorted(self.teams, key=lambda team: team.division, reverse=True)[0].division
+
+    def get_prize_by_placement(self, placement):
+        if placement == 1:
+            return self.prize_pool * .50
+        elif placement == 2:
+            return self.prize_pool * .30
+        elif placement == 3:
+            return self.prize_pool * .20
+        return 0
 
     def get_teams(self, sort=None):
         if sort == 'leaderboard':
@@ -251,6 +261,9 @@ class Event(PkModel, EventStateMixin):
             self.teams = []
         if self.status == 'Registering' and len(team.players) == self.team_size:
             self.teams.append(team)
+
+    def can_register(self):
+        return self.status == 'Registering'
 
     def launch_task(self, name, description, *args, **kwargs):
         rq_job = current_app.task_queue.enqueue('app.tasks.' + name, self.id,

@@ -99,6 +99,20 @@ body {
 .cover {
   padding: 0 1.5rem;
 }
+.cover::before {
+  content: "";
+  background-image: url('../img/branded/Emblem.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-size: auto;
+  position: absolute;
+  top: 400px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.75;
+  overflow:hidden
+}
 .cover .btn-lg {
   padding: .75rem 1.25rem;
   font-weight: 700;

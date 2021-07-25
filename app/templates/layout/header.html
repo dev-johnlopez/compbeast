@@ -1,9 +1,54 @@
-<header class="masthead mb-auto">
-  <div class="inner">
-    <h3 class="masthead-brand pull-left">CompBeast</h3>
-    <nav class="nav nav-masthead justify-content-left">
-      <a class="nav-link active" href="{{ url_for('public.home') }}">Home</a>
-      <a class="nav-link" href="{{ url_for('public.rules') }}">Rules</a>
+<!--====== Header Area Start ======-->
+<header class="header-main">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg">
+      <a class="navbar-brand" href="{{ url_for('public.home') }}">
+        <div class="logo-image">
+          <img src="{{ url_for('static', filename='img/logo.png') }}" alt="" />
+        </div>
+        <div class="logo-text">war<span>zone</span></div>
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon">
+          <img src="{{ url_for('static', filename='img/icons/menu.svg') }}" alt="" />
+        </span>
+      </button>
+
+      <div class="collapse navbar-collapse pull-right" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('public.home') }}"
+              >Home <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('events.index') }}">Events</a>
+          </li>
+          {#<li class="nav-item">
+            <a class="nav-link" href="#">Games</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Discounts</a>
+          </li>#}
+        </ul>
+        {#<div class="my-2 my-lg-0">
+          <a href="login.html" class="btn-custom-primary">Log In</a>
+          <a href="login.html" class="btn-custom-primary-outlined"
+            >Register</a
+          >
+        </div>#}
+      </div>
     </nav>
   </div>
 </header>
+<!--====== Header Area End ======-->

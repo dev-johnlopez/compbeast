@@ -1,95 +1,31 @@
 <!DOCTYPE html>
-<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js" lang="en">
-  <!--<![endif]-->
+<html lang="en">
   <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N2K0NVXWEM"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-      gtag('config', 'G-N2K0NVXWEM');
-    </script>
-    <meta charset="utf-8" />
+    <!-- Title  -->
+    <title>CompBeast.gg</title>
 
-    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/img/favicon.ico') }}">
-    <title>
-      {% block page_title %}
-      CompBeast.gg
-       {% endblock %}
-    </title>
-    <meta
-      name="description"
-      content="{% block meta_description %}{% endblock %}"
-    />
-    <meta name="author" content="{% block meta_author %}{% endblock %}" />
+    <!-- Favicon  -->
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" />
 
-    <!-- Mobile viewport optimized: h5bp.com/viewport -->
-    <meta name="viewport" content="width=device-width" />
-
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
-    />
-
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{ url_for('static', filename='css/cover.css') }}"
-    />
-
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{ url_for('static', filename='css/datatables/datatables.min.css') }}"
-    />
-
-    {% block css %}{% endblock %}
+    <!-- ***** All CSS Files ***** -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}" />
   </head>
-  <body class="text-center">
-    <div class="cover-container d-flex h-100 w-75 p-3 p-3 mx-auto flex-column">
-      {% block body %} {% if show_header is not defined or show_header is false %}{% include "layout/header.html" %} {% endif %}
-
-      {% block header %}{% endblock %}
-
-      <main role="main" class="inner cover">
-        {% with messages = get_flashed_messages(with_categories=true) %} {% if
-        messages %}
-        <div class="row">
-          <div class="col-md-12">
-            {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">
-              <a class="close" title="Close" href="#" data-dismiss="alert"
-                >&times;</a
-              >
-              {{ message }}
-            </div>
-            <!-- end .alert -->
-            {% endfor %}
-          </div>
-          <!-- end col-md -->
-        </div>
-        <!-- end row -->
-        {% endif %} {% endwith %}
-        {% block content %}{% endblock %}
-      </main>
-
-      {% if show_footer is not defined or show_footer is false %}{% include "layout/footer.html" %}{% endif %}
-    </div>
-
-    <script src="{{ url_for('static', filename='js/jquery/jquery-3.5.1.slim.min.js') }}"></script>
-    <script>window.jQuery || document.write('<script src="{{ url_for('static', filename='js/vendor/jquery-slim.min.js') }}"><\/script>')</script>
-    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/datatables/datatables.min.js') }}"></script>
-    {{ moment.include_moment() }}
-    {% block js %}{% endblock %}
-    {% endblock %}
+  <body>
+    {% if show_header is not defined or show_header == 1 %}
+      {% include 'layout/header.html' %}
+    {% endif %}
+    {% block content %}{% endblock %}
+    {% if show_footer is not defined or show_footer == 1 %}
+      {% include 'layout/footer.html' %}
+    {% endif %}
   </body>
 </html>
+
+<script src="{{ url_for('static', filename='js/jquery/jquery-3.5.1.slim.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>

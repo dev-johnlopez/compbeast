@@ -96,3 +96,7 @@
   {% endif %}
 </div>
 {% endmacro %}
+
+{% macro render_simple_field(field) %}
+  {{ field(**kwargs)|safe }}
+{% endmacro %}
