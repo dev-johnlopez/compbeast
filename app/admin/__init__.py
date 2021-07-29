@@ -11,6 +11,7 @@ from flask import request, redirect, url_for
 from flask_admin.contrib import rediscli
 from flask_security import current_user
 import json
+import requests
 #from app.tasks import _update_cod_info_for_player
 
 class CustomModelView(ModelView):
