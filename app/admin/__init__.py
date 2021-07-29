@@ -219,7 +219,7 @@ class PlayerView(CustomModelView):
             count = 0
             players = query.all()
             for player in players:
-                #_update_cod_info_for_player(player)
+                _update_cod_info_for_player(player)
                 player.save()
                 count += 1
             flash('{} of {} players(s) were had their ID refreshed'.format(count, len(ids)))
