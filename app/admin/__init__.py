@@ -10,7 +10,7 @@ from flask_admin.base import expose, BaseView
 from flask import request, redirect, url_for
 from flask_admin.contrib import rediscli
 from flask_security import current_user
-#from app.tasks import _update_cod_info_for_player
+from app.tasks import _update_cod_info_for_player
 
 class CustomModelView(ModelView):
 
