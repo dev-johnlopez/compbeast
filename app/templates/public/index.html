@@ -19,7 +19,7 @@
               <img src="{{ url_for('static', filename='img/icons/discord.png') }}" alt="Discord" />
               Join our discord</a
             >
-            <div class="banner-bottom">
+            {#<div class="banner-bottom">
               <div class="row">
                 <div class="col-6">
                   <div class="banner-left">
@@ -56,7 +56,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div>#}
           </div>
         </div>
       </div>
@@ -64,7 +64,7 @@
   </div>
 </section>
 <!--====== Banner Area End ======-->
-<!--====== Partners Area Start ======-->
+{#<!--====== Partners Area Start ======-->
 <section>
   <div class="partners-section">
     <div class="container">
@@ -88,7 +88,7 @@
     </div>
   </div>
 </section>
-<!--====== Partners Area End ======-->
+<!--====== Partners Area End ======-->#}
 
 <!--====== Tournaments History Area Start ======-->
 <section>
@@ -115,13 +115,9 @@
           </div>
         </div>
 
-        <div class="col-md-6 col-12 mb-3">
+        <div class="col-md-6 col-3 mt-3">
           <div class="card-history">
-            <img
-              src="{{ url_for('static', filename='img/icons/engineering.png') }}"
-              alt="engineering"
-            />
-            <h3>Automated scoring!</h3>
+            <h4>Automated scoring!</h3>
             <p>
               Slayout automatically tracks your score! There is no need for
               sending screenshots or streaming anymore.

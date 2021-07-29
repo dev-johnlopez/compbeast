@@ -273,6 +273,10 @@ input[type="text"], input[type="email"] {
     color: #F33535;
 }
 
+.card-history h4 {
+    color: #F33535;
+}
+
 .card-history p {
     font-size: 24px;
     font-weight: 600;
@@ -340,6 +344,12 @@ input[type="text"], input[type="email"] {
     list-style-type: none;
     color: #ffffff;
     font-size: 24px;
+}
+
+.card-list .list-item-sm {
+    list-style-type: none;
+    color: #ffffff;
+    font-size: 14px;
 }
 
 .card-list .list-item span {
@@ -447,6 +457,7 @@ input[type="text"], input[type="email"] {
 }
 
 .register-right {
+    height: 100%;
     padding: 3em 1em;
     position: relative;
     background-color: #060814;

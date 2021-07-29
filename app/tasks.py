@@ -57,6 +57,18 @@ def confirm_player(player_id, event_id=None):
         #app.logger.error('Unhandled exception', exc_info=sys.exc_info())
 
 @celery.task
+def get_player_stats(player_id):
+    try:
+        player = None
+        player = Player.query.get(player_id)
+        if player is not None:
+            _update_cod_info_for_player(player)
+            send_notification_email(player, event, email="register")
+    except:
+        print("Error!") #print(sys.exec_info())
+        #app.logger.error('Unhandled exception', exc_info=sys.exc_info())
+
+@celery.task
 def new_event_notification(player_id, event_id=None):
     try:
         player = None
@@ -141,6 +153,8 @@ def _update_cod_info_for_player(player):
         r = requests.get('https://frozen-island-36052.herokuapp.com/player_details?username={}'.format(player.username.replace("#", "%23")))
         data = json.loads(r.text)
         player.external_id = str(data['player'])
+        print(str(data['profile']['lifetime']['mode']['br']['properties']['kdRatio']))
+        # TODO - Test: player.kdr = int(data['kdr'])
         player.save()
     except:
         print("error")
