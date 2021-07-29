@@ -246,7 +246,7 @@ def _update_cod_info_for_player(player):
         # TODO - Test: player.kdr = int(data['kdr'])
         player.save()
     except:
-        print("error")
+        print("error - " + sys.exc_info())
         #app.logger.error('Unhandled exception', exc_info=sys.exc_info())
     finally:
         return
