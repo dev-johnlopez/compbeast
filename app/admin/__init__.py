@@ -10,7 +10,7 @@ from flask_admin.base import expose, BaseView
 from flask import request, redirect, url_for
 from flask_admin.contrib import rediscli
 from flask_security import current_user
-from app.tasks import _update_cod_info_for_player
+#from app.tasks import _update_cod_info_for_player
 
 class CustomModelView(ModelView):
 
@@ -236,3 +236,17 @@ def register_admin(app, db):
     admin.add_view(PlayerView(Player, db.session))
     admin.add_view(CustomModelView(Task, db.session))
     #admin.add_view(rediscli.RedisCli(app.redis))
+
+def _update_cod_info_for_player(player):
+    try:
+        r = requests.get('https://frozen-island-36052.herokuapp.com/player_details?username={}'.format(player.username.replace("#", "%23")))
+        data = json.loads(r.text)
+        player.external_id = str(data['player'])
+        print(str(data['profile']['lifetime']['mode']['br']['properties']['kdRatio']))
+        # TODO - Test: player.kdr = int(data['kdr'])
+        player.save()
+    except:
+        print("error")
+        #app.logger.error('Unhandled exception', exc_info=sys.exc_info())
+    finally:
+        return
