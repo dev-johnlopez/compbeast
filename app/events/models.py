@@ -19,6 +19,7 @@ class Player(PkModel):
     email = Column(db.String(255))
     username = Column(db.String(80), nullable=False)
     rating = Column(db.Integer)
+    kdr = Column(db.Float(asdecimal=True))
 
     team_id = db.Column(db.Integer, db.ForeignKey('team.id'),
         nullable=True)
