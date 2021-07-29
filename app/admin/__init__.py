@@ -241,8 +241,9 @@ def register_admin(app, db):
 def _update_cod_info_for_player(player):
     try:
         r = requests.get('https://frozen-island-36052.herokuapp.com/player_details?username={}'.format(player.username.replace("#", "%23")))
+        print("sent request")
         data = json.loads(r.text)
-        print("external id " + data['player'])
+        print("got data")
         player.external_id = str(data['player'])
         print("got external id - " + player.external_id)
         #print(str(data['profile']['lifetime']['mode']['br']['properties']['kdRatio']))
