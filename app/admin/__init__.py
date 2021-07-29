@@ -247,7 +247,8 @@ def _update_cod_info_for_player(player):
         print("got data")
         player.external_id = str(data['player'])
         print("got external id - " + player.external_id)
-        #print(str(data['profile']['lifetime']['mode']['br']['properties']['kdRatio']))
+        print(str(data['profile']['lifetime']['mode']['br']['properties']['kdRatio']))
+        print("got kdr - " + data['profile']['lifetime']['mode']['br']['properties']['kdRatio'])
         # TODO - Test: player.kdr = int(data['kdr'])
         player.save()
     except:
