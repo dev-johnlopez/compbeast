@@ -42,7 +42,7 @@ def progress_events():
     print("done updating status")
 
 @celery.task
-def confirm_player(player_id, event_id=None):
+def confirm_player(player_id, event_id=None, generate_emails=True):
     try:
         player = None
         event = None
@@ -51,7 +51,8 @@ def confirm_player(player_id, event_id=None):
         player = Player.query.get(player_id)
         if player is not None:
             _update_cod_info_for_player(player)
-            send_notification_email(player, event, email="register")
+            if generate_emails:
+                send_notification_email(player, event, email="register")
     except:
         print("Error!") #print(sys.exec_info())
         #app.logger.error('Unhandled exception', exc_info=sys.exc_info())

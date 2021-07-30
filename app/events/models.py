@@ -36,6 +36,28 @@ class Player(PkModel):
     def is_confirmed(self):
         return self.external_id != None and self.external_id != "" and self.external_id != "None"
 
+    def confirm(self):
+        from app.tasks import confirm_player
+        confirm_player.si(player.id, player.team.event.id).delay(player_id=player.id, event_id=player.team.event.id)
+
+    def refresh_profile(self):
+        try:
+            r = requests.get('https://frozen-island-36052.herokuapp.com/player_details?username={}'.format(self.username.replace("#", "%23")))
+            print("sent request")
+            data = json.loads(r.text)
+            print("got data")
+            self.external_id = str(data['player'])
+            print("got external id - " + self.external_id)
+            print(str(data['profile']['lifetime']['mode']['br']['properties']['kdRatio']))
+            self.kdr =  data['profile']['lifetime']['mode']['br']['properties']['kdRatio']
+            # TODO - Test: player.kdr = int(data['kdr'])
+            self.save()
+        except:
+            print("error!!!! ")
+            #app.logger.error('Unhandled exception', exc_info=sys.exc_info())
+        finally:
+            return
+
 class PlayerStat(PkModel):
     """A role for a user."""
 
@@ -239,6 +261,10 @@ class Event(PkModel, EventStateMixin):
     def close_registration(self):
         from app.tasks import generate_leaderboards
         print("generating leaderboard for {}".format(self.id))
+        teams = [team for team in self.teams]
+        for team in teams:
+            for player in teams:
+                player.refresh_profile()
         generate_leaderboards.delay(event_id=self.id)
 
     def seed_teams(self):

@@ -88,8 +88,7 @@ def update_player(player_id):
         player = Player.query.get_or_404(player_id)
         player.username = form.username.data
         player.save()
-        from app.tasks import confirm_player
-        confirm_player.si(player.id, player.team.event.id).delay(player_id=player.id, event_id=player.team.event.id)
+        player.confirm()
         return redirect(url_for('public.confirm', event_id=player.team.event.id))
     return render_template("public/update_player.html", form=form, event=player.team.event, player=player)
 
