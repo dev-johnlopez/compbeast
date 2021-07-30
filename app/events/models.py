@@ -263,7 +263,7 @@ class Event(PkModel, EventStateMixin):
         print("generating leaderboard for {}".format(self.id))
         teams = [team for team in self.teams]
         for team in teams:
-            for player in teams:
+            for player in team.players:
                 player.refresh_profile()
         generate_leaderboards.delay(event_id=self.id)
 
