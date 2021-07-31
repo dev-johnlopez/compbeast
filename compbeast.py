@@ -23,8 +23,10 @@ def to_cst(datetime):
     return new_date_time
 
 @app.template_filter('format_datetime')
-def format_datetime(datetime, format=None):
+def format_datetime(datetime, format=None, timedelta_hours=None):
     """Formats a datetime."""
+    if timedelta_hours is not None:
+        datetime += timedelta(hours=timedelta_hours)
     return datetime.strftime(format)
 
 @app.template_filter('timedelta')
