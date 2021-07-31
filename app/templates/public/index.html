@@ -178,11 +178,20 @@
                 <li class="list-item">Entry Fee: <span>Free</span></li>
               </ul>
               <div class="card-footer">
+                {% if event.can_register() %}
                 <a href="{{ url_for('public.register', event_id=event.id) }}"
                   class="btn-custom-primary w-100 d-block text-center"
                 >
                   Resgister today
                 </a>
+                {% else %}
+                <button
+                  disabled
+                  class="btn-custom-primary w-100 d-block text-center"
+                >
+                  Registrations Closed
+                </button>
+                {% endif %}
               </div>
             </div>
           </div>
