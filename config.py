@@ -44,6 +44,7 @@ class DevelopmentConfig(Config):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app/app.db')
+    STRIPE_API_KEY = "sk_test_JvHdeNOVjjgpk8QazjdloJMf"
 
 
 class TestingConfig(Config):
@@ -51,11 +52,13 @@ class TestingConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app/app.db')
     WTF_CSRF_ENABLED = False
+    STRIPE_API_KEY = "sk_test_JvHdeNOVjjgpk8QazjdloJMf"
 
 
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app/app.db')
+    STRIPE_API_KEY = "pk_live_cfzq6dhqlOgaiZjyTVRc4rOB"
 
     @classmethod
     def init_app(cls, app):

@@ -22,6 +22,7 @@ from app.extensions import (
 from app.admin import register_admin
 from app.email import *
 from config import config, Config
+import stripe
 
 celery = Celery("background", broker=Config.REDIS_URL)
 #scheduler.add_job(job1, 'interval', seconds=1)
@@ -36,6 +37,7 @@ def create_app(config_name, **kwargs):
     config[config_name].init_app(app)
     app.redis = Redis.from_url(app.config['REDIS_URL'])
     celery.conf.update(app.config)
+    stripe.api_key = app.config['STRIPE_API_KEY']
 
     register_extensions(app)
     register_admin(app, db)

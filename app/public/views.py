@@ -13,6 +13,7 @@ from flask import (
 from app.events.models import Event, Team, Player
 from app.events.forms import TeamForm, ConfirmPlayerForm
 from celery import chain
+import stripe
 #from app.tasks import new_team_registration_workflow
 #from app.events import EventQuery
 #from flask_login import login_required, login_user, logout_user
@@ -61,10 +62,28 @@ def register(event_id):
         from app.tasks import confirm_player
         [confirm_player.si(player.id, event_id).delay(player_id=player.id, event_id=event_id)
             for player in team.players]
-        #new_team_registration_workflow = chain(confirm_team.si(team.id),
-                                         # send_confirmation_emails.si(team.id))
-        #new_team_registration_workflow.delay(team_id=team.id)
-        return redirect(url_for('public.confirm', event_id=event.id))
+        print("creating stripe endpoint")
+        if True:
+            return redirect(url_for('public.confirm', event_id=event.id))
+        else:
+            session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                line_items=[{
+                  'price_data': {
+                    'currency': 'usd',
+                    'product_data': {
+                      'name': 'Event Entree Fee',
+                    },
+                    'unit_amount': 500,
+                  },
+                  'quantity': 2,
+                }],
+                mode='payment',
+                success_url='https://www.google.com',#url_for('public.confirm', event_id=event.id),
+                cancel_url='https://www.apple.com'#url_for('public.cancel', event_id=event.id),
+            )
+            print("redirecting to stripe endpoint")
+            return redirect(session.url, code=303)
 
     # if we get here, either validation failed or we're just loading the page
     # we can use append_entry to add up to the total number we want, if necessary
@@ -76,6 +95,11 @@ def register(event_id):
 
 @blueprint.route('/<event_id>/confirm', methods=['GET', 'POST'])
 def confirm(event_id):
+    event = Event.query.get_or_404(event_id)
+    return render_template("public/confirm.html", event=event)
+
+@blueprint.route('/<event_id>/cancel', methods=['GET', 'POST'])
+def cancel(event_id):
     event = Event.query.get_or_404(event_id)
     return render_template("public/confirm.html", event=event)
 
