@@ -45,6 +45,7 @@ class EventView(CustomModelView):
             new_event.num_games = event.num_games
             new_event.start_time = event.start_time + datetime.timedelta(days=7)
             new_event.end_time = event.end_time + datetime.timedelta(days=7)
+            new_event.prize_pool = event.prize_pool
             new_event.state = 'Draft'
             new_event.save()
 
