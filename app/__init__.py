@@ -46,6 +46,8 @@ def create_app(config_name, **kwargs):
     register_shellcontext(app)
 #    register_commands(app)
     configure_logger(app)
+    register_filters(app)
+
     return app
 
 def register_extensions(app):
@@ -112,5 +114,12 @@ def configure_logger(app):
     handler = logging.StreamHandler(sys.stdout)
     if not app.logger.handlers:
         app.logger.addHandler(handler)
+
+def register_filters(app):
+    """Register template filters."""
+    from app.filters import format_datetime, timediference, to_cst
+    app.jinja_env.filters['format_datetime'] = format_datetime
+    app.jinja_env.filters['timedelta'] = timediference
+    app.jinja_env.filters['to_cst'] = to_cst
 
 from app.tasks import *

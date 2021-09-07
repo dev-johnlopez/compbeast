@@ -38,11 +38,6 @@ def home():
     events = EventQuery.get_open_events(limit=3)
     return render_template("public/index.html", events=events)
 
-@blueprint.route("/theme", methods=["GET", "POST"])
-def theme():
-    events = EventQuery.get_open_events(limit=3)
-    return render_template("public/theme.html", events=events)
-
 @blueprint.route('/<event_id>/register', methods=['GET', 'POST'])
 def register(event_id):
     event = Event.query.get_or_404(event_id)

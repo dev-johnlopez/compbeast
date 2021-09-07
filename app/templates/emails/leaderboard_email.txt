@@ -1,6 +1,6 @@
 {{ player.name }} - The leaderboards have been created! Monitor your team's standing throughout the event here: {{ url_for('event.leaderboard', event_id=event.id) }}
 
-Our mods will be on standby for any issues you have. Feel free to request support in our discord: {{ url_for('public.discord') }}
+Our mods will be on standby for any issues you have. Request support in our discord: {{ url_for('public.discord') }}
 
 Thanks,
 CompBeast.gg

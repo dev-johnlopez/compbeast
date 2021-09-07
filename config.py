@@ -49,8 +49,7 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'app/app.db')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app/test_app.db')
     WTF_CSRF_ENABLED = False
     STRIPE_API_KEY = "sk_test_JvHdeNOVjjgpk8QazjdloJMf"
 
