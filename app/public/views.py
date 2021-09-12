@@ -58,27 +58,27 @@ def register(event_id):
         [confirm_player.si(player.id, event_id).delay(player_id=player.id, event_id=event_id)
             for player in team.players]
         print("creating stripe endpoint")
-        if True:
-            return redirect(url_for('public.confirm', event_id=event.id))
-        else:
-            session = stripe.checkout.Session.create(
-                payment_method_types=['card'],
-                line_items=[{
-                  'price_data': {
-                    'currency': 'usd',
-                    'product_data': {
-                      'name': 'Event Entry Fee',
-                    },
-                    'unit_amount': 500,
-                  },
-                  'quantity': 1,
-                }],
-                mode='payment',
-                success_url=url_for('public.confirm', event_id=event.id, _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
-                cancel_url=url_for('public.cancel', event_id=event.id, _external=True))
-            )
-            print("redirecting to stripe endpoint")
-            return redirect(session.url, code=303)
+        #if True:
+        return redirect(url_for('public.confirm', event_id=event.id))
+        #else:
+        #    session = stripe.checkout.Session.create(
+        #        payment_method_types=['card'],
+        #        line_items=[{
+        #          'price_data': {
+        #            'currency': 'usd',
+        #            'product_data': {
+        #              'name': 'Event Entry Fee',
+        #            },
+        #            'unit_amount': 500,
+        #          },
+        #          'quantity': 1,
+        #        }],
+        #        mode='payment',
+        #        success_url=url_for('public.confirm', event_id=event.id, _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
+        #        cancel_url=url_for('public.cancel', event_id=event.id, _external=True))
+        #    )
+        #    print("redirecting to stripe endpoint")
+        #    return redirect(session.url, code=303)
 
     # if we get here, either validation failed or we're just loading the page
     # we can use append_entry to add up to the total number we want, if necessary
