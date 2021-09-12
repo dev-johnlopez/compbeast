@@ -67,15 +67,15 @@ def register(event_id):
                   'price_data': {
                     'currency': 'usd',
                     'product_data': {
-                      'name': 'Event Entree Fee',
+                      'name': 'Event Entry Fee',
                     },
                     'unit_amount': 500,
                   },
-                  'quantity': 2,
+                  'quantity': 1,
                 }],
                 mode='payment',
-                success_url='https://www.google.com',#url_for('public.confirm', event_id=event.id),
-                cancel_url='https://www.apple.com'#url_for('public.cancel', event_id=event.id),
+                success_url=url_for('public.confirm', event_id=event.id, _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
+                cancel_url=url_for('public.cancel', event_id=event.id, _external=True))
             )
             print("redirecting to stripe endpoint")
             return redirect(session.url, code=303)
