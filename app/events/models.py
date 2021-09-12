@@ -15,6 +15,7 @@ class Player(PkModel):
     __tablename__ = "player"
     id = Column(db.Integer, primary_key=True)
     external_id = Column(db.String(80))
+    avatarUrl = Column(db.String(2000))
     name = Column(db.String(80))
     email = Column(db.String(255))
     username = Column(db.String(80), nullable=False)

@@ -154,6 +154,7 @@ def _update_cod_info_for_player(player):
         r = requests.get('https://frozen-island-36052.herokuapp.com/player_details?username={}'.format(player.username.replace("#", "%23")))
         data = json.loads(r.text)
         player.external_id = str(data['player'])
+        player.external_id = str(data['avatarUrl'])
         print(str(data['profile']['lifetime']['mode']['br']['properties']['kdRatio']))
         # TODO - Test: player.kdr = int(data['kdr'])
         player.save()

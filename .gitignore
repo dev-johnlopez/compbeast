@@ -4,3 +4,4 @@ flask/
 .flaskenv
 celerybeat-schedule
 *.rdb
+.env
