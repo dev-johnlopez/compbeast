@@ -1,9 +1,365 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- ***** All CSS Files ***** -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}" />
+    <style>
+      body {
+          font-family: 'Poppins', sans-serif !important;
+      }
+
+      a {
+          text-decoration: none;
+      }
+
+      a:hover {
+          text-decoration: none;
+      }
+
+      .bg-dark {
+          background-color: #020207 !important;
+      }
+
+      .bg-gray {
+          background-color: #0E101C;
+      }
+
+      input {
+        background: transparent;
+      }
+
+      input[type="text"], input[type="email"] {
+          background: transparent;
+          border: 2px solid #242943;
+          height: 49px;
+          width: 100%;
+          padding: 0 15px;
+          border-radius: 10px;
+      }
+      .navbar-toggler-icon img {
+          width: 100%;
+      }
+
+      /*********** Buttons styling *************/
+
+      .btn-custom-primary {
+          border: 2px solid #F33535;
+          background-color: #F33535;
+          color: #000000;
+          padding: 10px 35px;
+          margin-right: 1em;
+          border-radius: 10px;
+          transition: all .3s ease;
+      }
+
+      .btn-custom-primary:disabled {
+          background-color: #8C8FAA;
+          border-color: #8C8FAA;
+          cursor: not-allowed;
+      }
+
+      .btn-custom-primary:disabled:hover {
+          color: #000000;
+      }
+
+      .btn-custom-primary:hover {
+          color: #ffffff;
+      }
+
+      .btn-custom-primary-outlined {
+          border: 2px solid #F33535;
+          background-color: transparent;
+          color: #F33535;
+          padding: 10px 35px;
+          margin-right: 1em;
+          border-radius: 10px;
+          transition: all .3s ease;
+      }
+
+      .btn-custom-primary-outlined:hover {
+          color: #ffffff;
+          border-color: #ffffff;
+      }
+
+      .btn-custom-icon {
+          background-color: #F33535;
+          color: #ffffff;
+          padding: 10px 35px;
+          margin-right: 1em;
+          border-radius: 10px;
+          transition: all .3s ease;
+      }
+
+      .btn-custom-icon:hover {
+          color: #ffffff;
+      }
+
+      /*********** Heading styling *************/
+
+      .heading {
+          text-align: center;
+          color: #FFFFFF;
+          font-size: 42px;
+          margin-bottom: 1.75em;
+      }
+
+      .heading span {
+          color: #F33535;
+      }
+
+      /*********** Social Links styling *************/
+
+      .social-link a {
+          margin-left: 10px;
+      }
+
+      /*********** Logo styling *************/
+
+      .logo {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-decoration: none;
+      }
+
+      .logo-text {
+          text-transform: uppercase;
+          color: #F33535;
+          font-size: 36px;
+          font-weight: 600;
+          margin-left: 10px;
+      }
+
+      .logo-text span {
+          color: #ffffff;
+      }
+
+      .banner-heading {
+          color: #ffffff;
+          font-size: 56px;
+          font-weight: 600;
+      }
+
+      .banner-text {
+          font-size: 20px;
+          margin-bottom: 2em;
+          color: #F33535;
+      }
+
+      .banner-text-two {
+          color: #ffffff;
+          font-size: 20px;
+      }
+
+      /*--------------------------------------------------------------
+      ----------------------- Homepage Styling -----------------------
+      --------------------------------------------------------------*/
+
+      /*********** Header styling *************/
+
+      .header-main {
+          background-color: #060610;
+      }
+
+      .navbar-brand {
+          display: flex;
+          align-items: center;
+      }
+
+      .nav-item .nav-link {
+          color: #ffffff;
+          font-size: 18px;
+          font-weight: 500;
+          transition: all .3s ease;
+      }
+
+      .nav-item.active .nav-link, .nav-item .nav-link:hover {
+          color: #F33535;
+      }
+
+      /*********** Banner styling *************/
+
+      .banner-main {
+          position: relative;
+      }
+
+      .banner-bg-left {
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 40%;
+          position: absolute;
+          background: url(./../img/banner-bg-left.jpeg);
+          background-size: auto;
+          background-position: right;
+          clip-path: polygon(0% 0%, 100% 0%, 65% 115%, 0% 100%, 0% 50%);
+      }
+
+      .banner-bg-left::after {
+          position: absolute;
+          content: '';
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background-color: #0c1422eb;
+      }
+
+      .banner-bg-right {
+          top: 0;
+          bottom: 0;
+          left: 40%;
+          right: 0;
+          position: absolute;
+          background: url(./../img/banner-bg-right.jpeg);
+          background-size: cover;
+          clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 100%);
+      }
+
+      .banner-inner-area {
+          padding: 7em 0;
+      }
+
+      .banner-bottom {
+          margin-top: 6em;
+      }
+
+      .banner-left a {
+          color: #8C8FAA;
+          font-size: 20px;
+      }
+
+      /*********** Partner styling *************/
+
+      .partners-section {
+          background-color: #020207;
+      }
+      .partner-inner {
+          display: flex;
+          align-items: center;
+          overflow-x: auto;
+      }
+      .partner-inner::-webkit-scrollbar{
+          display: none;
+      }
+      .partner-img {
+          padding: 5em 1em;
+      }
+
+      /*********** Tournaments history styling *************/
+
+      .history {
+          background-color: #060814;
+          padding: 5em 0;
+          position: relative;
+      }
+
+      .card-history {
+          padding: 2em;
+          border: 2px solid #242943;
+          background-color: #090C1C;
+          border-radius: 10px;
+      }
+
+      .card-history.active {
+          border-color: #F33535;
+      }
+
+      .card-history img {
+          margin-bottom: 1em;
+      }
+
+      .card-history h3 {
+          font-size: 42px;
+          color: #F33535;
+      }
+
+      .card-history h4 {
+          color: #F33535;
+      }
+
+      .card-history p {
+          font-size: 24px;
+          font-weight: 600;
+          color: #ffffff;
+          margin-bottom: 0;
+      }
+
+      /*********** Upcoming Tournaments styling *************/
+
+      .tournaments {
+          padding: 5em 0;
+          background-color: #131523;
+      }
+
+      .card-tournament {
+          border: 2px solid #242943;
+          border-radius: 10px;
+          margin-bottom: 2em;
+          position: relative;
+      }
+
+      .card-tournament.active {
+          border: 2px solid #F33535;
+      }
+
+      .card-tournament.active::after {
+          content: url('./../img/feedback.png');
+          position: absolute;
+          top: -1px;
+          right: -1px;
+      }
+
+      .card-img {
+          height: 135px;
+      }
+
+      .card-img img {
+          height: 135px;
+          width: 100%;
+          object-fit: cover;
+          object-position: top;
+          border-radius: 10px 10px 0 0;
+      }
+
+      .card-body {
+          padding: 3em;
+      }
+
+      .card-heading h3 {
+          color: #ffffff;
+          font-size: 36px;
+          margin-bottom: 0;
+      }
+
+      .card-heading p {
+          color: #8C8FAA;
+      }
+
+      .card-list {
+          margin: 0;
+          padding: 0;
+      }
+
+      .card-list .list-item {
+          list-style-type: none;
+          color: #ffffff;
+          font-size: 24px;
+      }
+
+      .card-list .list-item-sm {
+          list-style-type: none;
+          color: #ffffff;
+          font-size: 14px;
+      }
+
+      .card-list .list-item span {
+          color: #F33535;
+      }
+
+      .card-footer {
+          padding: 0;
+          margin-top: 2em;
+      }
+</style>
   </head>
   <body>
     {% block content %}{% endblock %}
