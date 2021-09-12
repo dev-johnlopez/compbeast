@@ -1,7 +1,7 @@
 {% extends "layout/layout.html" %}
 {% set show_footer = 1 %}
 {% set active = "" %}
-{% from "macros/_vertical_form.html" import render_simple_field %}
+{% from "macros/_vertical_form.html" import render_simple_field, render_headless_field_with_errors %}
 {% block content %}
 <!--====== Register Area Start ======-->
 <div class="register-main">
@@ -164,7 +164,7 @@
               <div class="row">
                 <div class="col-12 my-5">
                   <h3 class="regiter-heading">Team Info</h3>
-                  {{ render_simple_field(form.name, class="form-control mb-3", placeholder="Team Name", required=True) }}
+                  {{ render_headless_field_with_errors(form.name, class="form-control mb-3", placeholder="Team Name", required=True) }}
                 </div>
                 {#<div class="col-12">
                   <h3 class="regiter-heading">4 Players Tournament</h3>
@@ -172,9 +172,9 @@
                 {% for player in form.players %}
                   <div class="col-12">
                     <h3 class="regiter-heading">Player {{ loop.index }}</h3>
-                    {{ render_simple_field(player.form.name, class="form-control mb-3", placeholder="Player Name", required=True) }}
-                    {{ render_simple_field(player.form.username, class="form-control mb-3", placeholder="Activision ID", required=True) }}
-                    {{ render_simple_field(player.form.email, class="form-control mb-3", placeholder="Email", required=True) }}
+                    {{ render_headless_field_with_errors(player.form.name, class="form-control mb-3", placeholder="Player Name", required=True) }}
+                    {{ render_headless_field_with_errors(player.form.username, class="form-control mb-3", placeholder="Activision ID", required=True) }}
+                    {{ render_headless_field_with_errors(player.form.email, class="form-control mb-3", placeholder="Email", required=True) }}
                   </div>
                 {% endfor %}
                 {#<div class="col-12">

@@ -34,6 +34,41 @@
   </div>
 {% endmacro %}
 
+{% macro render_headless_field_with_errors(field) %}
+  <div class="form-group">
+    {% if field.description is not none and field.description != "" %}
+      <i class="fa fa-question-circle-o" data-toggle="tooltip" data-placement="right" title="{{ field.description }}"></i>
+    {% endif %}
+    </label>
+    {% if field.type == 'RadioField' %}
+      {% for subfield in field %}
+      <div class="{% if field.inline is defined %}form-check form-check-inline{% else %}radio radio-primary{% endif %}">
+        {{ subfield }}
+        {{ subfield.label }}
+      </div>
+      {% endfor %}
+    {% elif field.type == 'MultiCheckboxField' %}
+      {% for subfield in field %}
+          {#{{ subfield }}
+          {{ subfield.label }}#}
+          <div class="custom-control custom-checkbox">
+              {{ subfield(class="custom-control-input") }}
+              <label class="custom-control-label" style="font-weight: normal !important;" for="{{ subfield.id }}">{{ subfield.label.text }}</label>
+          </div>
+      {% endfor %}
+    {% else %}
+      {{ field(**kwargs)|safe }}
+    {% endif %}
+    {% if field.errors %}
+      {% for error in field.errors %}
+      <div class="invalid-feedback d-block">
+        {{ error }}
+      </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+{% endmacro %}
+
 {% macro render_static(field) %}
   <div class="form-group">
     <label for="{{ field.id }}">{{ field.label }}
