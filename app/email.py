@@ -84,4 +84,4 @@ def send_leaderboard_email(player, event):
                recipients=[player.email],
                text_body=render_template('emails/{}.txt'.format(email_name), player=player, event=event),
                html_body=render_template('emails/{}.html'.format(email_name), player=player, event=event))
-        print("Email sent!"")
+        print("Email sent!")
