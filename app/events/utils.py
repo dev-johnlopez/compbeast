@@ -112,7 +112,7 @@ class MatchManager():
                 return recent_start_time #match is already in correct format. Don't need to convert to timestamp
 
     def get_end_time(self, team):
-        return to_timestamp(self.team.event.end_time)
+        return 0#to_timestamp(self.team.event.end_time)
 
 
 
