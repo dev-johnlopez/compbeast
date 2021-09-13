@@ -12,17 +12,21 @@ def send_async_email(app, msg):
 
 def send_email(subject, sender, recipients, text_body, html_body,
                attachments=None, sync=False):
+    print("Building email!")
     msg = Message(subject, sender=sender, recipients=recipients)
     msg.body = text_body
     msg.html = html_body
+    print("checking attachments!")
     if attachments:
         for attachment in attachments:
             msg.attach(*attachment)
     if sync:
         mail.send(msg)
     else:
+        print("new email")
         Thread(target=send_async_email,
             args=(current_app._get_current_object(), msg)).start()
+        print("new email")
 
 def send_notification_email(player, event, email=None):
     if email == "register":
