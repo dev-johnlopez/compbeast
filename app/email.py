@@ -78,9 +78,10 @@ def send_leaderboard_email(player, event):
     subject = "The leaderboard is available!"
     email_name = "leaderboard_email"
     with current_app.app_context():
-        print("Sending leaderboard email!")
+        print("Sending leaderboard email to {} for {}!".format(player, event))
         send_email(subject,
                sender='admin@compbeast.gg',
                recipients=[player.email],
                text_body=render_template('emails/{}.txt'.format(email_name), player=player, event=event),
                html_body=render_template('emails/{}.html'.format(email_name), player=player, event=event))
+        print("Email sent!"")
