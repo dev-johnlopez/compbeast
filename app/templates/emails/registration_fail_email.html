@@ -1,5 +1,14 @@
 <p>{{ player.name }} - We were not able to confirm your account. Please confirm your account by clicking <a href="{{ url_for('public.update_player', player_id=player.id) }}">here.</a></p>
 
+<p>Double check your privacy settings on Activision's website. Activision data needs to be public for our account to be confirmed. Update your privacy settings by:</p>
+<ol>
+  <li>Go to the official Call of Duty website</li>
+  <li>Login to your CoD account</li>
+  <li>Head to the top-right corner and hover the cursor over you name</li>
+  <li>Click on "Linked Accounts"</li>
+  <li>Set "Searchable" and "Data Visible" options to "All" for all platforms</li>
+</ol>
+
 <p>Your team will not be eligible to play in our event until your account is confirmed. Need additional help? Join our discord server and speak with our mods.</p>
 
 <p>Join our discord server by clicking <a href="{{ url_for('public.discord') }}">here.</a></p>

@@ -1,37 +1,9 @@
-{% extends "layout/email.html" %}
-{% block content %}
+{#{% extends "layout/email.html" %}
+{% block content %}#}
 
-<!--====== Tournaments History Area Start ======-->
-<section>
-  <div class="history">
-    <div class="container">
-      <div class="row">
-        <div class="col-12">
-          <div class="card card-history">
-            <h2 class="heading">You are regisetered!</h2>
-            <div class="row">
-              <div class="col-4 mb-2">
-                <img src="{{ avatarUrl }}"/>
-              </div>
-              <div class="col-8 mb-2">
-                <h4>{{ player.username }}</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <p>{{ player.name }} - We were able to confirm your Activision ID! Make sure your teammate is also confirmed. They will have to receive a confirmation email for the two of you to be eligible for prizes during the event.</p>
+<p>{{ player.name }} - We were able to confirm your Activision ID! Make sure your teammate is also confirmed. They will have to receive a confirmation email for the two of you to be eligible for prizes during the event.</p>
 
-                <p>Our team will send you the leaderboard before the event begins. Good luck!</p>
+<p>Our team will send you the leaderboard before the event begins. Good luck!</p>
 
-                <p>Thanks,<br />
-                CompBeast.gg</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!--====== Tournaments History Area End ======-->
-{% endblock %}
+<p>Thanks,<br />
+CompBeast.gg</p>
