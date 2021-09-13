@@ -110,7 +110,7 @@ def generate_leaderboards(event_id):
                 print("success!")
                 leaderboard_notification.si(player_id=player.id, event_id=event.id).delay(player_id=player.id, event_id=event.id)
     except:
-        print("Error!") #print(sys.exec_info())
+        print("Error in generate_leaderboards!") #print(sys.exec_info())
 
 @celery.task
 def registration_reminder_notification(player_id, event_id=None):
@@ -137,7 +137,7 @@ def leaderboard_notification(player_id, event_id=None):
         if player is not None:
             send_notification_email(player, event, email="leaderboard")
     except:
-        print("Error!") #print(sys.exec_info())
+        print("Error in leaderboard_notification!") #print(sys.exec_info())
         #app.logger.error('Unhandled exception', exc_info=sys.exc_info())
 
 @celery.task
