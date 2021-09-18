@@ -6,7 +6,7 @@
   <div class="banner-img">
     <img src="{{ url_for('static', filename='img/banner-bg-right.jpeg') }}" alt="" />
   </div>
-  <div class="container bg-dark">
+  {#<div class="container bg-dark">
     <div class="row">
     <div class="banner-detail py-5 text-center">
       <h1 class="banner-heading">{{ event.name }}</h1>
@@ -36,13 +36,22 @@
         </div>
       </div>
     </div>
-  </div>
+  </div>#}
 </div>
 <!--====== Banner Area End ======-->
 
 <!--====== History Area Start ======-->
 <div class="history-area bg-dark">
   <div class="container">
+    <div class="row">
+      <div class="banner-detail py-5 text-center">
+        <h1 class="banner-heading">{{ event.name }}</h1>
+        {% if event.can_register() %}
+        <p class="banner-text">Starts in 3 days : 2 hours : 15 minutes</p>
+        <a href="{{ url_for('event.register', event_id=event.id) }}" class="btn btn-custom-primary xs-100">Register today</button>
+        {% endif %}
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-4 col-12">
         <div class="card-history text-center mb-3 mb-sm-0">
