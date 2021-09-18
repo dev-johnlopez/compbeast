@@ -8,9 +8,11 @@
   </div>
   <div class="container">
     <div class="banner-detail py-5 text-center">
-      <h1 class="banner-heading">Warzone September 2021</h1>
+      <h1 class="banner-heading">{{ event.name }}</h1>
+      {% if event.can_register() %}
       <p class="banner-text">Starts in 3 days : 2 hours : 15 minutes</p>
-      <button class="btn-custom-primary xs-100">Register today</button>
+      <a href="{{ url_for('event.register', event_id=event.id) }}" class="btn btn-custom-primary xs-100">Register today</button>
+      {% endif %}
     </div>
   </div>
 </div>
@@ -22,20 +24,20 @@
     <div class="row">
       <div class="col-md-4 col-12">
         <div class="card-history text-center mb-3 mb-sm-0">
-          <h3>4 players</h3>
+          <h3>{{ event.team_size }} player{% if event.team_size > 1 %}s{% endif %}</h3>
           <p>Team size</p>
         </div>
       </div>
       <div class="col-md-4 col-12">
         <div class="card-history active text-center mb-3 mb-sm-0">
-          <h3>$100,000</h3>
+          <h3>{{ "${:,.0f}".format(event.prize_pool) }}</h3>
           <p>Prize Pool</p>
         </div>
       </div>
       <div class="col-md-4 col-12">
         <div class="card-history text-center mb-3 mb-sm-0">
-          <h3>4 days</h3>
-          <p>tourney duration</p>
+          <h3>{{ event.start_time|timedelta(event.end_time) }}</h3>
+          <p>tournament duration</p>
         </div>
       </div>
     </div>
