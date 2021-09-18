@@ -23,8 +23,23 @@ class CustomModelView(ModelView):
         # redirect to login page if user doesn't have access
         return current_app.login_manager.unauthorized()
 
+
+        if self.mode == "br_brsolo": return 1
+        elif self.mode == "br_brduos": return 2
+        elif self.mode == "br_dbd_dbd": return 2
+        elif self.mode == "br_brtrios": return 3
+        elif self.mode == "br_brquads": return 4
+
 class EventView(CustomModelView):
     list_template = "admin/my_list.html"  # Override the default template
+    form_choices = { 'mode': [
+                                ('br_brsolo', 'Solos'),
+                                ('br_brduos', 'Duos'),
+                                ('br_dbd_dbd', 'Iron Trials (Duos)'),
+                                ('br_brtrios', 'Trios'),
+                                ('br_brquads', 'Quads'),
+                            ]
+                   }
     form_ajax_refs = {
         'team': QueryAjaxModelLoader('team', db.session, Team, fields=['name'], page_size=10)
     }
