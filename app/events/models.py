@@ -124,15 +124,10 @@ class Team(PkModel):
 
     def refresh_stats(self, event, startTimestamp=None, endTimestamp=None):
         print("** refreshing status")
-        mode = None
-        if event.team_size == 1: mode = "br_brsolo"
-        elif event.team_size == 2: mode = "br_brduos"
-        elif event.team_size == 3: mode = "br_brtrios"
-        elif event.team_size == 4: mode = "br_brquads"
 
         from .utils import MatchManager
         print("** getting stats for mode: {}".format(mode))
-        stats_manager = MatchManager(team=self, mode=mode)
+        stats_manager = MatchManager(team=self, mode=self.mode)
         stats_manager.get_matches()
         self.save()
         #print("**** {}".format(len(matches)))
@@ -230,7 +225,7 @@ class Event(PkModel, EventStateMixin):
     __tablename__ = "event"
     id = Column(db.Integer, primary_key=True)
     name = Column(db.String(80))
-    team_size = Column(db.Integer)
+    mode = Column(db.String(50))
     teams = relationship("Team", backref="event", lazy=True)
     tasks = relationship('Task', backref='event', lazy='dynamic')
     teams_per_division = Column(db.Integer)
@@ -238,6 +233,15 @@ class Event(PkModel, EventStateMixin):
     start_time = Column(DateTime, nullable=True)
     end_time = Column(DateTime, nullable=True)
     prize_pool = Column(db.Integer, default=0)
+
+    @property
+    def team_size(self):
+        if self.mode == "br_brsolo": return 1
+        elif self.mode == "br_brduos": return 2
+        elif self.mode == "br_dbd_dbd": return 2
+        elif self.mode == "br_brtrios": return 3
+        elif self.mode == "br_brquads": return 4
+        return None
 
     @property
     def num_divisions(self):
