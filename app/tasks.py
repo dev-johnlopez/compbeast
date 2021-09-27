@@ -89,8 +89,9 @@ def new_event_notification(player_id, event_id=None):
 def remind_pending_registrations():
     try:
         print("sending remind registration tasks")
+        print("getting events for remind registration tasks")
         events = Event.query.filter_by(state='Registering').all()
-        print(events)
+        print("found {} events".format(len(events)))
         for event in events:
             for team in event.teams:
                 for player in team.players:
