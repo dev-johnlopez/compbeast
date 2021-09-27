@@ -17,6 +17,6 @@ celery.conf.beat_schedule = {
     },
     "send-registration-reminders-task": {
         "task": "app.tasks.remind_pending_registrations",
-        "schedule": crontab(minute=0, hour=14)
+        "schedule": crontab(minute=0, '*/1')
     }
 }
