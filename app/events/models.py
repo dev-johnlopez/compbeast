@@ -35,6 +35,7 @@ class Player(PkModel):
         return f"<Player({self.name})>"
 
     def is_confirmed(self):
+        print("Player {} is confirmed == {}".format(self.name, self.external_id != None and self.external_id != "" and self.external_id != "None"))
         return self.external_id != None and self.external_id != "" and self.external_id != "None"
 
     def confirm(self):
