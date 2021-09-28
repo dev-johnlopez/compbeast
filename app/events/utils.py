@@ -118,3 +118,24 @@ class MatchManager():
 
 def to_timestamp(datetime):
     return int(datetime.replace(tzinfo=timezone.utc).timestamp()) * 1000
+
+def get_sorted_leaderboard(teams):
+    if len(teams) == 0:
+        return []
+    elif len(teams) == 1:
+        return teams
+
+    teams.sort(key=lambda: team: team.rating, reverse=True)
+
+    leaderboard = []
+    team_placements = []
+    current_rating = teams[0].rating
+
+    for team in teams:
+        if team.rating != current_rating:
+            leaderboard.append(team_placements)
+            team_placements = []
+            current_rating = team.rating
+        team_placements.append(team)
+
+    return leaderboard

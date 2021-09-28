@@ -200,6 +200,13 @@ class Team(PkModel):
             rating += match_rating[i]
         return rating
 
+    @property
+    def placement(self):
+        all_ratings = [x.rating for x in self.event.teams]
+        all_ratings.sort(key=lambda x: x, reverse=True)
+        return all_ratings.index(self.rating) + 1
+
+
 
 
 class Task(PkModel):
