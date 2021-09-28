@@ -159,6 +159,7 @@
               </div>
               <ul class="card-list">
                 <li class="list-item">Prize Pool: <span>{{ "${:,.0f}".format(event.prize_pool) }}</span></li>
+                <li class="list-item">Mode: <span>{{ event.playlist }}</span></li>
                 <li class="list-item">Team Size:
                   {% if event.team_size == 1 %}
                     <span>Solos</span>

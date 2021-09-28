@@ -245,6 +245,15 @@ class Event(PkModel, EventStateMixin):
         return None
 
     @property
+    def playlist(self):
+        if self.mode == "br_brsolo": return "Battle Royale"
+        elif self.mode == "br_brduos": return "Battle Royale"
+        elif self.mode == "br_dbd_dbd": return "Iron Trials"
+        elif self.mode == "br_brtrios": return "Battle Royale"
+        elif self.mode == "br_brquads": return "Battle Royale"
+        return None
+
+    @property
     def num_divisions(self):
         if len(self.teams) == 0:
             return 0
