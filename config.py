@@ -34,6 +34,7 @@ class Config:
     SECURITY_PASSWORD_SALT = os.environ.get('SECURITY_PASSWORD_SALT')
     SECURE_PROXY_SSL_HEADER = os.environ.get("SECURE_PROXY_SSL_HEADER")
     SECURE_SSL_REDIRECT = os.environ.get("SECURE_SSL_REDIRECT")
+    STRIPE_WEBHOOKSECRET = 'whsec_US2gKmOFk4cIlvPbK6bbAL4ARP7jTGyj'
 
     @staticmethod
     def init_app(app):
@@ -94,6 +95,5 @@ config = {
     'testing': TestingConfig,
     'production': ProductionConfig,
     'heroku': HerokuConfig,
-
     'default': DevelopmentConfig
 }

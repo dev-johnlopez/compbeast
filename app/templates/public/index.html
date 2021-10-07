@@ -173,7 +173,7 @@
                 </li>
                 <li class="list-item">Length: <span>{{ event.start_time|timedelta(event.end_time) }}</li>
                 <li class="list-item">Scoring mode: <span>Kill Race</span></li>
-                <li class="list-item">Entry Fee: <span>Free</span></li>
+                <li class="list-item">Entry Fee: <span>{% if event.entry_fee > 0 %}{{ "${:,.0f}".format(event.entry_fee) }}{% else %}Free{% endif %}</span></li>
               </ul>
               <div class="card-footer">
                 {% if event.can_register() %}

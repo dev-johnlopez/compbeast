@@ -112,6 +112,8 @@ class Team(PkModel):
     division = Column(db.Integer)
     matches = relationship("Match", backref="team", lazy=True)
     player_stats = relationship("PlayerStat", backref="team", lazy=True)
+    payment_id = Column(db.String(255))
+    payment_complete = Column(db.Integer)
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'),
         nullable=True)
 
@@ -122,6 +124,15 @@ class Team(PkModel):
 
     def __repr__(self):
         return "Team {}, {} Rating".format(self.name, self.rating)
+
+    def is_confirmed(self):
+        for player in self.players:
+            if not player.is_confirmed():
+                return False
+
+        if self.event.prize_pool > 0 and not self.payment_complete:
+            return False
+        return True
 
     def refresh_stats(self, event, startTimestamp=None, endTimestamp=None):
         print("** refreshing status")
@@ -241,6 +252,7 @@ class Event(PkModel, EventStateMixin):
     start_time = Column(DateTime, nullable=True)
     end_time = Column(DateTime, nullable=True)
     prize_pool = Column(db.Integer, default=0)
+    entry_fee = Column(db.Integer, default=0)
 
     @property
     def team_size(self):
@@ -277,7 +289,7 @@ class Event(PkModel, EventStateMixin):
 
     def get_teams(self, sort=None):
         if sort == 'leaderboard':
-            return self.teams
+            return self.teams[team for team in self.teams if team.is_confirmed()]
         return self.teams
 
     def close_registration(self):
@@ -285,6 +297,7 @@ class Event(PkModel, EventStateMixin):
         print("generating leaderboard for {}".format(self.id))
         teams = [team for team in self.teams]
         for team in teams:
+            if self.prize_pool > 0 and not team.pai
             for player in team.players:
                 player.refresh_profile()
         generate_leaderboards.delay(event_id=self.id)

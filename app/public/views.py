@@ -9,6 +9,7 @@ from flask import (
     request,
     url_for,
     abort,
+    request
 )
 from app.events.models import Event, Team, Player
 from app.events.forms import TeamForm, ConfirmPlayerForm
@@ -58,27 +59,31 @@ def register(event_id):
         [confirm_player.si(player.id, event_id).delay(player_id=player.id, event_id=event_id)
             for player in team.players]
         print("creating stripe endpoint")
-        #if True:
-        return redirect(url_for('public.confirm', event_id=event.id))
-        #else:
-        #    session = stripe.checkout.Session.create(
-        #        payment_method_types=['card'],
-        #        line_items=[{
-        #          'price_data': {
-        #            'currency': 'usd',
-        #            'product_data': {
-        #              'name': 'Event Entry Fee',
-        #            },
-        #            'unit_amount': 500,
-        #          },
-        #          'quantity': 1,
-        #        }],
-        #        mode='payment',
-        #        success_url=url_for('public.confirm', event_id=event.id, _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
-        #        cancel_url=url_for('public.cancel', event_id=event.id, _external=True))
-        #    )
-        #    print("redirecting to stripe endpoint")
-        #    return redirect(session.url, code=303)
+        if event.entry_fee > 0:
+            session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                line_items=[{
+                  'price_data': {
+                    'currency': 'usd',
+                    'product_data': {
+                      'name': 'Event Entry Fee',
+                    },
+                    'unit_amount': event.entry_fee * 100,
+                  },
+                  'quantity': 1,
+                }],
+                mode='payment',
+                success_url=url_for('public.confirm', event_id=event.id, _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
+                cancel_url=url_for('public.cancel', event_id=event.id, _external=True))
+            team.payment_id = session['payment_intent']
+            team.save()
+            print("redirecting to stripe endpoint")
+            return redirect(session.url, code=303)
+
+        else:
+            team.payment_complete = 1
+            team.save()
+            return redirect(url_for('public.confirm', event_id=event.id))
 
     # if we get here, either validation failed or we're just loading the page
     # we can use append_entry to add up to the total number we want, if necessary
@@ -118,3 +123,46 @@ def rules():
 @blueprint.route('/discord', methods=['GET', 'POST'])
 def discord():
     return redirect('https://discord.gg/vsqg5BWzJt')
+
+@blueprint.route("/webhooks", methods=["POST"])
+def webhooks():
+    print('WEBHOOK CALLED')
+
+    if request.content_length > 1024 * 1024:
+        print('REQUEST TO BIG')
+        return "Payload too large", 400
+
+    payload = request.data.decode("utf-8")
+    received_sig = request.headers.get("Stripe-Signature", None)
+    webhook_secret = current_app.config['STRIPE_WEBHOOKSECRET']
+    event = None
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, received_sig, webhook_secret
+        )
+    except ValueError:
+        print("Error while decoding event!")
+        return "Bad payload", 400
+    except stripe.error.SignatureVerificationError:
+        print("Invalid signature!")
+        return "Bad signature", 400
+    print("***** {}".format(event.type))
+    print("***** {}".format(event['type']))
+    if event.type == 'charge.succeeded':
+        payment_intent = event.data.object
+        print(payment_intent)
+        team = Team.query.filter_by(payment_id=payment_intent.payment_intent).first()
+        team.payment_complete = 1
+        #team.payment_status = payment_intent.payment_status
+        print("**** {}".format(team))
+        team.save()
+
+    print(
+        "Received event: id={id}, type={type}".format(
+            id=event.id, type=event.type
+        )
+    )
+
+
+    return "", 200
