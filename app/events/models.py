@@ -297,9 +297,9 @@ class Event(PkModel, EventStateMixin):
         print("generating leaderboard for {}".format(self.id))
         teams = [team for team in self.teams]
         for team in teams:
-            if self.prize_pool > 0 and not team.pai
-            for player in team.players:
-                player.refresh_profile()
+            if team.is_confirmed():
+                for player in team.players:
+                    player.refresh_profile()
         generate_leaderboards.delay(event_id=self.id)
 
     def seed_teams(self):
