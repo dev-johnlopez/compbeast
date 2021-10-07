@@ -58,7 +58,8 @@ class TestingConfig(Config):
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app/app.db')
-    STRIPE_API_KEY = "pk_live_cfzq6dhqlOgaiZjyTVRc4rOB"
+    STRIPE_API_KEY = os.environ.get("STRIPE_API_KEY")
+    STRIPE_WEBHOOKSECRET = os.environ.get("STRIPE_WEBHOOKSECRET")
 
     @classmethod
     def init_app(cls, app):
