@@ -74,7 +74,7 @@ def register(event_id):
                 }],
                 mode='payment',
                 success_url=url_for('public.confirm', event_id=event.id, _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
-                cancel_url=url_for('public.cancel', event_id=event.id, _external=True))
+                cancel_url=url_for('public.index', _external=True))
             team.payment_id = session['payment_intent']
             team.save()
             print("redirecting to stripe endpoint")
