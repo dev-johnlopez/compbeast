@@ -289,7 +289,7 @@ class Event(PkModel, EventStateMixin):
 
     def get_teams(self, sort=None):
         if sort == 'leaderboard':
-            return self.teams[team for team in self.teams if team.is_confirmed()]
+            return [team for team in self.teams if team.is_confirmed()]
         return self.teams
 
     def close_registration(self):
