@@ -23,41 +23,7 @@
       <div class="row">
         {% for event in events %}
         <div class="col-md-4 col-12">
-          <div class="card-tournament">
-            <div class="card-img">
-              <img src="{{ url_for('static', filename='img/cod1.jpeg') }}" alt="Cod" />
-            </div>
-            <div class="card-body">
-              <div class="card-heading">
-                <h3>{{ event.name }}</h3>
-                <p>{{ event.start_time|format_datetime('%B %d') }}</p>
-              </div>
-              <ul class="card-list">
-                <li class="list-item">Prize Pool: <span>{{ "${:,.0f}".format(event.prize_pool) }}</span></li>
-                <li class="list-item">Team Size:
-                  {% if event.team_size == 1 %}
-                    <span>Solos</span>
-                  {% elif event.team_size == 2 %}
-                    <span>Duos</span>
-                  {% elif event.team_size == 3 %}
-                    <span>Trios</span>
-                  {% else %}
-                    <span>Quads</span>
-                  {% endif %}
-                </li>
-                <li class="list-item">Length: <span>{{ event.start_time|timedelta(event.end_time) }}</li>
-                <li class="list-item">Scoring mode: <span>Kill Race</span></li>
-                <li class="list-item">Entry Fee: <span>Free</span></li>
-              </ul>
-              <div class="card-footer">
-                <a href="{{ url_for('public.register', event_id=event.id) }}"
-                  class="btn-custom-primary w-100 d-block text-center"
-                >
-                  Resgister today
-                </a>
-              </div>
-            </div>
-          </div>
+          {% include 'public/components/event_card.html' %}
         </div>
         {% endfor %}
       </div>
