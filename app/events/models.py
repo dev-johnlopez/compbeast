@@ -253,6 +253,8 @@ class Event(PkModel, EventStateMixin):
     end_time = Column(DateTime, nullable=True)
     prize_pool = Column(db.Integer, default=0)
     entry_fee = Column(db.Integer, default=0)
+    flexible_start_ind = Column(db.Boolean, default=0)
+    flexible_start_time_length = Column(db.Integer)
 
     @property
     def team_size(self):
