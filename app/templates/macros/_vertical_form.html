@@ -39,7 +39,6 @@
     {% if field.description is not none and field.description != "" %}
       <i class="fa fa-question-circle-o" data-toggle="tooltip" data-placement="right" title="{{ field.description }}"></i>
     {% endif %}
-    </label>
     {% if field.type == 'RadioField' %}
       {% for subfield in field %}
       <div class="{% if field.inline is defined %}form-check form-check-inline{% else %}radio radio-primary{% endif %}">

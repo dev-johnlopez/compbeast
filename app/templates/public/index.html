@@ -2,160 +2,193 @@
 {% set active = "home" %}
 {% block content %}
 
-<!--====== Banner Area Start ======-->
-<section>
-  <div class="banner-main">
-    <div class="banner-bg-left"></div>
-    <div class="banner-bg-right"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 col-12">
-          <div class="banner-inner-area">
-            <h1 class="banner-heading">Weekly Warzone Tournaments</h1>
-            <p class="banner-text">
-              Cash prizes. Automated scoring. No cheaters.
-            </p>
-            {#<a href="{{ url_for('events.index') }}" class="btn-custom-primary">Tournaments</a>#}
-            <a href="{{ url_for('public.discord') }}" class="btn-custom-icon">
-              <img src="{{ url_for('static', filename='img/icons/discord.png') }}" alt="Discord" />
-              Join our discord</a
-            >
-            {#<div class="banner-bottom">
-              <div class="row">
-                <div class="col-6">
-                  <div class="banner-left">
-                    <a href="#">
-                      <img
-                        src="{{ url_for('static', filename='img/icons/arrow-down.png') }}"
-                        alt="Arrow"
-                      />
-                      <span>Learn how</span>
-                    </a>
-                  </div>
-                </div>
+<main id="content" role="main" class="overflow-hidden">
+  <section>
+    <div class="banner-main">
+      <div class="banner-bg-left">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 col-12">
+              <div class="banner-inner-area">
+                  <h1 class="banner-heading">Free to Play.<br />Big Prizes.</h1>
+                  <p class="banner-text">
+                    Monthly Warzone tournaments for<br /> competitive players.
+                  </p>
+                  <a href="{{ url_for('public.discord') }}" class="btn-custom-icon">
+                    <img src="{{ url_for('static', filename='img/icons/discord.png') }}" alt="Discord" />
+                    Join our discord</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="banner-bg-right"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-12">
+            <div class="banner-inner-area">
+                <h1 class="banner-heading">Weekly Warzone Tournaments</h1>
+                <p class="banner-text">
+                  Cash prizes. Automated scoring. No cheaters.
+                </p>
+                <a href="{{ url_for('public.discord') }}" class="btn-custom-icon">
+                  <img src="{{ url_for('static', filename='img/icons/discord.png') }}" alt="Discord" />
+                  Join our discord</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--====== Banner Area End ======-->
+  <section>
+    <div class="history">
+      <div class="container">
+        <h2 class="heading">Our <span>December</span> Tournament</h2>
 
-                <div class="col-6">
-                  <div class="social-link">
-                    <a href="#">
-                      <img
-                        src="{{ url_for('static', filename='img/icons/telegram.png') }}"
-                        alt="telegram"
-                      />
-                    </a>
-                    <a href="#">
-                      <img
-                        src="{{ url_for('static', filename='img/icons/message.png') }}"
-                        alt="message"
-                      />
-                    </a>
-                    <a href="#">
-                      <img
-                        src="{{ url_for('static', filename='img/icons/twitter.png') }}"
-                        alt="twitter"
-                      />
-                    </a>
-                  </div>
+        <div class="row justify-content-md-center">
+          <div class="col-md-6">
+            <div class="row justify-content-md-center">
+              <div class="col-md-6 col-12 mb-3">
+                <div class="card-history h-100 text-center">
+                  <h3>20</h3>
+                  <p>Teams</p>
                 </div>
               </div>
-            </div>#}
+              <div class="col-md-6 col-12 mb-3">
+                <div class="card-history h-100 text-center active">
+                  <h3>{{ "${:,.0f}".format(event.prize_pool) }}</h3>
+                  <p>Prize Pool</p>
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-md-center">
+              <div class="col-md-12 col-12 mb-3">
+                <div class="card-history h-100 text-center">
+                  <h3>Kill Race</h3>
+                  <p>Event Format</p>
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-md-center">
+              <div class="col-md-12 mb-5 mb-md-0">
+                <div class="card-history h-100 text-center">
+                  <h3>Flexible</h3>
+                  <p>Start Time</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            {% include 'public/components/event_card.html' %}
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-<!--====== Banner Area End ======-->
-{#<!--====== Partners Area Start ======-->
-<section>
-  <div class="partners-section">
-    <div class="container">
-      <div class="partner-inner">
-        <div class="partner-img">
-          <img src="{{ url_for('static', filename='img/partners/logitech.png') }}" alt="" />
+  </section>
+  <section>
+    <div class="history bg-light">
+      <div class="container mt-5">
+        <h2 class="heading"><span class="text-dark">Tournament</span> <span>Details</span></h2>
+        <div class="row justify-content-lg-between align-items-md-center mt-3">
+          <div class="col-md-6">
+            <table class="table table-bordered">
+              <thead class="text-center">
+                <tr class="table-dark">
+                  <th class="text-white">Rank</th>
+                  <th class="text-white">Total</th>
+                </tr>
+              </thead>
+              <tbody class="table-light">
+                <tr>
+                  <td>1st</td>
+                  <td>$500</td>
+                </tr>
+                <tr>
+                  <td>2nd</td>
+                  <td>$150</td>
+                </tr>
+                <tr>
+                  <td>3rd</td>
+                  <td>$100</td>
+                </tr>
+                <tr>
+                  <td>4th</td>
+                  <td>$50</td>
+                </tr>
+                <tr>
+                  <td>5th</td>
+                  <td>$25</td>
+                </tr>
+                <tr>
+                  <td>6th - 10th</td>
+                  <td>$20</td>
+                </tr>
+                <tr>
+                  <td>11th - 20th</td>
+                  <td>$10</td>
+                </tr>
+                <tr>
+                  <td class="text-primary">Total Prizes</td>
+                  <td class="text-primary">$1025</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-6 col-lg-5 content-space-1 content-space-md-2">
+            <h2 class="mb-4">Prize Pool</h2>
+            <p class="text-dark">This men's hat has low-key Trefoil style with an embroidered logo on the front.</p>
+            <p class="text-dark">Made of washed canvas, the hat has a crushable, packable design and an adjustable back strap so you can personalize the fit.</p>
+          </div>
         </div>
-        <div class="partner-img">
-          <img src="{{ url_for('static', filename='img/partners/hyperx.png') }}" alt="" />
-        </div>
-        <div class="partner-img">
-          <img src="{{ url_for('static', filename='img/partners/twitch.png') }}" alt="" />
-        </div>
-        <div class="partner-img">
-          <img src="{{ url_for('static', filename='img/partners/asus.png') }}" alt="" />
-        </div>
-        <div class="partner-img">
-          <img src="{{ url_for('static', filename='img/partners/sennheiser.png') }}" alt="" />
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!--====== Partners Area End ======-->#}
 
-<!--====== Tournaments History Area Start ======-->
-<section>
-  <div class="history">
-    <div class="container">
-      <h2 class="heading">Tournaments made <span>simple</span></h2>
-      <div class="row">
-        <div class="col-md-4 col-12 mb-3">
-          <div class="card-history text-center">
-            <h3>100+</h3>
-            <p>total matches played</p>
+        <div class="row justify-content-lg-between align-items-md-center mt-3">
+          <div class="col-md-6 col-lg-5 content-space-1 content-space-md-2">
+            <h2 class="mb-4">Kill Race</h2>
+            <p class="text-dark">This men's hat has low-key Trefoil style with an embroidered logo on the front.</p>
+            <p class="text-dark">Made of washed canvas, the hat has a crushable, packable design and an adjustable back strap so you can personalize the fit.</p>
           </div>
-        </div>
-        <div class="col-md-4 col-12 mb-3">
-          <div class="card-history active text-center">
-            <h3>$500+</h3>
-            <p>in weekly payouts</p>
-          </div>
-        </div>
-        <div class="col-md-4 col-12 mb-3">
-          <div class="card-history text-center">
-            <h3>2,000+</h3>
-            <p>players competing</p>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 col-12 mt-3">
-          <div class="card-history">
-            <h3>Automated scoring!</h3>
-            <p>
-              We automatically track your score so you don't need to worry about reporting manually!
-            </p>
-          </div>
-        </div>
-        <div class="col-md-6 col-12 mt-3">
-          <div class="card-history">
-            <h3>Guaranteed payouts!</h3>
-            <p>
-              If you've won your prize fair and square, we will pay it out
-              in 48 hours after the event, guaranteed!
-            </p>
+          <div class="col-md-6">
+            <div class="card">
+              <table class="table table-bordered text-center">
+                <thead>
+                  <tr class="table-dark">
+                    <th colspan="3" class="text-white">Scoring Format</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table-secondary">
+                    <td colspan="3">One point per kill plus the following placement bonus</td>
+                  </tr>
+                  <tr>
+                    <td>First Place<br /><strong>10 Points</strong</td>
+                    <td>Top 10<br /><strong>5 Points</strong</td>
+                    <td>Top 25<br /><strong>2 Points</strong</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-<!--====== Tournaments History Area End ======-->
-
-<!--====== Upcoming Tournaments Area End ======-->
-<section>
-  <div class="tournaments">
-    <div class="container-fluid">
-      <h2 class="heading">Upcoming tournaments</h2>
-      <div class="row">
-        {% for event in events %}
-        <div class="col-md-4 col-12">
-          {% include 'public/components/event_card.html' %}
+  </section>
+  {% include 'public/connect.html' %}
+  <!--====== Tournaments History Area End ======-->
+  <section>
+    <div class="tournaments">
+      <div class="container-fluid">
+        <h2 class="heading">Upcoming tournaments</h2>
+        <div class="row">
+          {% for event in events %}
+          <div class="col-md-4 col-12">
+            {% include 'public/components/event_card.html' %}
+          </div>
+          {% endfor %}
         </div>
-        {% endfor %}
       </div>
     </div>
-  </div>
-</section>
-<!--====== Upcoming Tournaments Area End ======-->
+  </section>
 
-{% include 'public/connect.html' %}
+</main>
 {% endblock %}

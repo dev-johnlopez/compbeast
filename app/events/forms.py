@@ -16,7 +16,14 @@ class ConfirmPlayerForm(FlaskForm):
 class PlayerForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired(), Length(max=80)])
     email = EmailField('Email', validators=[DataRequired(), Email(), Length(max=80)])
-    username = StringField('Activision Username', validators=[DataRequired(), Length(max=80)])
+    platform = SelectField('Platform', choices=[
+                                        ('', 'Account Type'),
+                                        ('uno', 'Activision'),
+                                        ('psn','PlayStation'),
+                                        ('xbl','Xbox'),
+                                        ('battle','BattleNet')],
+                                      validators=[DataRequired()])
+    username = StringField('Username', validators=[DataRequired(), Length(max=80)])
 
     def __init__(self, csrf_enabled=False, *args, **kwargs):
         super(PlayerForm, self).__init__(csrf_enabled=csrf_enabled,

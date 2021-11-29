@@ -8,7 +8,7 @@
       <p>{{ event.start_time|format_datetime('%B %d - %I:%M %p CT', timedelta_hours=5) }}</p>
     </div>
     <ul class="card-list">
-      <li class="list-item">Est. Prize Pool: <span>{{ "${:,.0f}".format(event.prize_pool) }}</span></li>
+      <li class="list-item">{% if event.entry_fee is not none and event.entry_fee > 0 %}Est. {% endif %}Prize Pool: <span>{{ "${:,.0f}".format(event.prize_pool) }}</span></li>
       <li class="list-item">Playlist: <span>{{ event.playlist }}</span></li>
       <li class="list-item">Team Size:
         {% if event.team_size == 1 %}
@@ -23,7 +23,7 @@
       </li>
       <li class="list-item">Length: <span>{{ event.start_time|timedelta(event.end_time) }}</li>
       <li class="list-item">Scoring mode: <span>Kill Race</span></li>
-      <li class="list-item">Entry Fee: <span>{% if event.entry_fee > 0 %}{{ "${:,.0f}".format(event.entry_fee) }}{% else %}Free{% endif %}</span></li>
+      <li class="list-item">Entry Fee: <span>{% if event.entry_fee is not none and event.entry_fee %}{{ "${:,.0f}".format(event.entry_fee) }}{% else %}Free{% endif %}</span></li>
     </ul>
     <div class="card-footer">
       {% if event.can_register() %}

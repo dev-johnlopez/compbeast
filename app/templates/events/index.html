@@ -31,6 +31,7 @@
   </div>
 </section>
 <!--====== Upcoming Tournaments Area End ======-->
-
+{% with event = events[0] %}
 {% include 'public/connect.html' %}
+{% endwith %}
 {% endblock %}

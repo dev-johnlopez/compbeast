@@ -5,15 +5,9 @@
 {% block content %}
 <!--====== Register Area Start ======-->
 <div class="register-main">
-  <div class="row no-gutters d-flex">
+  <div class="row g-0 d-flex">
     <div class="col-md-6 col-12">
       <div class="register-left">
-        {#<div class="back-link text-center d-block d-sm-none">
-          <a href="#">
-            <img src="{{ url_for('static', filename='img/icons/arrow-back.png') }}" alt="back" />
-            Go Back
-          </a>
-        </div>#}
         <div class="register-box">
           <div class="register-inner">
             {% include 'public/components/event_card.html' %}
@@ -46,7 +40,7 @@
               <div class="row">
                 <div class="col-12">
                   <h3 class="regiter-heading">Team Info</h3>
-                  {{ render_headless_field_with_errors(form.name, class="form-control mb-3", placeholder="Team Name", required=True) }}
+                  {{ render_headless_field_with_errors(form.name, class="form-control mb-3 form-custom-color", placeholder="Team Name", required=True) }}
                 </div>
                 {#<div class="col-12">
                   <h3 class="regiter-heading">4 Players Tournament</h3>
@@ -54,9 +48,10 @@
                 {% for player in form.players %}
                   <div class="col-12">
                     <h3 class="regiter-heading">Player {{ loop.index }}</h3>
-                    {{ render_headless_field_with_errors(player.form.name, class="form-control mb-3", placeholder="Player Name", required=True) }}
-                    {{ render_headless_field_with_errors(player.form.username, class="form-control mb-3", placeholder="Activision ID", required=True) }}
-                    {{ render_headless_field_with_errors(player.form.email, class="form-control mb-3", placeholder="Email", required=True) }}
+                    {{ render_headless_field_with_errors(player.form.name, class="form-control mb-3 form-custom-color", placeholder="Player Name", required=True) }}
+                    {{ render_headless_field_with_errors(player.form.platform, class="form-control form-select-custom mb-3", required=True, **{'aria-label': '.form-control' }) }}
+                    {{ render_headless_field_with_errors(player.form.username, class="form-control mb-3 form-custom-color", placeholder="Activision ID", required=True) }}
+                    {{ render_headless_field_with_errors(player.form.email, class="form-control mb-3 form-custom-color", placeholder="Email", required=True) }}
                   </div>
                 {% endfor %}
                 {#<div class="col-12">

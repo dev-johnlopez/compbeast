@@ -33,11 +33,17 @@ class EventQuery(object):
             query = query.limit(limit)
         return query.all()
 
+    @staticmethod
+    def get_highlighted_event():
+        return Event.query.filter((Event.status == 'Registering')).order_by(Event.start_time).first()
+
 
 @blueprint.route("/", methods=["GET", "POST"])
 def home():
     events = EventQuery.get_open_events(limit=3)
-    return render_template("public/index.html", events=events)
+    quick_register_event = EventQuery.get_highlighted_event()
+    print("**** {}".format(quick_register_event.name))
+    return render_template("public/index.html", event=quick_register_event, events=events)
 
 @blueprint.route('/<event_id>/register', methods=['GET', 'POST'])
 def register(event_id):
@@ -122,7 +128,7 @@ def rules():
 
 @blueprint.route('/discord', methods=['GET', 'POST'])
 def discord():
-    return redirect('https://discord.gg/vsqg5BWzJt')
+    return redirect('https://discord.gg/HNTUQUdYKP')
 
 @blueprint.route("/webhooks", methods=["POST"])
 def webhooks():

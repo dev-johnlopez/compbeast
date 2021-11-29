@@ -3,24 +3,16 @@
   <div class="newsletter-area">
     <div class="container">
       <div class="row justify-content-md-center">
-        {#<div class="col-md-6 col-12 mb-5 mb-sm-0">
-          <h4>Stay informed</h4>
+        <div class="col-md-6 col-12 mb-5 mb-sm-0 h-100">
+          <h4>Register now</h4>
           <p>
-            Subscribe to our newsletter and stay informed about events and
-            promo codes for ticket discounts!
+            Register for {{ event.name }}!
           </p>
-          <div class="d-sm-flex w-100">
-            <input
-              type="email"
-              class="w-100 mr-2 mb-2 mb-sm-0"
-              placeholder="Enter your email here"
-            />
-            <button type="submit" class="btn-custom-primary xs-100">
-              Submit
-            </button>
-          </div>
-        </div>#}
-        <div class="col-6">
+          <a href="{{ url_for('public.register', event_id=event.id) }}" class="btn-custom-primary text-center">
+            Register
+          </a>
+        </div>
+        <div class="col-md-6 col-12 mb-5 mb-sm-0 h-100">
           <h4>Join our community</h4>
           <p>
             Find other players and receive all CompBeast.gg updates through our Discord community.
