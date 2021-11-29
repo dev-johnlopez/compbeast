@@ -55,12 +55,14 @@ class EventView(CustomModelView):
             event = Event.query.get(event_id)
             new_event = Event()
             new_event.name = event.name
-            new_event.team_size = event.team_size
             new_event.teams_per_division = event.teams_per_division
             new_event.num_games = event.num_games
             new_event.start_time = event.start_time + datetime.timedelta(days=7)
             new_event.end_time = event.end_time + datetime.timedelta(days=7)
             new_event.prize_pool = event.prize_pool
+            new_event.mode = event.mode
+            new_event.flexible_start_ind = event.flexible_start_ind
+            new_event.flexible_start_time_length = event.flexible_start_time_length
             new_event.state = 'Draft'
             new_event.save()
 
