@@ -35,7 +35,7 @@ class EventQuery(object):
 
     @staticmethod
     def get_highlighted_event():
-        return Event.query.filter((Event.status == 'Registering')).order_by(Event.start_time).first()
+        return Event.query.filter((Event.status != 'Closed')).order_by(Event.start_time).first()
 
 
 @blueprint.route("/", methods=["GET", "POST"])
