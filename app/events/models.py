@@ -39,6 +39,7 @@ class Player(PkModel):
         return self.external_id != None and self.external_id != "" and self.external_id != "None"
 
     def confirm(self):
+        return
         from app.tasks import confirm_player
         confirm_player.si(player.id, player.team.event.id).delay(player_id=player.id, event_id=player.team.event.id)
 
@@ -295,6 +296,7 @@ class Event(PkModel, EventStateMixin):
         return self.teams
 
     def close_registration(self):
+        return
         from app.tasks import generate_leaderboards
         print("generating leaderboard for {}".format(self.id))
         teams = [team for team in self.teams]

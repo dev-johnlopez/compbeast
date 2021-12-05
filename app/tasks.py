@@ -10,6 +10,7 @@ from app.events.models import Team, Player, Event
 
 @celery.task
 def refresh_event_stats():
+    return
     events = Event.query.filter_by(status='Active').all()
     print("refreshing status for events")
     for event in events:
@@ -19,6 +20,7 @@ def refresh_event_stats():
 
 @celery.task
 def progress_events():
+    return
     events = Event.query.filter(Event.status != 'Closed').all()
     print("updating status for events")
     for event in events:
@@ -44,6 +46,7 @@ def progress_events():
 
 @celery.task
 def confirm_player(player_id, event_id=None, generate_emails=True):
+    return
     try:
         player = None
         event = None
@@ -61,6 +64,7 @@ def confirm_player(player_id, event_id=None, generate_emails=True):
 
 @celery.task
 def get_player_stats(player_id):
+    return
     try:
         player = None
         player = Player.query.get(player_id)
@@ -73,6 +77,7 @@ def get_player_stats(player_id):
 
 @celery.task
 def new_event_notification(player_id, event_id=None):
+    return
     try:
         player = None
         event = None
@@ -87,6 +92,7 @@ def new_event_notification(player_id, event_id=None):
 
 @celery.task
 def remind_pending_registrations():
+    return
     try:
         print("sending remind registration tasks")
         print("getting events for remind registration tasks")
@@ -103,6 +109,7 @@ def remind_pending_registrations():
 
 @celery.task
 def generate_leaderboards(event_id):
+    return
     try:
         print(event_id)
         event = Event.query.get(event_id)
@@ -117,6 +124,7 @@ def generate_leaderboards(event_id):
 
 @celery.task
 def registration_reminder_notification(player_id, event_id=None):
+    return
     try:
         player = None
         event = None
@@ -133,6 +141,7 @@ def registration_reminder_notification(player_id, event_id=None):
 
 @celery.task
 def leaderboard_notification(player_id, event_id=None):
+    return
     try:
         player = None
         event = None
@@ -158,6 +167,7 @@ def send_async_email(email_data):
         mail.send(msg)
 
 def _update_cod_info_for_player(player):
+    return
     try:
         r = requests.get('https://frozen-island-36052.herokuapp.com/player_details?username={}'.format(player.username.replace("#", "%23")))
         data = json.loads(r.text)

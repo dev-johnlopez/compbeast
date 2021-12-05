@@ -4,13 +4,23 @@
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-6 col-12 mb-5 mb-sm-0 h-100">
-          <h4>Register now</h4>
-          <p>
-            Register for {{ event.name }}!
-          </p>
-          <a href="{{ url_for('public.register', event_id=event.id) }}" class="btn-custom-primary text-center">
-            Register
-          </a>
+          {% if event.can_register() %}
+            <h4>Register now</h4>
+            <p>
+              Register for {{ event.name }}!
+            </p>
+            <a href="{{ url_for('public.register', event_id=event.id) }}" class="btn-custom-primary text-center">
+              Register
+            </a>
+          {% else %}
+            <h4>Play Now</h4>
+            <p>
+              We host tournaments all the time. {{ event.name }}!
+            </p>
+            <a href="{{ url_for('events.index') }}" class="btn-custom-primary text-center">
+              Find a tournament
+            </a>
+          {% endif %}
         </div>
         <div class="col-md-6 col-12 mb-5 mb-sm-0 h-100">
           <h4>Join our community</h4>
