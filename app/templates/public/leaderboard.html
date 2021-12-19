@@ -55,6 +55,7 @@
           <th scope="col">Team Name</th>
           <th scope="col">Rank Placement</th>
           <th scope="col">Score</th>
+          <th scope="col">Winnings</th>
         </tr>
       </thead>
       <tbody>
@@ -83,6 +84,23 @@
               </div>
             </td>
             <td>{{ team.rating }}</td>
+            <td>
+              {% if loop.index == 1 %}
+                $500
+              {% elif loop.index == 2 %}
+                $150
+              {% elif loop.index == 3 %}
+                $100
+              {% elif loop.index == 4 %}
+                $50
+              {% elif loop.index == 5 %}
+                $25
+              {% elif loop.index > 5 and loop.index < 11 %}
+                $20
+              {% elif loop.index > 10 and loop.index < 21 %}
+                $10
+              {% endif %}
+            </td>
           </tr>
         {% else %}
         <tr>
