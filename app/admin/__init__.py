@@ -17,7 +17,7 @@ import requests
 class CustomModelView(ModelView):
 
     def is_accessible(self):
-        return True#current_user.is_authenticated
+        return current_user.is_authenticated
 
     def inaccessible_callback(self, name, **kwargs):
         # redirect to login page if user doesn't have access
