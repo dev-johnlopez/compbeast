@@ -117,6 +117,7 @@ class Team(PkModel):
     payment_complete = Column(db.Integer)
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'),
         nullable=True)
+    manual_score = db.Column(db.Integer)
 
 
     def __init__(self, **kwargs):
@@ -193,6 +194,9 @@ class Team(PkModel):
 
     @property
     def rating(self):
+        if self.manual_score > 0:
+            return self.manual_score
+
         rating = 0
         num_games = 0
         event = self.event
