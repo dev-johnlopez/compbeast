@@ -60,12 +60,6 @@
       <tbody>
         {% for team in event.get_teams(sort='leaderboard') %}
           <tr>
-            <td scope="row">
-              <div class="team-box">
-                {#<img src="{{ url_for('static', filename='img/team1.jpeg') }}" alt="Icon" />#}
-                <span>{{ team.name }}</span>
-              </div>
-            </td>
             <td>
               <div class="rank-box">
                 {% if loop.index == 1 %}
@@ -80,6 +74,12 @@
                 {% else %}
                   <span>{{ team.placement }}</span>
                 {% endif %}
+              </div>
+            </td>
+            <td scope="row">
+              <div class="team-box">
+                {#<img src="{{ url_for('static', filename='img/team1.jpeg') }}" alt="Icon" />#}
+                <span>{{ team.name }}</span>
               </div>
             </td>
             <td>{{ team.rating }}</td>
