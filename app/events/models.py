@@ -296,7 +296,7 @@ class Event(PkModel, EventStateMixin):
 
     def get_teams(self, sort=None):
         if sort == 'leaderboard':
-            teams = [team for team in self.teams if team.is_confirmed()]
+            teams = [team for team in self.teams]
             teams.sort(key=lambda x: x.placement)
             return teams
         return self.teams
