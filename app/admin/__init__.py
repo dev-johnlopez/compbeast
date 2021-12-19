@@ -6,13 +6,21 @@ from flask_admin.contrib.sqla import ModelView
 from flask_admin.contrib.sqla.ajax import QueryAjaxModelLoader
 from flask import flash, current_app
 from flask_admin.model.template import EndpointLinkRowAction, TemplateLinkRowAction
-from flask_admin.base import expose, BaseView
+from flask_admin.base import expose, BaseView, AdminIndexView
 from flask import request, redirect, url_for
 from flask_admin.contrib import rediscli
 from flask_security import current_user
 import json
 import requests
 #from app.tasks import _update_cod_info_for_player
+
+class MyIndexView(AdminIndexView):
+    def is_accessible(self):
+        return current_user.is_authenticated
+
+    def inaccessible_callback(self, name, **kwargs):
+        # redirect to login page if user doesn't have access
+        return current_app.login_manager.unauthorized()
 
 class CustomModelView(ModelView):
 
@@ -23,12 +31,6 @@ class CustomModelView(ModelView):
         # redirect to login page if user doesn't have access
         return current_app.login_manager.unauthorized()
 
-
-        if self.mode == "br_brsolo": return 1
-        elif self.mode == "br_brduos": return 2
-        elif self.mode == "br_dbd_dbd": return 2
-        elif self.mode == "br_brtrios": return 3
-        elif self.mode == "br_brquads": return 4
 
 class EventView(CustomModelView):
     list_template = "admin/my_list.html"  # Override the default template
