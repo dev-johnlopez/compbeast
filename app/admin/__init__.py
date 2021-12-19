@@ -252,7 +252,7 @@ class PlayerView(CustomModelView):
             flash('Failed to refresh stats. %(error)s', 'error')
 
 def register_admin(app, db):
-    admin.init_app(app)
+    admin.init_app(app, index_view=MyIndexView())
     admin.add_view(EventView(Event, db.session))
     admin.add_view(TeamView(Team, db.session))
     admin.add_view(PlayerView(Player, db.session))
