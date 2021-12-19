@@ -72,7 +72,7 @@
                   <img src="{{ url_for('static', filename='img/cup3.png') }}" alt="Icon" />
                   <span>Third Place</span>
                 {% else %}
-                  <span>{{ team.placement }}</span>
+                  <span>{{ loop.index }}</span>
                 {% endif %}
               </div>
             </td>
