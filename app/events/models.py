@@ -194,7 +194,7 @@ class Team(PkModel):
 
     @property
     def rating(self):
-        if self.manual_score > 0:
+        if self.manual_score is not None and self.manual_score > 0:
             return self.manual_score
 
         rating = 0
@@ -295,8 +295,8 @@ class Event(PkModel, EventStateMixin):
         return 0
 
     def get_teams(self, sort=None):
-        if sort == 'leaderboard':
-            return [team for team in self.teams if team.is_confirmed()]
+        #if sort == 'leaderboard':
+        #    return [team for team in self.teams if team.is_confirmed()]
         return self.teams
 
     def close_registration(self):
