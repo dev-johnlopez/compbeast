@@ -49,7 +49,7 @@ def home():
 def register(event_id):
     event = Event.query.get_or_404(event_id)
     if event.state != "Registering": abort(404)
-    form = TeamForm()
+    form = TeamForm(event=event)
     if form.validate_on_submit():
         team = Team()
         form.populate_obj(team)
@@ -65,7 +65,7 @@ def register(event_id):
         [confirm_player.si(player.id, event_id).delay(player_id=player.id, event_id=event_id)
             for player in team.players]
         print("creating stripe endpoint")
-        if event.entry_fee > 0:
+        if event.entry_fee is not None and event.entry_fee > 0:
             session = stripe.checkout.Session.create(
                 payment_method_types=['card'],
                 line_items=[{

@@ -1,11 +1,11 @@
 {% macro render_field_with_errors(field) %}
   <div class="form-group row">
-    <label for="{{ field.id }}" class="col-6 col-form-label">{{ field.label }}
+    <label for="{{ field.id }}" class="col-4 col-form-label-lg text-white">{{ field.label }}
     {% if field.description is not none and field.description != "" %}
       <i class="fa fa-question-circle-o" data-toggle="tooltip" data-placement="right" title="{{ field.description }}"></i>
     {% endif %}
     </label>
-    <div class="col-6">
+    <div class="col-8">
       {% if field.type == 'RadioField' %}
         {% for subfield in field %}
         <div class="{% if field.inline is defined %}form-check form-check-inline{% else %}radio radio-primary{% endif %}">

@@ -1,9 +1,10 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, FormField, BooleanField, \
                     TextAreaField, SelectField, FieldList, HiddenField
-from wtforms.fields.html5 import EmailField
-from wtforms.validators import DataRequired, Optional, Email, Length
+from wtforms.fields.html5 import EmailField, TimeField, DateField
+from wtforms.validators import DataRequired, Optional, Email, Length, ValidationError
 from app.events.models import Team, Player, PlayerStat
+import datetime
 
 class ConfirmPlayerForm(FlaskForm):
     username = StringField('Confirm Activision Username', validators=[DataRequired()])
@@ -32,9 +33,85 @@ class PlayerForm(FlaskForm):
 
 class TeamForm(FlaskForm):
     name = StringField('Team Name', validators=[DataRequired(), Length(max=30)])
+    start_time = TimeField('Start Time', validators=[DataRequired()])
+    start_date = DateField('Start Date', validators=[DataRequired()])
+    timezone = SelectField('Timezone', choices=[
+                                            ('',	'Select your timezone'),
+                                            ('GMT',	'Greenwich Mean Time'),
+                                            ('UTC',	'Universal Coordinated Time'),
+                                            ('ECT',	'European Central Time'),
+                                            ('EET',	'Eastern European Time'),
+                                            ('ART',	'Arabic/Egypt Standard Time'),
+                                            ('EAT',	'Eastern African Time'),
+                                            ('MET',	'Middle East Time'),
+                                            ('NET',	'Near East Time'),
+                                            ('PLT',	'Pakistan Lahore Time'),
+                                            ('IST',	'India Standard Time'),
+                                            ('BST',	'Bangladesh Standard Time'),
+                                            ('VST',	'Vietnam Standard Time'),
+                                            ('CTT',	'China Taiwan Time'),
+                                            ('JST',	'Japan Standard Time'),
+                                            ('ACT',	'Australia Central Time'),
+                                            ('AET',	'Australia Eastern Time'),
+                                            ('SST',	'Solomon Standard Time'),
+                                            ('NST',	'New Zealand Standard Time'),
+                                            ('MIT',	'Midway Islands Time'),
+                                            ('HST',	'Hawaii Standard Time'),
+                                            ('AST',	'Alaska Standard Time'),
+                                            ('PST',	'Pacific Standard Time'),
+                                            ('PNT',	'Phoenix Standard Time'),
+                                            ('MST',	'Mountain Standard Time'),
+                                            ('CST',	'Central Standard Time'),
+                                            ('EST',	'Eastern Standard Time'),
+                                            ('IET',	'Indiana Eastern Standard Time'),
+                                            ('PRT',	'Puerto Rico and US Virgin Islands Time'),
+                                            ('CNT',	'Canada Newfoundland Time'),
+                                            ('AGT',	'Argentina Standard Time'),
+                                            ('BET',	'Brazil Eastern Time'),
+                                            ('CAT',	'Central African Time')
+                                            ], validators=[DataRequired()])
     players = FieldList(FormField(PlayerForm,
                                   default=lambda:
                                   Player()))
+
+    def __init__(self, event=None, *args, **kwargs):
+        super(TeamForm, self).__init__(*args, **kwargs)
+        self.event = event
+
+    #def validate_start_date(self, field):
+    #    print("validating start time")
+    #    if self.event is None:
+    #        return
+
+    #    if field.data < self.event.start_time.date():
+    #        print("ERROR!!!!")
+    #        raise ValidationError('The start date must be between {} and {}'.format(self.event.start_time.date(), self.event.end_time.date()))
+
+    #def validate_start_date(self, field):
+    #    print("validating start time")
+    #    if self.event is None:
+    #        return
+
+    #    if field.data < self.event.start_time.date():
+    #        print("ERROR!!!!")
+    #        raise ValidationError('The start date must be between {} and {}'.format(self.event.start_time.date(), self.event.end_time.date()))
+
+    def validate(self):
+        rv = FlaskForm.validate(self)
+        if not rv:
+            return False
+
+        if self.event is None:
+            return True
+
+        start_date_time = datetime.datetime.combine(self.start_date.data,
+                                  self.start_time.data)
+
+        if start_date_time < self.event.start_time or start_date_time > self.event.end_time:
+            self.timezone.errors.append('Event start time (date & time) needs to be between {} and {}'.format(self.event.start_time, self.event.end_time))
+            return False
+
+        return True
 
 class PlayerStatForm(FlaskForm):
     kills = IntegerField("Kills", validators=[DataRequired()])

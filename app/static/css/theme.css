@@ -2328,7 +2328,7 @@ progress {
 .col-form-label-lg {
   padding-top: 0.8125rem;
   padding-bottom: 0.8125rem;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 .col-form-label-sm {
@@ -27669,7 +27669,11 @@ input {
           appearance: none;
 }
 
-input[type="text"], input[type="email"] {
+input[type="text"],
+input[type="email"],
+input[type="select"],
+input[type="time"],
+input[type="date"] {
   background: transparent;
   border: 2px solid #242943;
   height: 49px;
