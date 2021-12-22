@@ -19,6 +19,7 @@ class Player(PkModel):
     name = Column(db.String(80))
     email = Column(db.String(255))
     username = Column(db.String(80), nullable=False)
+    platform = Column(db.String(80), nullable=True)
     rating = Column(db.Integer)
     kdr = Column(db.Float(asdecimal=True))
 
@@ -65,10 +66,10 @@ class PlayerStat(PkModel):
     """A role for a user."""
 
     __tablename__ = "player_statistic"
-    id = Column(db.Integer, primary_key=True)
-    username = Column(db.String(80))
-    kills = Column(db.Integer)
-    placement = Column(db.Integer)
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80))
+    kills = db.Column(db.Integer)
+    placement = db.Column(db.Integer)
     match_id = db.Column(db.Integer, db.ForeignKey('match.id'),
         nullable=True)
     team_id = db.Column(db.Integer, db.ForeignKey('team.id'),
@@ -91,6 +92,8 @@ class Match(PkModel):
     external_id = Column(db.String(80))
     start_time = Column(db.Integer)
     player_stats = relationship("PlayerStat", backref="match", lazy=True)
+    placement = Column(db.Integer)
+    external_url = Column(db.String(255))
     team_id = db.Column(db.Integer, db.ForeignKey('team.id'),
         nullable=True)
 
@@ -174,9 +177,12 @@ class Team(PkModel):
         if self.matches is None:
             self.matches = []
 
-        if str(match.external_id) in [str(match.external_id) for match in self.matches]:
-            print("could not add match {}".format(match.external_id))
-            return
+        print("*** {}***".format(match.external_id))
+
+        if str(match.external_id) is not None and str(match.external_id) != "" and str(match.external_id) != "None":
+            if str(match.external_id) in [str(match.external_id) for match in self.matches]:
+                print("could not add match {}".format(match.external_id))
+                return
 
         self.matches.append(match)
         print("added match {}".format(match.external_id))
@@ -207,6 +213,12 @@ class Team(PkModel):
             mRating = 0
             for stat in match.player_stats:
                 mRating += stat.kills
+            if match.placement == 1:
+                mRating += 10
+            elif match.placement < 11:
+                mRating += 5
+            elif match.placement < 26:
+                mrating += 2
             match_rating.append(mRating)
         match_rating.sort(reverse=True)
         max_index = len(match_rating) - 1

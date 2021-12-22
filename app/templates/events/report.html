@@ -1,0 +1,61 @@
+{% extends "layout/layout.html" %}
+{% set show_footer = 1 %}
+{% set active = "" %}
+{% from "macros/_vertical_form.html" import render_simple_field, render_headless_field_with_errors %}
+{% block content %}
+<!--====== Register Area Start ======-->
+<div class="register-main">
+  <div class="row g-0 d-flex">
+    <div class="col-md-6 col-12">
+      <div class="register-left">
+        <div class="register-box">
+          <div class="register-inner">
+            {% with stop_registration=1 %}
+            {% include 'public/components/event_card.html' %}
+            {% endwith %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="register-right">
+        <div class="register-box">
+          <div class="register-inner m-0 p-0">
+            <form method="POST" class="register-form">
+              {{ form.hidden_tag() }}
+              <div class="row">
+                <div class="col-12 mb-3">
+                  <h1 class="text-primary">{{ team.name }}</h1>
+                  <p class="text-white">Report your scores here</p>
+                </div>
+                <div class="col-12">
+                  <h3 class="regiter-heading">COD Tracker URL</h3>
+                  {{ render_headless_field_with_errors(form.external_url, class="form-control mb-3 form-custom-color", placeholder="Provide URL for the match from cod.tracker.gg", required=True) }}
+                </div>
+                <div class="col-12">
+                  <h3 class="regiter-heading">Placement</h3>
+                  {{ render_headless_field_with_errors(form.placement, class="form-control mb-3 form-custom-color", placeholder="Placement (e.g. \"1\" for first place, \"10\" for tenth place)", required=True) }}
+                </div>
+                {% for player in form.player_stats %}
+                  {{ player.hidden_tag() }}
+                  <div class="col-12">
+                    <h3 class="regiter-heading">Player {{ loop.index }}</h3>
+                    {{ render_headless_field_with_errors(player.kills, class="form-control mb-3 form-custom-color", placeholder="# Kills", required=True) }}
+                  </div>
+                {% endfor %}
+                <div class="col-12 bm-5">
+                  <button class="btn-custom-primary w-100" type="submit">
+                    {#<img src="{{ url_for('static', filename='img/icons/shield.png') }}" alt="" />#}
+                    Report Score
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends "layout/layout.html" %}
+{% set show_footer = 1 %}
+{% set active = "" %}
+{% from "macros/_vertical_form.html" import render_simple_field, render_headless_field_with_errors %}
+{% block content %}
+<!--====== Register Area Start ======-->
+<div class="register-main">
+  <div class="row g-0 d-flex">
+    <div class="col-md-6 col-12">
+      <div class="register-left">
+        <div class="register-box">
+          <div class="register-inner">
+            {% include 'public/components/event_card.html' %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="register-right">
+        <div class="register-box">
+          <div class="register-inner m-0 p-0">
+            {#<h2 class="text-white">Register Now!</h2>#}
+            {#<div class="back-link d-none d-sm-block">
+              <a href="#">
+                <img
+                  src="{{ url_for('static', filename='img/icons/arrow-back.png') }}"
+                  alt="back"
+                />
+                Go Back
+              </a>
+            </div>
+            <a href="index.html" class="logo d-none d-sm-block">
+              <div class="logo-image">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="" />
+              </div>
+              <div class="logo-text">war<span>zone</span></div>
+            </a>#}
+            <form method="POST" class="register-form">
+              {{ form.hidden_tag() }}
+              <div class="row">
+                <div class="col-12">
+                  <h3 class="regiter-heading">Team Info</h3>
+                  {{ render_headless_field_with_errors(form.name, class="form-control mb-3 form-custom-color", placeholder="Team Name", required=True) }}
+                </div>
+                {#<div class="col-12">
+                  <h3 class="regiter-heading">4 Players Tournament</h3>
+                </div>#}
+                {% for player in form.players %}
+                  <div class="col-12">
+                    <h3 class="regiter-heading">Player {{ loop.index }}</h3>
+                    {{ render_headless_field_with_errors(player.form.name, class="form-control mb-3 form-custom-color", placeholder="Player Name", required=True) }}
+                    {{ render_headless_field_with_errors(player.form.platform, class="form-control form-select-custom mb-3", required=True, **{'aria-label': '.form-control' }) }}
+                    {{ render_headless_field_with_errors(player.form.username, class="form-control mb-3 form-custom-color", placeholder="Activision ID", required=True) }}
+                    {{ render_headless_field_with_errors(player.form.email, class="form-control mb-3 form-custom-color", placeholder="Email", required=True) }}
+                  </div>
+                {% endfor %}
+                <div class="col-12 bm-5">
+                  <button class="btn-custom-primary w-100" type="submit">
+                    {#<img src="{{ url_for('static', filename='img/icons/shield.png') }}" alt="" />#}
+                    Register
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

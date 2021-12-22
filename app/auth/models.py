@@ -19,3 +19,7 @@ class User(db.Model, UserMixin):
     confirmed_at = db.Column(db.DateTime())
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='dynamic'))
+
+    def is_admin(self):
+        print("{} == johnny.lopez617@gmail.com, {}".format(self.email.lower(), self.email.lower() == "johnny.lopez617@gmail.com"))
+        return self.email.lower() == "johnny.lopez617@gmail.com"

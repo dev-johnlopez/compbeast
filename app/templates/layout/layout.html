@@ -65,6 +65,21 @@
     {% if show_header is not defined or show_header == 1 %}
       {% include 'layout/header.html' %}
     {% endif %}
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="container-fluid pt-3" style="position:fixed;z-index:900;">
+          {% for message in messages %}
+            <div class="row justify-content-center">
+              <div class="col-8">
+                <div class="alert alert-primary alert-dismissable" style="width:100%;" role="alert">
+                    {{ message }}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
     {% block content %}{% endblock %}
     {% if show_footer is not defined or show_footer == 1 %}
       {% include 'layout/footer.html' %}

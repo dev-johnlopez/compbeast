@@ -3,7 +3,7 @@ from wtforms import StringField, IntegerField, FormField, BooleanField, \
                     TextAreaField, SelectField, FieldList, HiddenField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Optional, Email, Length
-from app.events.models import Team, Player
+from app.events.models import Team, Player, PlayerStat
 
 class ConfirmPlayerForm(FlaskForm):
     username = StringField('Confirm Activision Username', validators=[DataRequired()])
@@ -35,3 +35,13 @@ class TeamForm(FlaskForm):
     players = FieldList(FormField(PlayerForm,
                                   default=lambda:
                                   Player()))
+
+class PlayerStatForm(FlaskForm):
+    kills = IntegerField("Kills", validators=[DataRequired()])
+
+class MatchForm(FlaskForm):
+    placement = IntegerField("Team Placement", validators=[DataRequired()])
+    player_stats = FieldList(FormField(PlayerStatForm,
+                                  default=lambda:
+                                  PlayerStat()))
+    external_url = StringField('COD Tracker URL', validators=[DataRequired()])

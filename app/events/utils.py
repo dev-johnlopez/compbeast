@@ -92,12 +92,13 @@ class MatchManager():
 
     def adapt_match(self, match):
         player_stats = []
+        placement = None
         for stat in match['stats']:
             player_stat = PlayerStat(username=stat['player']['uno'],
-                                    kills=int(stat['playerStats']['kills']),
-                                    placement=int(stat['playerStats']['teamPlacement']))
+                                    kills=int(stat['playerStats']['kills']))
             player_stats.append(player_stat)
-        match = Match(external_id=str(match['id']), player_stats=player_stats, start_time=int(match['utcStartSeconds']))
+            placement = int(stat['playerStats']['teamPlacement'])
+        match = Match(external_id=str(match['id']), player_stats=player_stats, start_time=int(match['utcStartSeconds'], placement=placement))
         return match
 
     def get_start_time(self, team):

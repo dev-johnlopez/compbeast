@@ -1,5 +1,6 @@
 import datetime
 from app.extensions import admin, db, security
+from app.auth.models import User
 from app.events.models import Event, Team, Player, Task
 from flask_admin.actions import action
 from flask_admin.contrib.sqla import ModelView
@@ -16,7 +17,7 @@ import requests
 
 class MyIndexView(AdminIndexView):
     def is_accessible(self):
-        return current_user.is_authenticated
+        return current_user.is_authenticated and current_user.is_admin()
 
     def inaccessible_callback(self, name, **kwargs):
         # redirect to login page if user doesn't have access
@@ -25,7 +26,7 @@ class MyIndexView(AdminIndexView):
 class CustomModelView(ModelView):
 
     def is_accessible(self):
-        return current_user.is_authenticated
+        return current_user.is_authenticated and current_user.is_admin()
 
     def inaccessible_callback(self, name, **kwargs):
         # redirect to login page if user doesn't have access
@@ -253,6 +254,7 @@ class PlayerView(CustomModelView):
 
 def register_admin(app, db):
     admin.init_app(app, index_view=MyIndexView())
+    admin.add_view(CustomModelView(User, db.session))
     admin.add_view(EventView(Event, db.session))
     admin.add_view(TeamView(Team, db.session))
     admin.add_view(PlayerView(Player, db.session))
