@@ -51,7 +51,7 @@ def register(event_id):
     if event.state != "Registering": abort(404)
     form = TeamForm(event=event)
     if form.validate_on_submit():
-        print(form.start_date.data)
+        print("***: {}".format(form.start_time.data))
         team = Team()
         form.populate_obj(team)
         #for player in form.players:
