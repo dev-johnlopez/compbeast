@@ -53,7 +53,7 @@ def register(event_id):
     form = TeamForm(event=event)
     if form.validate_on_submit():
         mydatetime = datetime.datetime.combine(form.start_date.data, form.start_time.data)
-        form.start_time.data = datetime.timestamp(mydatetime)
+        form.start_time.data = datetime.datetime.timestamp(mydatetime)
         print("***: {}".format(form.start_time.data))
         team = Team()
         form.populate_obj(team)
