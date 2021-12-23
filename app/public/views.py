@@ -15,6 +15,7 @@ from app.events.models import Event, Team, Player
 from app.events.forms import TeamForm, ConfirmPlayerForm
 from celery import chain
 import stripe
+import datetime
 #from app.tasks import new_team_registration_workflow
 #from app.events import EventQuery
 #from flask_login import login_required, login_user, logout_user
@@ -51,7 +52,7 @@ def register(event_id):
     if event.state != "Registering": abort(404)
     form = TeamForm(event=event)
     if form.validate_on_submit():
-        mydatetime = dt.datetime.combine(form.start_date.data, form.start_time.data)
+        mydatetime = datetime.datetime.combine(form.start_date.data, form.start_time.data)
         form.start_time.data = datetime.timestamp(mydatetime)
         print("***: {}".format(form.start_time.data))
         team = Team()
