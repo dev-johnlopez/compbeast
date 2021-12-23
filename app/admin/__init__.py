@@ -1,7 +1,7 @@
 import datetime
 from app.extensions import admin, db, security
 from app.auth.models import User
-from app.events.models import Event, Team, Player, Task
+from app.events.models import Event, Team, Player, Task, Match, PlayerStat
 from flask_admin.actions import action
 from flask_admin.contrib.sqla import ModelView
 from flask_admin.contrib.sqla.ajax import QueryAjaxModelLoader
@@ -257,6 +257,8 @@ def register_admin(app, db):
     admin.add_view(CustomModelView(User, db.session))
     admin.add_view(EventView(Event, db.session))
     admin.add_view(TeamView(Team, db.session))
+    admin.add_view(CustomModelView(Match, db.session))
+    admin.add_view(CustomModelView(PlayerStat, db.session))
     admin.add_view(PlayerView(Player, db.session))
     admin.add_view(CustomModelView(Task, db.session))
     #admin.add_view(rediscli.RedisCli(app.redis))

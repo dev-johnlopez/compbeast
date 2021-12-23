@@ -87,31 +87,31 @@ class TeamForm(FlaskForm):
     #        print("ERROR!!!!")
     #        raise ValidationError('The start date must be between {} and {}'.format(self.event.start_time.date(), self.event.end_time.date()))
 
-    #def validate_start_date(self, field):
-    #    print("validating start time")
-    #    if self.event is None:
-    #        return
-
-    #    if field.data < self.event.start_time.date():
-    #        print("ERROR!!!!")
-    #        raise ValidationError('The start date must be between {} and {}'.format(self.event.start_time.date(), self.event.end_time.date()))
-
-    def validate(self):
-        rv = FlaskForm.validate(self)
-        if not rv:
-            return False
-
+    def validate_start_date(self, field):
+        print("validating start time")
         if self.event is None:
-            return True
+            return
 
-        start_date_time = datetime.datetime.combine(self.start_date.data,
-                                  self.start_time.data)
+        if field.data < self.event.start_time.date() or field.data > self.event.end_time.date():
+            print("ERROR!!!!")
+            raise ValidationError('The start date must be between {} and {}'.format(self.event.start_time.date(), self.event.end_time.date()))
 
-        if start_date_time < self.event.start_time or start_date_time > self.event.end_time:
-            self.timezone.errors.append('Event start time (date & time) needs to be between {} and {}'.format(self.event.start_time, self.event.end_time))
-            return False
+    #def validate(self):
+    #    rv = FlaskForm.validate(self)
+    #    if not rv:
+    #        return False
 
-        return True
+    #    if self.event is None:
+    #        return True
+
+    #    start_date_time = datetime.datetime.combine(self.start_date.data,
+    #                              self.start_time.data)
+
+    #    if start_date_time < self.event.start_time or start_date_time > self.event.end_time:
+    #        self.timezone.errors.append('Event start time (date & time) needs to be between {} and {}'.format(self.event.start_time, self.event.end_time))
+    #        return False
+
+    #    return True
 
 class PlayerStatForm(FlaskForm):
     kills = IntegerField("Kills", validators=[DataRequired()])

@@ -121,6 +121,9 @@ class Team(PkModel):
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'),
         nullable=True)
     manual_score = db.Column(db.Integer)
+    start_time = Column(db.Time, nullable=True)
+    start_date = Column(db.Date, nullable=True)
+    timezone = Column(db.String(255))
 
 
     def __init__(self, **kwargs):
@@ -224,7 +227,7 @@ class Team(PkModel):
         max_index = len(match_rating) - 1
         if max_index > num_games:
             max_index = num_games
-        for i in range(max_index):
+        for i in range(max_index + 1):
             rating += match_rating[i]
         return rating
 
@@ -266,8 +269,8 @@ class Event(PkModel, EventStateMixin):
     tasks = relationship('Task', backref='event', lazy='dynamic')
     teams_per_division = Column(db.Integer)
     num_games = Column(db.Integer, default=1)
-    start_time = Column(DateTime, nullable=True)
-    end_time = Column(DateTime, nullable=True)
+    start_time = Column(db.DateTime, nullable=True)
+    end_time = Column(db.DateTime, nullable=True)
     prize_pool = Column(db.Integer, default=0)
     entry_fee = Column(db.Integer, default=0)
     flexible_start_ind = Column(db.Boolean, default=0)
