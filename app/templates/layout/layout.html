@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='img/bootstrap-icons/font/bootstrap-icons.css') }}">
 
     <!-- ***** All CSS Files ***** -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-datetimepicker.min.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}" />
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -90,3 +91,12 @@
 <script src="{{ url_for('static', filename='js/jquery/jquery-3.5.1.slim.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
+<script type="text/javascript">
+  $(function () {
+    $('.datepicker').datetimepicker({
+      format: 'yyyy-mm-ddTHH:ii'
+    });
+  });
+</script>

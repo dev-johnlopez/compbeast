@@ -41,8 +41,8 @@
                 <div class="col-12">
                   <h3 class="regiter-heading">Team Info</h3>
                   {{ render_field_with_errors(form.name, class="form-control mb-3 form-custom-color", placeholder="Team Name", required=True) }}
-                  {{ render_field_with_errors(form.start_date, class="form-control mb-3 form-custom-color", required=True) }}
-                  {{ render_field_with_errors(form.start_time, class="form-control mb-3 form-custom-color", required=True) }}
+                  {#{{ render_field_with_errors(form.start_date, class="form-control mb-3 form-custom-color", required=True) }}#}
+                  {{ render_field_with_errors(form.start_datetime, class="form-control mb-3 form-custom-color datepicker", required=True) }}
                   {{ render_field_with_errors(form.timezone, class="form-control form-select-custom mb-3", required=True) }}
                 </div>
                 {#<div class="col-12">

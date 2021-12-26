@@ -121,8 +121,7 @@ class Team(PkModel):
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'),
         nullable=True)
     manual_score = db.Column(db.Integer)
-    start_time = Column(db.Time, nullable=True)
-    start_date = Column(db.Date, nullable=True)
+    start_datetime = Column(db.DateTime, nullable=True)
     timezone = Column(db.String(255))
 
 

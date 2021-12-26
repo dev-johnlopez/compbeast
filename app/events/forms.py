@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, FormField, BooleanField, \
                     TextAreaField, SelectField, FieldList, HiddenField
-from wtforms.fields.html5 import EmailField, TimeField, DateField
+from wtforms.fields.html5 import EmailField, TimeField, DateField, DateTimeField
 from wtforms.validators import DataRequired, Optional, Email, Length, ValidationError
 from app.events.models import Team, Player, PlayerStat
 import datetime
@@ -34,8 +34,8 @@ class PlayerForm(FlaskForm):
 
 class TeamForm(FlaskForm):
     name = StringField('Team Name', validators=[DataRequired(), Length(max=30)])
-    start_time = TimeField('Start Time', validators=[DataRequired()])
-    start_date = DateField('Start Date', validators=[DataRequired()])
+    start_datetime = DateTimeField('Start Time', format='%Y-%m-%dT%H:%M', validators=[DataRequired()])
+    #start_date = DateField('Start Date', validators=[DataRequired()])
     timezone = SelectField('Timezone', choices=[
                                             ('',	'Select your timezone'),
                                             ('GMT',	'Greenwich Mean Time'),
@@ -79,6 +79,11 @@ class TeamForm(FlaskForm):
         super(TeamForm, self).__init__(*args, **kwargs)
         self.event = event
 
+    #def validate(self):
+    #    print("*****")
+    #    print("***** {}".format(self.start_datetime.data))
+    #    return True
+
     #def validate_start_date(self, field):
     #    print("validating start time")
     #    if self.event is None:
@@ -88,14 +93,14 @@ class TeamForm(FlaskForm):
     #        print("ERROR!!!!")
     #        raise ValidationError('The start date must be between {} and {}'.format(self.event.start_time.date(), self.event.end_time.date()))
 
-    def validate_start_date(self, field):
-        print("validating start time")
-        if self.event is None:
-            return
-
-        if field.data < self.event.start_time.date() or field.data > self.event.end_time.date():
-            print("ERROR!!!!")
-            raise ValidationError('The start date must be between {} and {}'.format(self.event.start_time.date(), self.event.end_time.date()))
+    #def validate_start_date(self, field):
+    #    print("validating start time")
+    #    if self.event is None:
+    #        return
+#
+#        if field.data < self.event.start_time.date() or field.data > self.event.end_time.date():
+#            print("ERROR!!!!")
+#            raise ValidationError('The start date must be between {} and {}'.format(self.event.start_time.date(), self.event.end_time.date()))
 
     #def validate(self):
     #    rv = FlaskForm.validate(self)

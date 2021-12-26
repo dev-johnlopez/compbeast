@@ -1,0 +1,16 @@
+<p>{{ player.name }} - Your team has been registered to play in {{ event.name }}!</p>
+
+<p>Here is some important information for you and your teammate</p>
+<ul>
+  <li>You're is registered to play at {{ player.team.start_time }} {{ player.team.timezone }} on {{ player.team.start_date }}.</li>
+  <li>You can play as many matches as possible in a {{ event.flexible_start_time_length }} hour time period. Only your best {{ event.num_games }} will count toward your score.</li>
+  <li>You must report their individual game scores. Report your team's scores <a href="{{ url_for('events.report', event_id=event.id, team_id=player.team.id) }}">here.</a> <strong>Only one player on your team needs to report scores.</strong></li>
+  <li>Leaderboards will be updated as teams report their scores. The leaderboards can be found <a href="{{ url_for('events.leaderboard', event_id=event.id ) }}">here.</a></li>
+  <li>Payouts will be coordinated after the event concludes. We will email players with next steps at that time.</li>
+  <li>We post updates, announcements, and provide support for all teams/players in our Discord. Click <a href="{{ url_for('public.discord') }}">here.</a> to join.</li>
+</ul>
+
+<p>Good luck in the event!</p>
+
+<p>Thanks,<br />
+oFook @ CompBeast.gg</p>

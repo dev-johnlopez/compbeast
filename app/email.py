@@ -30,27 +30,23 @@ def send_email(subject, sender, recipients, text_body, html_body,
 
 def send_notification_email(player, event, email=None):
     if email == "register":
-        send_registration_email(player)
-    elif email == "new_event":
-        send_new_event_email(player, event)
-    elif email == "reminder":
-        send_registration_reminder_email(player, event)
-    elif email == "leaderboard":
-        send_leaderboard_email(player, event)
+        send_registration_email(player, event)
+    #elif email == "new_event":
+    #    send_new_event_email(player, event)
+    #elif email == "reminder":
+    #    send_registration_reminder_email(player, event)
+    #elif email == "leaderboard":
+    #    send_leaderboard_email(player, event)
     else:
         return
 
-def send_registration_email(player):
-    subject = None
-    if player.is_confirmed():
-        subject = "[Confirmed] You're ready to go!"
-    else:
-        subject = "[Activision Sync] We couldn't find your Activision ID!"
-    email_name = None
-    if player.is_confirmed():
-        email_name = "registration_success_email"
-    else:
-        email_name = "registration_fail_email"
+def send_registration_email(player, event):
+    subject = "[Confirmed] You're registered to play!"
+    email_name = "team_registration_email"
+    #if player.is_confirmed():
+    #    email_name = "registration_success_email"
+    #else:
+    #    email_name = "registration_fail_email"
     with current_app.app_context():
         send_email(subject,
                sender='admin@compbeast.gg',
