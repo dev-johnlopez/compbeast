@@ -52,8 +52,8 @@ def send_registration_email(player, event):
         send_email(subject,
                sender='admin@compbeast.gg',
                recipients=[player.email],
-               text_body=render_template('emails/{}.txt'.format(email_name), player=player),
-               html_body=render_template('emails/{}.html'.format(email_name), player=player))
+               text_body=render_template('emails/{}.txt'.format(email_name), player=player, event=event),
+               html_body=render_template('emails/{}.html'.format(email_name), player=player, event=event))
 
 def send_new_event_email(player, event):
     subject = "New tournament - compete for your chance to win!"
