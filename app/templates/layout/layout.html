@@ -102,7 +102,7 @@
         month: '{{ event.start_time.strftime('%m') }}',
         day: '{{ event.start_time.strftime('%d') }}'
       },
-      format: 'yyyy-mm-ddTHH:ii',
+      format: 'mm/dd/yyyy HH:ii p',
       startDate: '{{ event.start_time }}',
       endDate: '{{ event.end_time }}',
       autoclose: 1

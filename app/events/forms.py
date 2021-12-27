@@ -34,7 +34,7 @@ class PlayerForm(FlaskForm):
 
 class TeamForm(FlaskForm):
     name = StringField('Team Name', validators=[DataRequired(), Length(max=30)])
-    start_datetime = DateTimeField('Start Time', format='%Y-%m-%dT%H:%M', validators=[DataRequired()])
+    start_datetime = DateTimeField('Start Time', format='%m/%d/%Y %I:%M %p', validators=[DataRequired()])
     #start_date = DateField('Start Date', validators=[DataRequired()])
     timezone = SelectField('Timezone', choices=[
                                             ('',	'Select your timezone'),
