@@ -53,8 +53,11 @@ def confirm_player(player_id, event_id=None, generate_emails=True):
             event = Event.query.get(event_id)
         player = Player.query.get(player_id)
         if player is not None:
-            print("**** Updating Player Status for {}".format(player))
-            _update_cod_info_for_player(player)
+            try:
+                print("**** Updating Player Status for {}".format(player))
+                _update_cod_info_for_player(player)
+            except:
+                print("*** Could not update stats")
             if generate_emails:
                 send_notification_email(player, event, email="register")
     except:

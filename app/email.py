@@ -29,6 +29,7 @@ def send_email(subject, sender, recipients, text_body, html_body,
         print("new email")
 
 def send_notification_email(player, event, email=None):
+    print("*** Sending {} email".format(email))
     if email == "register":
         send_registration_email(player, event)
     #elif email == "new_event":
