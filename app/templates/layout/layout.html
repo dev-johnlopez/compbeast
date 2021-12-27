@@ -94,9 +94,19 @@
 
 <script type="text/javascript" src="{{ url_for('static', filename='js/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
 <script type="text/javascript">
+  {% if event is defined %}
   $(function () {
     $('.datepicker').datetimepicker({
-      format: 'yyyy-mm-ddTHH:ii'
+      defaultViewDate: {
+        year: '{{ event.start_time.strftime('%Y') }}',
+        month: '{{ event.start_time.strftime('%m') }}',
+        day: '{{ event.start_time.strftime('%d') }}'
+      },
+      format: 'yyyy-mm-ddTHH:ii',
+      startDate: '{{ event.start_time }}',
+      endDate: '{{ event.end_time }}',
+      autoclose: 1
     });
   });
+  {% endif %}
 </script>
