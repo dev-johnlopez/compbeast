@@ -5,7 +5,7 @@
   <div class="card-body">
     <div class="card-heading">
       <h3>{{ event.name }}</h3>
-      <p>{{ event.start_time|format_datetime('%B %d - %I:%M %p CT', timedelta_hours=5) }}</p>
+      <p>{{ event.start_time|format_datetime('%B %d') }} to {{ event.end_time|format_datetime('%B %d') }}</p>
     </div>
     <ul class="card-list">
       <li class="list-item">{% if event.entry_fee is not none and event.entry_fee > 0 %}Est. {% endif %}Prize Pool: <span>{{ "${:,.0f}".format(event.prize_pool) }}</span></li>
