@@ -46,7 +46,6 @@ def progress_events():
 
 @celery.task
 def confirm_player(player_id, event_id=None, generate_emails=True):
-    return
     try:
         player = None
         event = None
