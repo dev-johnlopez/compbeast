@@ -16,7 +16,7 @@ class ConfirmPlayerForm(FlaskForm):
                                        **kwargs)
 
 class PlayerForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired(), Length(max=80)])
+    #name = StringField('Name', validators=[DataRequired(), Length(max=80)])
     email = EmailField('Email', validators=[DataRequired(), Email(), Length(max=80)])
     platform = SelectField('Platform', choices=[
                                         ('', 'Account Type'),
