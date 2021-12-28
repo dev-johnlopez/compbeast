@@ -52,6 +52,7 @@ def register(event_id):
     if event.state != "Registering": abort(404)
     form = TeamForm(event=event)
     print(form.start_datetime.data)
+    print(form.csrf_token.data)
     if form.validate_on_submit():
         #mydatetime = datetime.datetime.combine(form.start_date.data, form.start_time.data)
         #form.start_time.data = mydatetime
@@ -95,7 +96,8 @@ def register(event_id):
             team.payment_complete = 1
             team.save()
             return redirect(url_for('public.confirm', event_id=event.id))
-
+    if request.method == 'POST' and len(form.errors) > 0:
+        flash('An error occurred submitting the form. Please try again.')
     # if we get here, either validation failed or we're just loading the page
     # we can use append_entry to add up to the total number we want, if necessary
     print("**** {}".format(form.errors))
