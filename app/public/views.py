@@ -52,7 +52,6 @@ def register(event_id):
     if event.state != "Registering": abort(404)
     form = TeamForm(event=event)
     print(form.start_datetime.data)
-    print(form.csrf_token.data)
     if form.validate_on_submit():
         #mydatetime = datetime.datetime.combine(form.start_date.data, form.start_time.data)
         #form.start_time.data = mydatetime
