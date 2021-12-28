@@ -37,6 +37,7 @@ class Config:
     SECURE_PROXY_SSL_HEADER = os.environ.get("SECURE_PROXY_SSL_HEADER")
     SECURE_SSL_REDIRECT = os.environ.get("SECURE_SSL_REDIRECT")
     STRIPE_WEBHOOKSECRET = 'whsec_US2gKmOFk4cIlvPbK6bbAL4ARP7jTGyj'
+    WTF_CSRF_ENABLED = False
 
     @staticmethod
     def init_app(app):
