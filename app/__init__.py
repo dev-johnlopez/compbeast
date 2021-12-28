@@ -13,6 +13,7 @@ from celery import Celery
 from app import events
 from app.extensions import (
     db,
+    csrf,
     migrate,
     mail,
     moment,
@@ -58,6 +59,7 @@ def register_extensions(app):
     migrate.init_app(app, db)
     mail.init_app(app)
     moment.init_app(app)
+    csrf.init_app(app)
 
     from flask_security import SQLAlchemyUserDatastore
     from app.auth.models import User, Role
