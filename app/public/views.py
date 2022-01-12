@@ -13,9 +13,11 @@ from flask import (
 )
 from app.events.models import Event, Team, Player
 from app.events.forms import TeamForm, ConfirmPlayerForm
+from flask_dance.contrib.discord import discord
 from celery import chain
 import stripe
 import datetime
+import json
 #from app.tasks import new_team_registration_workflow
 #from app.events import EventQuery
 #from flask_login import login_required, login_user, logout_user
@@ -41,6 +43,15 @@ class EventQuery(object):
 
 @blueprint.route("/", methods=["GET", "POST"])
 def home():
+    if discord.authorized:
+        account_info = discord.get('https://discordapp.com/api/users/@me')
+        if account_info.ok:
+            #pass
+            account_info_json = account_info.json()
+            print("Your discord name is {}".format(str(account_info)))
+            print("Your discord username is {}".format(str(account_info_json['username'])))
+            print("Your discord email is {}".format(str(account_info_json['email'])))
+    #print("****: {}".format(discord.get('/users/@me')))
     events = EventQuery.get_open_events(limit=3)
     quick_register_event = EventQuery.get_highlighted_event()
     print("**** {}".format(quick_register_event.name))
@@ -132,8 +143,8 @@ def update_player(player_id):
 def rules():
     return render_template("public/rules.html")
 
-@blueprint.route('/discord', methods=['GET', 'POST'])
-def discord():
+@blueprint.route('/discord_server', methods=['GET', 'POST'])
+def discord_server():
     return redirect('https://discord.gg/HNTUQUdYKP')
 
 @blueprint.route("/webhooks", methods=["POST"])

@@ -8,7 +8,7 @@ from flask_moment import Moment
 from flask_security import Security, SQLAlchemyUserDatastore, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin.base import AdminIndexView, expose
-from flask_wtf import CsrfProtect
+#from flask_wtf import CsrfProtect
 
 # Create customized index view class that handles login & registration
 class AuthView(AdminIndexView):
@@ -34,4 +34,4 @@ migrate = Migrate()
 mail = Mail()
 security = Security()
 moment = Moment()
-csrf = CsrfProtect()
+#csrf = CsrfProtect()

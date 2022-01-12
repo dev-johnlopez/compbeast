@@ -7,7 +7,7 @@
   <li>You must report each individual game score. Our scoring formula will determine your best three games automatically. Report your team's scores <a href="{{ url_for('events.report', event_id=event.id, team_id=player.team.id) }}">here.</a> <strong>Only one player on your team needs to report scores.</strong></li>
   <li>Leaderboards will be updated as teams report their scores. The leaderboards can be found <a href="{{ url_for('events.leaderboard', event_id=event.id ) }}">here.</a></li>
   <li>Payouts will be coordinated after the event concludes. We will email players with next steps at that time.</li>
-  <li>We post updates, announcements, and provide support for all teams/players in our Discord. Click <a href="{{ url_for('public.discord') }}">here</a> to join.</li>
+  <li>We post updates, announcements, and provide support for all teams/players in our Discord. Click <a href="{{ url_for('public.discord_server') }}">here</a> to join.</li>
 </ul>
 
 <p>Good luck in the event!</p>

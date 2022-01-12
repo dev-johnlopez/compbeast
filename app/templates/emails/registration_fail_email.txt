@@ -9,7 +9,7 @@ Double check your privacy settings on Activision's website. Activision data need
 
 Your team will not be eligible to play in our event until your account is confirmed. Need additional help? Join our discord server and speak with our mods.
 
-Join our discord server here: {{ url_for('public.discord') }}
+Join our discord server here: {{ url_for('public.discord_server') }}
 
 Thanks,
 CompBeast.gg

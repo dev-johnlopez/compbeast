@@ -5,7 +5,7 @@ import asyncio
 import sys
 import os
 
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 from redis import Redis
 from celery import Celery
 
@@ -13,12 +13,14 @@ from celery import Celery
 from app import events
 from app.extensions import (
     db,
-    csrf,
+    #csrf,
     migrate,
     mail,
     moment,
     security
 )
+
+from flask_dance.contrib.discord import make_discord_blueprint
 
 from app.admin import register_admin
 from app.email import *
@@ -59,7 +61,7 @@ def register_extensions(app):
     migrate.init_app(app, db)
     mail.init_app(app)
     moment.init_app(app)
-    csrf.init_app(app)
+    #csrf.init_app(app)
 
     from flask_security import SQLAlchemyUserDatastore
     from app.auth.models import User, Role
@@ -74,6 +76,10 @@ def register_blueprints(app):
     from app.public.views import blueprint as public
     app.register_blueprint(events)
     app.register_blueprint(public)
+    with app.app_context():
+        app.register_blueprint(make_discord_blueprint(
+            client_id="794289001477570630",
+            client_secret="Xp_KL9O0pnHAhejnOD_EW2IoKJNOe_5B"))
     return None
 
 

@@ -19,6 +19,9 @@ class Config:
     ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL')
     ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
     DEBUG = True
+    # OAuth2 must make use of HTTPS in production environment.
+    DISCORD_CLIENT_ID = 794289001477570630    # Discord client ID.
+    DISCORD_OAUTH_CLIENT_SECRET = "Xp_KL9O0pnHAhejnOD_EW2IoKJNOe_5B"
     FLASK_DEBUG = True
     SERVER_NAME='localhost:5000'
     SECRET_KEY = os.environ.get('SECRET_KEY')
