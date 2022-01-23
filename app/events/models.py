@@ -224,10 +224,13 @@ class Team(PkModel):
             match_rating.append(mRating)
         match_rating.sort(reverse=True)
         max_index = len(match_rating) - 1
+
         if max_index > num_games:
             max_index = num_games
+        print("Max Index: {}, Num Games: {}".format(max_index, num_games))
         for i in range(max_index + 1):
             rating += match_rating[i]
+        print("Rating: {}, Num Games: {}".format(rating))
         return rating
 
     @property
