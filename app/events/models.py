@@ -104,7 +104,20 @@ class Match(PkModel):
 
     def __repr__(self):
         """Represent instance as a unique string."""
-        return f"<Match({self.id}, Placement: {self.placement})>"
+        return f"<Match({self.id}, Placement: {self.placement}, Rating: {self.rating})>"
+
+    @property
+    def rating(self):
+        rating = 0
+        for stat in match.player_stats:
+            rating += stat.kills
+        if self.placement == 1:
+            rating += 10
+        elif self.placement < 11:
+            rating += 5
+        elif self.placement < 26:
+            rating += 2
+        return rating
 
 class Team(PkModel):
     """A role for a user."""
@@ -212,17 +225,7 @@ class Team(PkModel):
             num_games = self.event.num_games
         match_rating = []
         for match in self.matches:
-            mRating = 0
-            for stat in match.player_stats:
-                mRating += stat.kills
-            if match.placement == 1:
-                mRating += 10
-            elif match.placement < 11:
-                mRating += 5
-            elif match.placement < 26:
-                mRating += 2
-            print("adding match with rating {} to team {}".format(mRating, self.name))
-            match_rating.append(mRating)
+            match_rating.append(match.rating)
         match_rating.sort(reverse=True)
         max_index = len(match_rating)
 
