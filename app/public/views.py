@@ -43,15 +43,6 @@ class EventQuery(object):
 
 @blueprint.route("/", methods=["GET", "POST"])
 def home():
-    if discord.authorized:
-        account_info = discord.get('https://discordapp.com/api/users/@me')
-        if account_info.ok:
-            #pass
-            account_info_json = account_info.json()
-            print("Your discord name is {}".format(str(account_info)))
-            print("Your discord username is {}".format(str(account_info_json['username'])))
-            print("Your discord email is {}".format(str(account_info_json['email'])))
-    #print("****: {}".format(discord.get('/users/@me')))
     events = EventQuery.get_open_events(limit=3)
     quick_register_event = EventQuery.get_highlighted_event()
     print("**** {}".format(quick_register_event.name))

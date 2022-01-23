@@ -19,9 +19,7 @@ from app.extensions import (
     moment,
     security
 )
-
-from flask_dance.contrib.discord import make_discord_blueprint
-
+from app.auth.models import OAuth
 from app.admin import register_admin
 from app.email import *
 from config import config, Config
@@ -72,14 +70,17 @@ def register_extensions(app):
 
 def register_blueprints(app):
     """Register Flask blueprints."""
+    from app.auth.views import discord_bp, twitch_bp
+    from app.auth.views import blueprint as users
     from app.events.views import blueprint as events
     from app.public.views import blueprint as public
     app.register_blueprint(events)
+    app.register_blueprint(users)
     app.register_blueprint(public)
     with app.app_context():
-        app.register_blueprint(make_discord_blueprint(
-            client_id="794289001477570630",
-            client_secret="Xp_KL9O0pnHAhejnOD_EW2IoKJNOe_5B"))
+        app.register_blueprint(discord_bp)
+        app.register_blueprint(twitch_bp)
+
     return None
 
 

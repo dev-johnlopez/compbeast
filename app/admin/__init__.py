@@ -1,6 +1,6 @@
 import datetime
 from app.extensions import admin, db, security
-from app.auth.models import User
+from app.auth.models import User, OAuth, ExternalAccount
 from app.events.models import Event, Team, Player, Task, Match, PlayerStat
 from flask_admin.actions import action
 from flask_admin.contrib.sqla import ModelView
@@ -252,14 +252,37 @@ class PlayerView(CustomModelView):
 
             flash('Failed to refresh stats. %(error)s', 'error')
 
+class UserView(CustomModelView):
+    list_template = "admin/my_list.html"  # Override the default template
+
+    @action('refresh', 'Refresh ID', 'Are you sure you want to refresh Activision ID?')
+    def action_refresh(self, ids):
+        try:
+            query = User.query.filter(User.id.in_(ids))
+
+            count = 0
+            users = query.all()
+            for user in users:
+                _update_cod_info_for_user(user)
+                db.session.add(user)
+                count += 1
+            db.session.commit()
+            flash('{} of {} players(s) were had their ID refreshed'.format(count, len(ids)))
+        except Exception as ex:
+            if not self.handle_view_exception(ex):
+                raise
+
+            flash('Failed to refresh stats. %(error)s', 'error')
+
 def register_admin(app, db):
     admin.init_app(app, index_view=MyIndexView())
-    admin.add_view(CustomModelView(User, db.session))
+    admin.add_view(UserView(User, db.session))
     admin.add_view(EventView(Event, db.session))
     admin.add_view(TeamView(Team, db.session))
     admin.add_view(CustomModelView(Match, db.session))
     admin.add_view(CustomModelView(PlayerStat, db.session))
     admin.add_view(PlayerView(Player, db.session))
+    admin.add_view(CustomModelView(OAuth, db.session))
     admin.add_view(CustomModelView(Task, db.session))
     #admin.add_view(rediscli.RedisCli(app.redis))
 
@@ -275,6 +298,23 @@ def _update_cod_info_for_player(player):
         player.kdr =  data['profile']['lifetime']['mode']['br']['properties']['kdRatio']
         # TODO - Test: player.kdr = int(data['kdr'])
         player.save()
+    except:
+        print("error!!!! ")
+        #app.logger.error('Unhandled exception', exc_info=sys.exc_info())
+    finally:
+        return
+
+def _update_cod_info_for_user(user):
+    try:
+        r = requests.get('https://frozen-island-36052.herokuapp.com/player_details?username={}'.format(user.username.replace("#", "%23")))
+        print("sent request")
+        data = json.loads(r.text)
+        print("got data")
+        user.warzone_player_id = str(data['player'])
+        print("got external id - " + player.external_id)
+        print(str(data['profile']['lifetime']['mode']['br']['properties']['kdRatio']))
+        #player.kdr =  data['profile']['lifetime']['mode']['br']['properties']['kdRatio']
+        # TODO - Test: player.kdr = int(data['kdr'])
     except:
         print("error!!!! ")
         #app.logger.error('Unhandled exception', exc_info=sys.exc_info())

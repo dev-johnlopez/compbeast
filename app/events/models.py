@@ -220,7 +220,7 @@ class Team(PkModel):
             elif match.placement < 11:
                 mRating += 5
             elif match.placement < 26:
-                mrating += 2
+                mRating += 2
             match_rating.append(mRating)
         match_rating.sort(reverse=True)
         max_index = len(match_rating) - 1

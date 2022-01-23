@@ -1,0 +1,91 @@
+
+{% extends "layout/layout.html" %}
+{% set show_footer = 1 %}
+{% set active = "account" %}
+{% from "macros/_horizontal_form.html" import render_simple_field, render_field_with_errors %}
+{% block content %}
+<!--====== Account Area Start ======-->
+<div class="register-main">
+  <div class="row g-0 d-flex">
+    <div class="col-md-8 col-12">
+      <div class="register-right">
+        <div class="register-box">
+          <div class="register-inner">
+              <form method="POST" class="register-form">
+                {{ form.hidden_tag() }}
+                <h3 class="regiter-heading">Player Info</h3>
+                {{ render_field_with_errors(form.email, class="form-control mb-3 form-custom-color", required=True) }}
+                <div class="col-12">
+                  <h3 class="regiter-heading">Your Warzone Info</h3>
+                  {{ render_field_with_errors(form.platform, class="form-control form-select-custom mb-3", required=True, **{'aria-label': '.form-control' }) }}
+                  {{ render_field_with_errors(form.username, class="form-control mb-3 form-custom-color", placeholder="Username On Platform", required=True) }}
+                  <p class="text-white"><span class="text-primary">Warzone Account Status:</span> {% if current_user.warzone_player_id is none or current_user.warzone_player_id == "" %}Not{% endif%} Connected.</p>
+                </div>
+                <div class="col-12 bm-5">
+                  <button class="btn-custom-primary w-100" type="submit">
+                    Save
+                  </button>
+                </div>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-12">
+      <div class="register-left">
+        <div class="register-box">
+          <div class="register-inner m-0 p-0">
+            <h2 class="text-primary">Looking to be sponsored?</h2>
+            <p class="text-white">Connect your accounts to be displayed in our Discord!</p>
+            <div class="row mt-5">
+              <div class="col-6">
+                {% if true %}
+                <div class="card bg-dark border border-success text-center p-4">
+                  <h4 class="text-white">Your Discord is connected.</h4>
+                </div>
+                {% else %}
+                <a href="#">
+                  <div class="card bg-dark border border-primary text-center p-4">
+                    <h4 class="text-white">Click here to connect your Warzone account</h4>
+                  </div>
+                </a>
+                {% endif %}
+              </div>
+              <div class="col-6">
+                {% if current_user.get_account_by_type("twitch") is none %}
+                <a href="{{ url_for('twitch.login') }}">
+                  <div class="card bg-dark border border-primary text-center p-4">
+                    <h4 class="text-white">Click here to connect your Twitch account</h4>
+                  </div>
+                </a>
+                {% else %}
+                <div class="card bg-dark border border-success text-center p-4">
+                  <h4 class="text-white">Your Twitch is connected.</h4>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="row mt-5">
+              <div class="col-6">
+                <a href="#">
+                  <div class="card bg-dark border border-primary text-center p-4">
+                    <h4 class="text-white">Click here to connect your Warzone account</h4>
+                  </div>
+                </a>
+              </div>
+              <div class="col-6">
+                <a href="#">
+                  <div class="card bg-dark border border-primary text-center p-4">
+                    <h4 class="text-white">Click here to connect your Warzone account</h4>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
