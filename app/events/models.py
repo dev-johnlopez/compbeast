@@ -224,7 +224,7 @@ class Team(PkModel):
             print("adding match with rating {} to team {}".format(mRating, self.name))
             match_rating.append(mRating)
         match_rating.sort(reverse=True)
-        max_index = len(match_rating) - 1
+        max_index = len(match_rating)
 
         if max_index > num_games:
             max_index = num_games
