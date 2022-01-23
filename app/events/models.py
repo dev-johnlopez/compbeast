@@ -82,7 +82,7 @@ class PlayerStat(PkModel):
 
     def __repr__(self):
         """Represent instance as a unique string."""
-        return f"<PlayerStat({self.match})>"
+        return f"<PlayerStat(Placement: {self.match.placement}, Team: {self.match.team.name})>"
 
 class Match(PkModel):
     """A role for a user."""
@@ -229,7 +229,7 @@ class Team(PkModel):
         if max_index > num_games:
             max_index = num_games
         print("Max Index: {}, Num Games: {}".format(max_index, num_games))
-        for i in range(max_index + 1):
+        for i in range(max_index):
             rating += match_rating[i]
         print("Rating: {}".format(rating))
         return rating
