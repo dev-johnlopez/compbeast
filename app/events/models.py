@@ -221,6 +221,7 @@ class Team(PkModel):
                 mRating += 5
             elif match.placement < 26:
                 mRating += 2
+            print("adding match with rating {} to team {}".format(mRating, self.name))
             match_rating.append(mRating)
         match_rating.sort(reverse=True)
         max_index = len(match_rating) - 1
