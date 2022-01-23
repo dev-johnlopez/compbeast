@@ -109,7 +109,7 @@ class Match(PkModel):
     @property
     def rating(self):
         rating = 0
-        for stat in match.player_stats:
+        for stat in self.player_stats:
             rating += stat.kills
         if self.placement == 1:
             rating += 10
