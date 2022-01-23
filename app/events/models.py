@@ -104,7 +104,7 @@ class Match(PkModel):
 
     def __repr__(self):
         """Represent instance as a unique string."""
-        return f"<Match({self.team})>"
+        return f"<Match({self.id}, Placement: {self.placement})>"
 
 class Team(PkModel):
     """A role for a user."""
