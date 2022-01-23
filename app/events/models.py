@@ -33,7 +33,7 @@ class Player(PkModel):
 
     def __repr__(self):
         """Represent instance as a unique string."""
-        return f"<Player({self.name})>"
+        return f"<Player({self.email}, {self.username})>"
 
     def is_confirmed(self):
         print("Player {} is confirmed == {}".format(self.name, self.external_id != None and self.external_id != "" and self.external_id != "None"))
@@ -82,7 +82,7 @@ class PlayerStat(PkModel):
 
     def __repr__(self):
         """Represent instance as a unique string."""
-        return f"<PlayerStat({self.username})>"
+        return f"<PlayerStat({self.match})>"
 
 class Match(PkModel):
     """A role for a user."""
@@ -104,7 +104,7 @@ class Match(PkModel):
 
     def __repr__(self):
         """Represent instance as a unique string."""
-        return f"<Match({self.external_id})>"
+        return f"<Match({self.team})>"
 
 class Team(PkModel):
     """A role for a user."""
