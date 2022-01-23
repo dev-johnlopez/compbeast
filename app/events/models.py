@@ -35,6 +35,13 @@ class Player(PkModel):
         """Represent instance as a unique string."""
         return f"<Player({self.email}, {self.username})>"
 
+    def get_platform_display(self):
+        if self.platform == "uno": return "Activision"
+        elif self.platform == "battle": return "Battle.net"
+        elif self.platform == "xbl": return "Xbox"
+        elif self.platform == "psn": return "PSN"
+        else: return "INVALID"
+
     def is_confirmed(self):
         print("Player {} is confirmed == {}".format(self.name, self.external_id != None and self.external_id != "" and self.external_id != "None"))
         return self.external_id != None and self.external_id != "" and self.external_id != "None"
@@ -323,15 +330,10 @@ class Event(PkModel, EventStateMixin):
         return self.teams
 
     def close_registration(self):
-        return
-        from app.tasks import generate_leaderboards
-        print("generating leaderboard for {}".format(self.id))
-        teams = [team for team in self.teams]
-        for team in teams:
-            if team.is_confirmed():
-                for player in team.players:
-                    player.refresh_profile()
-        generate_leaderboards.delay(event_id=self.id)
+        from app.tasks import send_event_starting_email
+        print("sending event starting emails {}".format(self.id))
+        for team in self.teams:
+            send_event_starting_email.delay(team_id=team.id)
 
     def seed_teams(self):
         print("** launching task")

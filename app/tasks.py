@@ -59,7 +59,7 @@ def confirm_player(player_id, event_id=None, generate_emails=True):
             except:
                 print("*** Could not update stats")
             if generate_emails:
-                send_notification_email(player, event, email="register")
+                send_notification_email(player=player, event=event, email="register")
     except:
         print("Error!") #print(sys.exec_info())
         #app.logger.error('Unhandled exception', exc_info=sys.exc_info())
@@ -72,7 +72,7 @@ def get_player_stats(player_id):
         player = Player.query.get(player_id)
         if player is not None:
             _update_cod_info_for_player(player)
-            send_notification_email(player, event, email="register")
+            send_notification_email(player=player, event=event, email="register")
     except:
         print("Error!") #print(sys.exec_info())
         #app.logger.error('Unhandled exception', exc_info=sys.exc_info())
@@ -87,7 +87,7 @@ def new_event_notification(player_id, event_id=None):
             event = Event.query.get(event_id)
         player = Player.query.get(player_id)
         if player is not None:
-            send_notification_email(player, event, email="new_event")
+            send_notification_email(player=player, event=event, email="new_event")
     except:
         print("Error!") #print(sys.exec_info())
         #app.logger.error('Unhandled exception', exc_info=sys.exc_info())
@@ -134,7 +134,7 @@ def registration_reminder_notification(player_id, event_id=None):
             event = Event.query.get(event_id)
         player = Player.query.get(player_id)
         if player is not None:
-            send_notification_email(player, event, email="reminder")
+            send_notification_email(player=player, event=event, email="reminder")
     except:
         print("Error!") #print(sys.exec_info())
         # printing stack trace
@@ -151,12 +151,28 @@ def leaderboard_notification(player_id, event_id=None):
             event = Event.query.get(event_id)
         player = Player.query.get(player_id)
         if player is not None:
-            send_notification_email(player, event, email="leaderboard")
+            send_notification_email(player=player, event=event, email="leaderboard")
     except:
         print("Error in leaderboard_notification!") #print(sys.exec_info())
         # printing stack trace
         traceback.print_exc()
         #app.logger.error('Unhandled exception', exc_info=sys.exc_info())
+
+@celery.task
+def send_event_starting_email(team_id=None):
+    try:
+        team = None
+        event = None
+        if team_id is not None:
+            team = Team.query.get(team_id)
+        for player in team.players:
+            send_notification_email(event=team.event, team=team, email="event_starting")
+    except:
+        print("Error in send_event_starting_email") #print(sys.exec_info())
+        # printing stack trace
+        traceback.print_exc()
+        #app.logger.error('Unhandled exception', exc_info=sys.exc_info())
+
 
 @celery.task
 def send_async_email(email_data):

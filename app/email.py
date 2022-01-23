@@ -28,10 +28,12 @@ def send_email(subject, sender, recipients, text_body, html_body,
             args=(current_app._get_current_object(), msg)).start()
         print("new email")
 
-def send_notification_email(player, event, email=None):
+def send_notification_email(player=None, event=None, team=None, email=None):
     print("*** Sending {} email".format(email))
     if email == "register":
         send_registration_email(player, event)
+    if email == "event_starting":
+        send_event_starting_email(player, event, team)
     #elif email == "new_event":
     #    send_new_event_email(player, event)
     #elif email == "reminder":
@@ -54,6 +56,21 @@ def send_registration_email(player, event):
                recipients=[player.email],
                text_body=render_template('emails/{}.txt'.format(email_name), player=player, event=event),
                html_body=render_template('emails/{}.html'.format(email_name), player=player, event=event))
+
+def send_event_starting_email(player, event, team):
+    print("****: SENDING EVENT STARTING EMAIL")
+    subject = "CompBeast Tournament - About to start!"
+    email_name = "event_starting_email"
+    #if player.is_confirmed():
+    #    email_name = "registration_success_email"
+    #else:
+    #    email_name = "registration_fail_email"
+    with current_app.app_context():
+        send_email(subject,
+               sender='admin@compbeast.gg',
+               recipients=[player.email for player in team.players],
+               text_body=render_template('emails/{}.txt'.format(email_name), players=team.players, team=team, event=event),
+               html_body=render_template('emails/{}.html'.format(email_name), players=team.players, team=team, event=event))
 
 def send_new_event_email(player, event):
     subject = "New tournament - compete for your chance to win!"

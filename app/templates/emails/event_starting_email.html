@@ -1,0 +1,27 @@
+<p>Hello Team {{ team.name }}!</p>
+
+<p>Thank you for registering for this tournament. Registration is officially closed and we are locked in to begin the event. I want to make this process as easy as possible for you so please read this email carefully.</p>
+
+<p>First, please confirm the following information I have about your team. If this information is wrong/invalid, please respond to this email with the corrected information. If this info is not correct and you don't tell me before your start time, you will be disqualified from the event.</p>
+
+<p>Team Name: {{team.name }}<br />
+Start Time: {{ team.start_datetime|format_datetime('%a %b %d at %-I:%M %p') }} {{ team.timezone }}</p>
+
+{% for player in team.players %}
+<p>Player #{{ loop.index }} Platform: {{ player.get_platform_display() }}<br />
+Player #{{ loop.index }} Platform Username: {{ player.username }}</p>
+{% endfor %}
+
+<p>Additional information for you:</p>
+<ul>
+  <li>You can play as many matches as possible in a {{ event.flexible_start_time_length }} hour time period. Only your best {{ event.num_games }} games will count toward your score.</li>
+  <li>You must report each individual game score. Our scoring formula will determine your best three games automatically. You can either report only your best three scores or you can report as many games as you play during your play period. <strong>When you report your scores, you must include the link to the match within cod tracker.</strong> Please note: Do not share the link to your profile on cod tracker. When you look at your profile, click on the match that you are reporting and then share the URL for that page. Only one player will need to report their scores. Report your scores <a href="{{ url_for('events.report', event_id=event.id, team_id=team.id) }}">here.</a></li>
+  <li>Leaderboards will be updated as teams report their scores. I will be reviewing the leaderboards and making adjustments if people report invalid scores. This means the leaderboards are subject to change until I finalize them at the end of the event. The leaderboards can be found <a href="{{ url_for('events.leaderboard', event_id=event.id ) }}">here.</a></li>
+  <li>Payouts will be coordinated after the event concludes. We will email players with next steps at that time.</li>
+  <li>We post updates, announcements, and provide support for all teams/players in our Discord. Click <a href="{{ url_for('public.discord_server') }}">here</a> to join if you haven't already.</li>
+</ul>
+
+<p>Our mods will be on standby for any issues you have. Request support in our discord by clicking <a href="{{ url_for('public.discord_server') }}">here.</a></p>
+
+<p>Thanks,<br />
+oFook</p>
