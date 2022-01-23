@@ -230,7 +230,7 @@ class Team(PkModel):
         print("Max Index: {}, Num Games: {}".format(max_index, num_games))
         for i in range(max_index + 1):
             rating += match_rating[i]
-        print("Rating: {}, Num Games: {}".format(rating))
+        print("Rating: {}".format(rating))
         return rating
 
     @property
