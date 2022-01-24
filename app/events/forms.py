@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, FormField, BooleanField, \
                     TextAreaField, SelectField, FieldList, HiddenField
 from wtforms.fields.html5 import EmailField, TimeField, DateField, DateTimeField
-from wtforms.validators import DataRequired, Optional, Email, Length, ValidationError
+from wtforms.validators import DataRequired, Optional, Email, Length, ValidationError, InputRequired
 from app.events.models import Team, Player, PlayerStat
 import datetime
 import time
@@ -120,7 +120,7 @@ class TeamForm(FlaskForm):
     #    return True
 
 class PlayerStatForm(FlaskForm):
-    kills = IntegerField("Kills", validators=[DataRequired()])
+    kills = IntegerField("Kills", validators=[InputRequired('This field is required.')])
 
 class MatchForm(FlaskForm):
     placement = IntegerField("Team Placement", validators=[DataRequired()])
