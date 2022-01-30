@@ -89,6 +89,8 @@ class PlayerStat(PkModel):
 
     def __repr__(self):
         """Represent instance as a unique string."""
+        if self.match is None:
+            return f"<PlayerStat(Player: {self.username}>"
         return f"<PlayerStat(Placement: {self.match.placement}, Team: {self.match.team.name})>"
 
 class Match(PkModel):
