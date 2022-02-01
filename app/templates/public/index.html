@@ -41,6 +41,7 @@
     </div>
   </section>
   <!--====== Banner Area End ======-->
+  {% if event is not none %}
   <section>
     <div class="history">
       <div class="container">
@@ -86,10 +87,11 @@
       </div>
     </div>
   </section>
+  {% endif %}
   <section>
     <div class="history bg-light">
       <div class="container mt-5">
-        <h2 class="heading"><span class="text-dark">February Tournament</span> <span>Details</span></h2>
+        <h2 class="heading"><span class="text-dark">Tournament</span> <span>Details</span></h2>
         <div class="row justify-content-lg-between align-items-md-center mt-3">
           <div class="col-md-6">
             <div class="card">
@@ -173,11 +175,13 @@
     <div class="tournaments">
       <div class="container-fluid">
         <h2 class="heading">Upcoming tournaments</h2>
-        <div class="row">
+        <div class="row align-items-center">
           {% for event in events %}
           <div class="col-md-4 col-12">
             {% include 'public/components/event_card.html' %}
           </div>
+          {% else %}
+          <h4 class="text-center text-primary">Uh oh! We are working on our tournament schedule. Check back soon!</h4>
           {% endfor %}
         </div>
       </div>

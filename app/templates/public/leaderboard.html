@@ -83,7 +83,7 @@
                 <span>{{ team.name }}</span>
               </div>
             </td>
-            <td>{{ team.rating }}</td>
+            <td>{% if event.flexible_start_ind and event.status == "Closed"}{{ team.rating }}{% endif %}</td>
             <td>
               {% if loop.index == 1 %}
                 $500

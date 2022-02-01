@@ -20,8 +20,8 @@ class Config:
     ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
     DEBUG = True
     # OAuth2 must make use of HTTPS in production environment.
-    DISCORD_CLIENT_ID = "794289001477570630"    # Discord client ID.
-    DISCORD_OAUTH_CLIENT_SECRET = "Xp_KL9O0pnHAhejnOD_EW2IoKJNOe_5B"
+    DISCORD_OAUTH_CLIENT_ID = '794289001477570630'    # Discord client ID.
+    DISCORD_OAUTH_CLIENT_SECRET = 'Xp_KL9O0pnHAhejnOD_EW2IoKJNOe_5B'
     FLASK_DEBUG = True
     SERVER_NAME='localhost:5000'
     SECRET_KEY = os.environ.get('SECRET_KEY')
@@ -34,18 +34,20 @@ class Config:
     #SERVER_NAME = os.getenv('SERVER_NAME')
     ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL')
     ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
+    SECURITY_UNAUTHORIZED_VIEW = "/discord"
     SECURITY_PASSWORD_SALT = os.environ.get('SECURITY_PASSWORD_SALT')
     SECURITY_REGISTERABLE = True
     SECURITY_SEND_REGISTER_EMAIL = False
     SECURE_PROXY_SSL_HEADER = os.environ.get("SECURE_PROXY_SSL_HEADER")
     SECURE_SSL_REDIRECT = os.environ.get("SECURE_SSL_REDIRECT")
     STRIPE_WEBHOOKSECRET = 'whsec_US2gKmOFk4cIlvPbK6bbAL4ARP7jTGyj'
+    TWITCH_OAUTH_CLIENT_ID='4nk8xqmlua380h1segtiyq8d5opc6b'
+    TWITCH_OAUTH_CLIENT_SECRET='u64edqvvy05vj614b9h11dqdp2a3bf'
     WTF_CSRF_ENABLED = False
 
     @staticmethod
     def init_app(app):
         pass
-
 
 class DevelopmentConfig(Config):
     DEBUG = True

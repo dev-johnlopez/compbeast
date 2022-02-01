@@ -1,0 +1,90 @@
+{% extends "layout/layout.html" %}
+{% from "macros/_horizontal_form.html" import render_simple_field, render_field_with_errors %}
+{% block content %}
+<!-- ========== MAIN CONTENT ========== -->
+<main id="content" role="main">
+  <!-- Breadcrumb -->
+  <div class="navbar-dark">
+    <div class="container content-space-1 content-space-b-lg-3">
+      <div class="row align-items-center">
+      </div>
+      <!-- End Row -->
+    </div>
+  </div>
+  <!-- End Breadcrumb -->
+
+  <!-- Content -->
+  <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10 text-white">
+    <div class="row">
+      <div class="col-lg-3">
+        {% include 'profile/components/sidebar.html' %}
+      </div>
+      <!-- End Col -->
+
+      <div class="col-lg-9">
+        <div class="d-grid gap-3 gap-lg-5">
+
+            <ul class="list-unstyled mb-5">
+              {% for team in teams %}
+              <!-- Card -->
+              <li class="card-tournament text-white card-bordered shadow-none mb-3">
+                <div class="card-img">
+                  <img src="{{ url_for('static', filename='img/cod1.jpeg') }}" alt="Cod" />
+                </div>
+                <div class="card-body">
+                  <div class="card-heading">
+                    <h3>{{ team.event.name }}</h3>
+                    <p>{{ team.event.start_time|format_datetime('%B %d') }} to {{ team.event.end_time|format_datetime('%B %d') }}</p>
+                  </div>
+                  <ul class="card-list">
+                    <li class="list-item">Start Time: <span>{{ team.start_datetime|format_datetime('%a %b %d at %-I:%M %p') }} {{ team.timezone }}</span></li>
+                    {% for player in team.players %}
+                    <li class="list-item">Player #{{ loop.index }}: <span>{{ player.username }}</span></li>
+                    {% endfor %}
+                  </ul>
+                  <div class="card-footer">
+                    {% if team.can_update_registration() %}
+                    <a href="{{ url_for('profile.edit_registration', team_id=team.id) }}"
+                      class="btn-custom-primary w-100 d-block text-center text-white"
+                    >
+                      Update registration
+                    </a>
+                    {% else %}
+                    <button
+                      disabled
+                      class="btn-custom-primary w-100 d-block text-center"
+                    >
+                      Registration Final
+                    </button>
+                    {% endif %}
+                    <a href="{{ url_for('events.leaderboard', event_id=team.event.id) }}"
+                      class="btn btn-outline-primary w-100 d-block text-center mt-1"
+                    >
+                      View Leaderboard
+                    </a>
+                  </div>
+                </div>
+              </li>
+              <!-- End Card -->
+              {% else %}
+              <!-- Card -->
+              <li class="card card-dark text-white card-bordered shadow-none mb-3">
+                <div class="card-header border-bottom">
+                  <h4 class="card-header-title text-white">Uh Oh!</h4>
+                </div>
+                <div class="card-body">
+                  <p class="text-primary">You don't have any active registrations. Find a tournament <a href="{{ url_for('profile.tournaments') }}">here</a></p>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+        </div>
+      </div>
+      <!-- End Col -->
+    </div>
+    <!-- End Row -->
+  </div>
+  <!-- End Content -->
+</main>
+<!-- ========== END MAIN CONTENT ========== -->
+{% endblock %}

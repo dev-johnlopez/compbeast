@@ -65,21 +65,27 @@ def register_extensions(app):
     from app.auth.models import User, Role
     user_datastore = SQLAlchemyUserDatastore(db, User, Role)
     security.init_app(app=app, datastore=user_datastore)
+
     return None
 
 
 def register_blueprints(app):
     """Register Flask blueprints."""
-    from app.auth.views import discord_bp, twitch_bp
+    from app.auth.views import discord_bp#, twitch_bp
     from app.auth.views import blueprint as users
     from app.events.views import blueprint as events
     from app.public.views import blueprint as public
+    from app.profile import bp as profile
     app.register_blueprint(events)
     app.register_blueprint(users)
     app.register_blueprint(public)
+    app.register_blueprint(profile)
     with app.app_context():
         app.register_blueprint(discord_bp)
-        app.register_blueprint(twitch_bp)
+        #app.register_blueprint(twitch_bp)
+
+    from app.errors import bp as errors_bp
+    app.register_blueprint(errors_bp)
 
     return None
 

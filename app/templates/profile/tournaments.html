@@ -1,0 +1,132 @@
+{% extends "layout/layout.html" %}
+{% from "macros/_horizontal_form.html" import render_simple_field, render_field_with_errors %}
+{% block content %}
+<!-- ========== MAIN CONTENT ========== -->
+<main id="content" role="main">
+  <!-- Breadcrumb -->
+  <div class="navbar-dark">
+    <div class="container content-space-1 content-space-b-lg-3">
+      <div class="row align-items-center">
+        {#<div class="col">
+          <div class="d-none d-lg-block">
+            <h1 class="h2 text-white">Personal info</h1>
+          </div>
+
+          <!-- Breadcrumb -->
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light mb-0">
+              <li class="breadcrumb-item">Account</li>
+              <li class="breadcrumb-item active" aria-current="page">Personal Info</li>
+            </ol>
+          </nav>
+          <!-- End Breadcrumb -->
+        </div>
+        <!-- End Col -->
+
+        <div class="col-auto">
+          <div class="d-none d-lg-block">
+            <a class="btn btn-custom-primary btn-sm text-white" href="">Log out</a>
+          </div>
+
+          <!-- Responsive Toggle Button -->
+          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-default">
+              <i class="bi-list"></i>
+            </span>
+            <span class="navbar-toggler-toggled">
+              <i class="bi-x"></i>
+            </span>
+          </button>
+          <!-- End Responsive Toggle Button -->
+        </div>
+        <!-- End Col -->#}
+      </div>
+      <!-- End Row -->
+    </div>
+  </div>
+  <!-- End Breadcrumb -->
+
+  <!-- Content -->
+  <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10 text-white">
+    <div class="row">
+      <div class="col-lg-3">
+        {% include 'profile/components/sidebar.html' %}
+      </div>
+      <!-- End Col -->
+
+      <div class="col-lg-9">
+        <div class="d-grid gap-3 gap-lg-5">
+
+            <ul class="list-unstyled mb-5">
+              {% for event in events %}
+              <!-- Card -->
+              <li class="card-tournament text-white card-bordered shadow-none mb-3">
+                <div class="card-img">
+                  <img src="{{ url_for('static', filename='img/cod1.jpeg') }}" alt="Cod" />
+                </div>
+                <div class="card-body">
+                  <div class="card-heading">
+                    <h3>{{ event.name }}</h3>
+                    <p>{{ event.start_time|format_datetime('%B %d') }} to {{ event.end_time|format_datetime('%B %d') }}</p>
+                  </div>
+                  <ul class="card-list">
+                    <li class="list-item">{% if event.entry_fee is not none and event.entry_fee > 0 %}Est. {% endif %}Prize Pool: <span>{{ "${:,.0f}".format(event.prize_pool) }}</span></li>
+                    <li class="list-item">Playlist: <span>{{ event.playlist }}</span></li>
+                    <li class="list-item">Team Size:
+                      {% if event.team_size == 1 %}
+                        <span>Solos</span>
+                      {% elif event.team_size == 2 %}
+                        <span>Duos</span>
+                      {% elif event.team_size == 3 %}
+                        <span>Trios</span>
+                      {% else %}
+                        <span>Quads</span>
+                      {% endif %}
+                    </li>
+                    <li class="list-item">Length: <span>{% if event.flexible_start_ind %}{{ event.flexible_start_time_length }} hours{% else %}{{ event.start_time|timedelta(event.end_time) }}{% endif %}</li>
+                    <li class="list-item">Scoring mode: <span>Kill Race (Best {{ event.num_games }} games)</span></li>
+                    <li class="list-item">Entry Fee: <span>{% if event.entry_fee is not none and event.entry_fee %}{{ "${:,.0f}".format(event.entry_fee) }}{% else %}Free{% endif %}</span></li>
+                  </ul>
+                  <div class="card-footer">
+                    {% if stop_registration is not defined %}
+                      {% if event.can_register() %}
+                      <a href="{{ url_for('public.register', event_id=event.id) }}"
+                        class="btn-custom-primary w-100 d-block text-center"
+                      >
+                        Register today
+                      </a>
+                      {% else %}
+                      <button
+                        disabled
+                        class="btn-custom-primary w-100 d-block text-center"
+                      >
+                        Registrations Closed
+                      </button>
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                </div>
+              </li>
+              <!-- End Card -->
+              {% else %}
+              <!-- Card -->
+              <li class="card card-dark text-white card-bordered shadow-none mb-3">
+                <div class="card-header border-bottom">
+                  <h4 class="card-header-title text-white">Uh Oh!</h4>
+                </div>
+                <div class="card-body">
+                  <p class="text-primary">Sit tight - we are scheduling our upcoming tournaments now!</p>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+        </div>
+      </div>
+      <!-- End Col -->
+    </div>
+    <!-- End Row -->
+  </div>
+  <!-- End Content -->
+</main>
+<!-- ========== END MAIN CONTENT ========== -->
+{% endblock %}

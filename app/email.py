@@ -103,3 +103,6 @@ def send_leaderboard_email(player, event):
                text_body=render_template('emails/{}.txt'.format(email_name), player=player, event=event),
                html_body=render_template('emails/{}.html'.format(email_name), player=player, event=event))
         print("Email sent!")
+
+def send_upcoming_tournaments_email(events):
+    return

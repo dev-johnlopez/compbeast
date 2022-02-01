@@ -42,15 +42,15 @@
           <li class="nav-item">
             <a class="nav-link{% if active=="events" %}-active{% endif %}" href="{{ url_for('events.index') }}">Events</a>
           </li>
-          {#{% if not current_user.is_authenticated %}
+          {% if not current_user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('discord.login') }}">Login with Discord</a>
+              <a class="nav-link" href="{{ url_for('discord.login') }}">Login with Discord {{ current_user.email }}</a>
             </li>
           {% else %}
             <li class="nav-item">
-              <a class="nav-link{% if active=="account" %}-active{% endif %}" href="{{ url_for('users.account') }}">My Account</a>
+              <a class="nav-link{% if active=="account" %}-active{% endif %}" href="{{ url_for('profile.index') }}">My Account</a>
             </li>
-          {% endif %}#}
+          {% endif %}
         </ul>
       </div>
     </nav>

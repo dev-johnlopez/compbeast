@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row justify-content-md-center">
         <div class="col-md-6 col-12 mb-5 mb-sm-0 h-100">
-          {% if event.can_register() %}
+          {% if event is not none and event.can_register() %}
             <h4>Register now</h4>
             <p>
               Register for {{ event.name }}!
@@ -15,7 +15,7 @@
           {% else %}
             <h4>Play Now</h4>
             <p>
-              We host tournaments all the time. {{ event.name }}!
+              We host tournaments all the time. Check out our events page for all tournaments!
             </p>
             <a href="{{ url_for('events.index') }}" class="btn-custom-primary text-center">
               Find a tournament

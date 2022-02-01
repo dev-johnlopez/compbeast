@@ -7,6 +7,7 @@ from datetime import date
 from app import celery, create_app
 from app.email import send_notification_email
 from app.events.models import Team, Player, Event
+from app.events.queries import EventQuery
 
 @celery.task
 def refresh_event_stats():
@@ -183,6 +184,17 @@ def send_async_email(email_data):
     msg.body = email_data['body']
     with app.app_context():
         mail.send(msg)
+
+@celery.task
+def send_this_weeks_tournaments_email():
+    print("**** SENDING TOURNAMENTS EMAIL")
+    start_date = datetime.date.today() + datetime.timedelta(days=1)
+    start_datetime = datetime.datetime.combine(start_date, datetime.datetime.min.time())
+    end_date = datetime.date.today() + datetime.timedelta(days=7)
+    end_datetime = datetime.datetime.combine(start_date, datetime.datetime.min.time())
+    events = EventQuery.get_registerable_events(start_time=start_datetime,
+                                                end_start_time=end_datetime)
+    print("**** {}".format(events))
 
 def _update_cod_info_for_player(player):
     return

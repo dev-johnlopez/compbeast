@@ -7,6 +7,10 @@ roles_users = db.Table('roles_users',
         db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
         db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
 
+teams_users = db.Table('teams_users',
+        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+        db.Column('team_id', db.Integer(), db.ForeignKey('team.id')))
+
 class Role(db.Model, RoleMixin):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(80), unique=True)
@@ -27,6 +31,10 @@ class User(db.Model, UserMixin):
     warzone_player_id = db.Column(db.String(80))
     warzone_avatarUrl = db.Column(db.String(2000))
     warzone_connected = db.Column(db.Boolean, nullable=True)
+    teams = db.relationship('Team', secondary=teams_users, backref=db.backref('users', lazy='dynamic'))
+
+    def __repr__(self):
+        return f"User<{self.email}>"
 
     def is_admin(self):
         return self.email.lower() == "johnny.lopez617@gmail.com"
@@ -41,6 +49,11 @@ class User(db.Model, UserMixin):
             if account.type == account_type:
                 return account
         return None
+
+    def add_team(self, team):
+        if self.teams is None:
+            self.teams = []
+        self.teams.append(team)
 
 class ExternalAccount(PkModel):
     __tablename__ = 'external_accounts'

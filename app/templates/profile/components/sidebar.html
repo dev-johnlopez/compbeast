@@ -1,0 +1,83 @@
+<!-- Navbar -->
+<div class="navbar-expand-lg">
+  <div id="sidebarNav" class="collapse navbar-collapse navbar-vertical">
+    <!-- Card -->
+    <div class="card card-dark flex-grow-1 mb-5">
+      <div class="card-body">
+        <!-- Avatar -->
+        <div class="d-none d-lg-block text-center mb-5">
+          <h4 class="card-title text-white mb-0">{{ current_user.get_account_by_type("discord").username }}</h4>
+          <p class="card-text small">{{ current_user.email }}</p>
+        </div>
+        <!-- End Avatar -->
+
+        <!-- Nav -->
+        <span class="text-cap">Account</span>
+
+        <!-- List -->
+        <ul class="nav nav-sm nav-tabs nav-vertical mb-4">
+          <li class="nav-item">
+            <a class="nav-link active" href="{{ url_for('profile.index') }}">
+              <i class="bi-person-badge nav-icon"></i> My info
+            </a>
+          </li>
+          {#<li class="nav-item">
+            <a class="nav-link " href="{{ url_for('profile.accounts' )}}">
+              <i class="bi-shield-shaded nav-icon"></i> Connected Accounts
+            </a>
+          </li>#}
+
+        </ul>
+        <!-- End List -->
+
+        <span class="text-cap">Tournaments</span>
+
+        <!-- List -->
+        <ul class="nav nav-sm nav-tabs nav-vertical mb-4">
+          <li class="nav-item">
+            <a class="nav-link " href="{{ url_for('profile.tournaments') }}">
+              <i class="bi-basket nav-icon"></i> All Tournaments
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="{{ url_for('profile.registrations') }}">
+              <i class="bi-heart nav-icon"></i> Registrations
+              <span class="badge bg-soft-dark text-dark rounded-pill nav-link-badge">2</span>
+            </a>
+          </li>
+        </ul>
+        <!-- End List -->
+
+        {#<span class="text-cap">Teams</span>
+
+        <!-- List -->
+        <ul class="nav nav-sm nav-tabs nav-vertical">
+          <li class="nav-item">
+            <a class="nav-link " href="./account-payments.html">
+              <i class="bi-credit-card nav-icon"></i> My Teams
+            </a>
+          </li>
+        </ul>
+        <!-- End List -->#}
+
+        <div class="d-lg-none">
+          <div class="dropdown-divider"></div>
+
+          <!-- List -->
+          <ul class="nav nav-sm nav-tabs nav-vertical">
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                <i class="bi-box-arrow-right nav-icon"></i> Log out
+              </a>
+            </li>
+          </ul>
+          <!-- End List -->
+        </div>
+
+        <!-- End Nav -->
+      </div>
+    </div>
+    <!-- End Card -->
+  </div>
+</div>
+<!-- End Navbar -->

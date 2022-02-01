@@ -163,6 +163,17 @@ class Team(PkModel):
             return False
         return True
 
+    def can_update_registration(self):
+        from app.util import TimeZoneConverter
+        converter = TimeZoneConverter()
+        utc_start_datetime = converter.to_utc(self.start_datetime, self.timezone)
+        #cutoff time is 5 minutes before scheduled start date
+        cutoff_datetime = utc_start_datetime + dt.timedelta(minutes=-5)
+        
+        print("Cutoff time: {}".format(cutoff_datetime))
+        print("Current time: {}".format(dt.datetime.now()))
+        return dt.datetime.now() + dt.timedelta(minutes=5) < utc_start_datetime
+
     def refresh_stats(self, event, startTimestamp=None, endTimestamp=None):
         print("** refreshing status")
 

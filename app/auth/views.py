@@ -1,7 +1,7 @@
 #from app import discord_bp
 from app.database import db, PkModel
 import flask
-from flask import Blueprint, flash, render_template, url_for
+from flask import Blueprint, flash, render_template, url_for, current_app
 from flask_security import current_user, login_user
 from flask_dance.consumer import oauth_authorized
 from flask_dance.contrib.discord import make_discord_blueprint
@@ -23,11 +23,10 @@ def account():
         flash("Success!")
     return render_template("users/account.html", form=form)
 
+discord_storage = SQLAlchemyStorage(OAuth, db.session, user=current_user)
+discord_bp = make_discord_blueprint(storage=discord_storage)
 
-discord_bp = make_discord_blueprint(client_id="794289001477570630", client_secret="Xp_KL9O0pnHAhejnOD_EW2IoKJNOe_5B")
-discord_bp.backend = SQLAlchemyStorage(OAuth, db.session, user=current_user)
-
-twitch_bp = make_twitch_blueprint(client_id="4nk8xqmlua380h1segtiyq8d5opc6b", client_secret="u64edqvvy05vj614b9h11dqdp2a3bf", scope="user_read")
+twitch_bp = make_twitch_blueprint(scope="user_read")
 twitch_bp.backend = SQLAlchemyStorage(OAuth, db.session, user=current_user)
 
 # create/login local user on successful Discord OAuth login
@@ -72,7 +71,12 @@ def discord_logged_in(blueprint, token):
         # log in that local user account.
         # Note that if we just created this OAuth token, then it can't
         # have an associated local account yet.
-        login_user(oauth.user)
+        print("*** Logging in with known users {}".format(oauth.user))
+        try:
+            login = login_user(oauth.user)
+            print("*** Current User Logged In: {}".format(login))
+        except:
+            print("*** ERROR!!!!")
         flash("Successfully signed in with Discord.")
 
     else:
@@ -87,6 +91,11 @@ def discord_logged_in(blueprint, token):
         try:
             account = DiscordAccount.query.filter_by(username=discord_info_username,discriminator=discord_info_discriminator).one()
             user = account.user
+            if user is None:
+                user = User(
+                    email=discord_info_email
+                )
+                user.add_account(account)
         except NoResultFound:
             account = DiscordAccount(
                 email=discord_info_email,
@@ -95,16 +104,20 @@ def discord_logged_in(blueprint, token):
                 avatar=discord_info_avatar,
             )
             user = User(
-                email=discord_info_email
+                email=discord_info_email,
+                active=True
             )
             user.add_account(account)
 
         # Associate the new local user account with the OAuth token
         oauth.user = user
         # Save and commit our database models
+        print("USER: {}".format(user))
+        print("OAUTH: {}".format(oauth))
         db.session.add_all([user, oauth])
         db.session.commit()
         # Log in the new local user account
+        print("*** Logging in with unknown user {}".format(user))
         login_user(user)
         flash("Successfully signed in with Discord.")
 
@@ -117,7 +130,7 @@ def discord_logged_in(blueprint, token):
 
 # create/login local user on successful Twitch OAuth login
 @oauth_authorized.connect_via(twitch_bp)
-def discord_logged_in(blueprint, token):
+def twitch_logged_in(blueprint, token):
     print("***** CONNECT_VIA TWITCH: {}".format(token))
     if not token:
         flash("Failed to log in with Discord.", category="error")

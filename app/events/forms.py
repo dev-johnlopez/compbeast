@@ -60,16 +60,10 @@ class TeamForm(FlaskForm):
                                             ('HST',	'Hawaii Standard Time'),
                                             ('AST',	'Alaska Standard Time'),
                                             ('PST',	'Pacific Standard Time'),
-                                            ('PNT',	'Phoenix Standard Time'),
                                             ('MST',	'Mountain Standard Time'),
                                             ('CST',	'Central Standard Time'),
                                             ('EST',	'Eastern Standard Time'),
-                                            ('IET',	'Indiana Eastern Standard Time'),
-                                            ('PRT',	'Puerto Rico and US Virgin Islands Time'),
-                                            ('CNT',	'Canada Newfoundland Time'),
-                                            ('AGT',	'Argentina Standard Time'),
-                                            ('BET',	'Brazil Eastern Time'),
-                                            ('CAT',	'Central African Time')
+                                            ('CNT',	'Canada Newfoundland Time')
                                             ], validators=[DataRequired()])
     players = FieldList(FormField(PlayerForm,
                                   default=lambda:

@@ -14,6 +14,7 @@ from flask import (
 from app.events.models import Event, Team, Player
 from app.events.forms import TeamForm, ConfirmPlayerForm
 from flask_dance.contrib.discord import discord
+from flask_security import current_user, login_required
 from celery import chain
 import stripe
 import datetime
@@ -43,13 +44,17 @@ class EventQuery(object):
 
 @blueprint.route("/", methods=["GET", "POST"])
 def home():
+    print("*** CURRENT USER: {}".format(current_user))
     events = EventQuery.get_open_events(limit=3)
     quick_register_event = EventQuery.get_highlighted_event()
-    print("**** {}".format(quick_register_event.name))
     return render_template("public/index.html", event=quick_register_event, events=events)
 
 @blueprint.route('/<event_id>/register', methods=['GET', 'POST'])
 def register(event_id):
+    #force login w/ discord if user isn't logged in.
+    if not current_user.is_authenticated:
+        return redirect(url_for('discord.login'))
+
     event = Event.query.get_or_404(event_id)
     if event.state != "Registering": abort(404)
     form = TeamForm(event=event)
@@ -65,6 +70,8 @@ def register(event_id):
         #                    email=player.email.data,
         #                    username=player.username.data)
         #    team.add_player(player)
+        if current_user.is_authenticated:
+            current_user.add_team(team)
         event.register_team(team)
         team.save()
         event.save()
@@ -87,7 +94,7 @@ def register(event_id):
                 }],
                 mode='payment',
                 success_url=url_for('public.confirm', event_id=event.id, _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
-                cancel_url=url_for('public.index', _external=True))
+                cancel_url=url_for('public.home', _external=True))
             team.payment_id = session['payment_intent']
             team.save()
             print("redirecting to stripe endpoint")
@@ -103,7 +110,11 @@ def register(event_id):
     # we can use append_entry to add up to the total number we want, if necessary
     print("**** {}".format(form.errors))
     for i in range(len(form.players.entries), event.team_size):
-        form.players.append_entry()
+        player_form = form.players.append_entry()
+        if i == 0:
+            player_form.email.data = current_user.email
+            player_form.platform.data = current_user.platform
+            player_form.username.data = current_user.username
 
     return render_template("public/register.html", form=form, event=event)
 
@@ -180,3 +191,9 @@ def webhooks():
 
 
     return "", 200
+
+@blueprint.route('/referral/<user_id>', methods=['GET', 'POST'])
+def referral(user_id):
+    #force login w/ discord if user isn't logged in.
+    if not current_user.is_authenticated:
+        return redirect(url_for('discord.login'))

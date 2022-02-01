@@ -1,15 +1,49 @@
 
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en" dir="" class="h-100">
+<head>
+  <!-- Required Meta Tags Always Come First -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-{% block page_title %}Unauthorized{% endblock %}
+  <!-- Title -->
+  <title>Error 404 | Front - Multipurpose Responsive Template</title>
 
-{% block content %}
-<div class="jumbotron">
-    <div class="text-center">
-        <h1>401</h1>
-        <p>You are not authorized to see this page. Please <a href="{{ url_for('public.home')}}">log in</a> or
-            <a href="{{ url_for('public.home') }}">create a new account</a>.
-        </p>
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="./favicon.ico">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS Implementing Plugins -->
+  <!-- bundlecss:vendor [.] -->
+  <link rel="stylesheet" href="./node_modules/bootstrap-icons/font/bootstrap-icons.css">
+
+  <!-- CSS Front Template -->
+  <!-- bundlecss:theme [.] ?v=1.0 -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+</head>
+
+<body class="d-flex flex-column justify-content-center align-items-center h-100 history"><script id="__bs_script__">//<![CDATA[
+    document.write("<script async src='/browser-sync/browser-sync-client.js?v=2.27.7'><\/script>".replace("HOST", location.hostname));
+//]]></script>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main id="content" role="main">
+    <!-- Content -->
+    <div class="container text-center">
+      <div class="mb-3">
+        <img class="img-fluid" src="{{ url_for('static', filename='svg/illustrations/error-number-401.svg') }}" alt="Image Description" style="width: 30rem;">
+      </div>
+
+      <div class="mb-4">
+        <p class="fs-4 mb-0">Gotta log in to first. Login <a href="{{ url_for('discord.login') }}">here</a>.</p>
+      </div>
+
+      <a class="btn btn-primary" href="{{ url_for('public.home') }}">Go back home</a>
     </div>
-</div>
-{% endblock %}
+    <!-- End Content -->
+  </main>
+  <!-- ========== END MAIN CONTENT ========== -->
+</body>
+</html>

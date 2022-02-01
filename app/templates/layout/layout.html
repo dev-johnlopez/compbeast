@@ -72,8 +72,9 @@
           {% for message in messages %}
             <div class="row justify-content-center">
               <div class="col-8">
-                <div class="alert alert-primary alert-dismissable" style="width:100%;" role="alert">
+                <div class="alert alert-primary alert-dismissible fade show" style="width:100%;" role="alert">
                     {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
               </div>
             </div>
@@ -94,7 +95,7 @@
 
 <script type="text/javascript" src="{{ url_for('static', filename='js/datetimepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
 <script type="text/javascript">
-  {% if event is defined %}
+  {% if event is defined and event is not none %}
   $(function () {
     $('.datepicker').datetimepicker({
       defaultViewDate: {

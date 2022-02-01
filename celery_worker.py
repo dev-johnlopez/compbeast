@@ -18,5 +18,10 @@ celery.conf.beat_schedule = {
     "send-registration-reminders-task": {
         "task": "app.tasks.remind_pending_registrations",
         "schedule": crontab(minute=0, hour=14)
+    },
+    "send-this-weeks-tournaments-email-task": {
+        "task": "app.tasks.send_this_weeks_tournaments_email",
+        "schedule": crontab(minute='*/1')
+        #"schedule": crontab(minute=0, hour=8, day_of_week='sun')
     }
 }
