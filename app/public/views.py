@@ -6,10 +6,10 @@ from flask import (
     flash,
     redirect,
     render_template,
+    session,
     request,
     url_for,
-    abort,
-    request
+    abort
 )
 from app.events.models import Event, Team, Player
 from app.events.forms import TeamForm, ConfirmPlayerForm
@@ -53,6 +53,7 @@ def home():
 def register(event_id):
     #force login w/ discord if user isn't logged in.
     if not current_user.is_authenticated:
+        session['next_url'] = url_for('public.register', event_id=event_id)
         return redirect(url_for('discord.login'))
 
     event = Event.query.get_or_404(event_id)
@@ -80,7 +81,7 @@ def register(event_id):
             for player in team.players]
         print("creating stripe endpoint")
         if event.entry_fee is not None and event.entry_fee > 0:
-            session = stripe.checkout.Session.create(
+            stripe_session = stripe.checkout.Session.create(
                 payment_method_types=['card'],
                 line_items=[{
                   'price_data': {
@@ -95,10 +96,10 @@ def register(event_id):
                 mode='payment',
                 success_url=url_for('public.confirm', event_id=event.id, _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
                 cancel_url=url_for('public.home', _external=True))
-            team.payment_id = session['payment_intent']
+            team.payment_id = stripe_session['payment_intent']
             team.save()
             print("redirecting to stripe endpoint")
-            return redirect(session.url, code=303)
+            return redirect(stripe_session.url, code=303)
 
         else:
             team.payment_complete = 1

@@ -82,6 +82,7 @@ def register_blueprints(app):
     app.register_blueprint(profile)
     with app.app_context():
         app.register_blueprint(discord_bp)
+        discord_bp.redirect_url=url_for('profile.index')
         #app.register_blueprint(twitch_bp)
 
     from app.errors import bp as errors_bp

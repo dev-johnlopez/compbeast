@@ -1,4 +1,4 @@
-from flask import render_template, flash, abort, redirect, url_for
+from flask import render_template, flash, abort, redirect, url_for, session
 from app.database import db
 from app.events.queries import EventQuery
 from app.events.forms import TeamForm
@@ -12,6 +12,11 @@ from flask_security import login_required, current_user
 @bp.route('/', methods=["GET", "POST"])
 @login_required
 def index():
+    if session.get('next_url'):
+        next_url = session.get('next_url')
+        session.pop('next_url', None)
+        return redirect(next_url)
+
     form = UserForm(obj=current_user)
     if form.validate_on_submit():
         form.populate_obj(current_user)
