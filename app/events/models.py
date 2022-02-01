@@ -307,6 +307,7 @@ class Event(PkModel, EventStateMixin):
         if self.mode == "br_brsolo": return 1
         elif self.mode == "br_brduos": return 2
         elif self.mode == "br_dbd_dbd": return 2
+        elif self.mode == "br_rebirthduos": return 3
         elif self.mode == "br_brtrios": return 3
         elif self.mode == "br_rebirthtrios": return 3
         elif self.mode == "br_brquads": return 4
@@ -316,6 +317,7 @@ class Event(PkModel, EventStateMixin):
     def playlist(self):
         if self.mode == "br_brsolo": return "Battle Royale"
         elif self.mode == "br_brduos": return "Battle Royale"
+        elif self.mode == "br_rebirthduos": return "Rebirth Royale"
         elif self.mode == "br_dbd_dbd": return "Iron Trials"
         elif self.mode == "br_rebirthtrios": return "Rebirth Royale"
         elif self.mode == "br_brtrios": return "Battle Royale"

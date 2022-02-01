@@ -38,6 +38,7 @@ class EventView(CustomModelView):
     form_choices = { 'mode': [
                                 ('br_brsolo', 'Solos'),
                                 ('br_brduos', 'Duos'),
+                                ('br_rebirthduos', 'Rebirth Duos'),
                                 ('br_dbd_dbd', 'Iron Trials (Duos)'),
                                 ('br_rebirthtrios', 'Rebirth Trios'),
                                 ('br_brtrios', 'Trios'),
