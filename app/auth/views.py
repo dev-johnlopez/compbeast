@@ -24,7 +24,7 @@ def account():
     return render_template("users/account.html", form=form)
 
 discord_storage = SQLAlchemyStorage(OAuth, db.session, user=current_user)
-discord_bp = make_discord_blueprint(storage=discord_storage)
+discord_bp = make_discord_blueprint(scope="email", storage=discord_storage)
 
 twitch_bp = make_twitch_blueprint(scope="user_read")
 twitch_bp.backend = SQLAlchemyStorage(OAuth, db.session, user=current_user)
@@ -44,6 +44,7 @@ def discord_logged_in(blueprint, token):
         return False
 
     discord_info = resp.json()
+    print("Your discord name is {}".format(str(discord_info)))
     print("Your discord name is {}".format(str(discord_info)))
     print("Your discord username is {}".format(str(discord_info['username'])))
     print("Your discord email is {}".format(str(discord_info['email'])))
