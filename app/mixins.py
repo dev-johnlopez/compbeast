@@ -28,7 +28,7 @@ class EventStateMixin(object):
 
     @classmethod
     def init_state_machine(cls, obj, *args, **kwargs):
-        states = ['Draft', 'Registering', 'Active', 'Closed']
+        states = ['Draft', 'Registering', 'Active', 'Closed', 'Final']
         #transitions = [
         #    ['open_registration', 'Draft', 'Registering'],
         #    ['activate', 'Registering', 'Active'],

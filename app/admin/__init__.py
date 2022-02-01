@@ -39,6 +39,7 @@ class EventView(CustomModelView):
                                 ('br_brsolo', 'Solos'),
                                 ('br_brduos', 'Duos'),
                                 ('br_dbd_dbd', 'Iron Trials (Duos)'),
+                                ('br_rebirthtrios', 'Rebirth Trios'),
                                 ('br_brtrios', 'Trios'),
                                 ('br_brquads', 'Quads'),
                             ]

@@ -169,7 +169,7 @@ class Team(PkModel):
         utc_start_datetime = converter.to_utc(self.start_datetime, self.timezone)
         #cutoff time is 5 minutes before scheduled start date
         cutoff_datetime = utc_start_datetime + dt.timedelta(minutes=-5)
-        
+
         print("Cutoff time: {}".format(cutoff_datetime))
         print("Current time: {}".format(dt.datetime.now()))
         return dt.datetime.now() + dt.timedelta(minutes=5) < utc_start_datetime
@@ -308,6 +308,7 @@ class Event(PkModel, EventStateMixin):
         elif self.mode == "br_brduos": return 2
         elif self.mode == "br_dbd_dbd": return 2
         elif self.mode == "br_brtrios": return 3
+        elif self.mode == "br_rebirthtrios": return 3
         elif self.mode == "br_brquads": return 4
         return None
 
@@ -316,6 +317,7 @@ class Event(PkModel, EventStateMixin):
         if self.mode == "br_brsolo": return "Battle Royale"
         elif self.mode == "br_brduos": return "Battle Royale"
         elif self.mode == "br_dbd_dbd": return "Iron Trials"
+        elif self.mode == "br_rebirthtrios": return "Rebirth Royale"
         elif self.mode == "br_brtrios": return "Battle Royale"
         elif self.mode == "br_brquads": return "Battle Royale"
         return None
