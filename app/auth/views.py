@@ -103,10 +103,12 @@ def discord_logged_in(blueprint, token):
                 discriminator=discord_info_discriminator,
                 avatar=discord_info_avatar,
             )
-            user = User(
-                email=discord_info_email,
-                active=True
-            )
+            user = User.query.filter_by(email=discord_info_email).first()
+            if user is None:
+                user = User(
+                    email=discord_info_email,
+                    active=True
+                )
             user.add_account(account)
 
         # Associate the new local user account with the OAuth token
