@@ -97,22 +97,57 @@
 
             <!-- Body -->
             <div class="card-body">
-              <form method="POST" class="register-form">
-                {{ form.hidden_tag() }}
-                <h3 class="regiter-heading">Player Info</h3>
-                {{ render_field_with_errors(form.email, class="form-control mb-3 form-custom-color", required=True) }}
-                <div class="col-12">
-                  <h3 class="regiter-heading">Your Warzone Info</h3>
-                  {{ render_field_with_errors(form.platform, class="form-control form-select-custom mb-3", required=True, **{'aria-label': '.form-control' }) }}
-                  {{ render_field_with_errors(form.username, class="form-control mb-3 form-custom-color", placeholder="Username On Platform", required=True) }}
-                  <p class="text-white"><span class="text-primary">Warzone Account Status:</span> {% if current_user.warzone_player_id is none or current_user.warzone_player_id == "" %}Not{% endif%} Connected.</p>
-                </div>
-                <div class="col-12 bm-5">
-                  <button class="btn-custom-primary w-100" type="submit">
-                    Save
-                  </button>
-                </div>
-              </form>
+              <table class="table text-white">
+                <thead>
+                  <tr>
+                    <th scope="col" class="text-white">Account</th>
+                    <th scope="col" class="text-white">Status</th>
+                    <th scope="col" class="text-white"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td scope="row" class="text-white">Discord</td>
+                    {% if current_user.get_account_by_type('discord') is none %}
+                      <td class="text-white">Not connected</td>
+                      <td><a href="{{ url_for('twitch.login') }}" class="btn btn-primary">Connect Now</a></td>
+                    {% else %}
+                      <td class="text-success">Connected</td>
+                      <td></td>
+                    {% endif %}
+                  </tr>
+                  <tr>
+                    <td scope="row" class="text-white">Twitch</td>
+                    {% if current_user.get_account_by_type('twitch') is none %}
+                      <td class="text-white">Not connected</td>
+                      <td><a href="{{ url_for('twitch.login') }}" class="btn btn-primary">Connect Now</a></td>
+                    {% else %}
+                      <td class="text-success">Connected</td>
+                      <td></td>
+                    {% endif %}
+                  </tr>
+                  <tr>
+                    <td scope="row" class="text-white">Facebook</td>
+                    {% if current_user.get_account_by_type('facebook') is none %}
+                      <td class="text-white">Not connected</td>
+                      <td><a href="{{ url_for('twitch.login') }}" class="btn btn-primary">Connect Now</a></td>
+                    {% else %}
+                      <td class="text-success">Connected</td>
+                      <td></td>
+                    {% endif %}
+                  </tr>
+                  <tr>
+                    <td scope="row" class="text-white">Twitter</td>
+                    {% if current_user.get_account_by_type('twitter') is none %}
+                      <td class="text-white">Not connected</td>
+                      <td><a href="{{ url_for('twitch.login') }}" class="btn btn-primary">Connect Now</a></td>
+                    {% else %}
+                      <td class="text-success">Connected</td>
+                      <td></td>
+                    {% endif %}
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <!-- End Body -->
           </div>

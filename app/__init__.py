@@ -71,7 +71,7 @@ def register_extensions(app):
 
 def register_blueprints(app):
     """Register Flask blueprints."""
-    from app.auth.views import discord_bp#, twitch_bp
+    from app.auth.views import discord_bp, twitch_bp
     from app.auth.views import blueprint as users
     from app.events.views import blueprint as events
     from app.public.views import blueprint as public
@@ -83,7 +83,8 @@ def register_blueprints(app):
     with app.app_context():
         app.register_blueprint(discord_bp)
         discord_bp.redirect_url=url_for('profile.index')
-        #app.register_blueprint(twitch_bp)
+        app.register_blueprint(twitch_bp)
+        twitch_bp.redirect_url=url_for('profile.index')
 
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
