@@ -1,0 +1,129 @@
+{% extends "layout/layout.html" %}
+{% set active = "" %}
+{% block content %}
+<!--====== Banner Area Start ======-->
+<div class="laederboard-banner bg-gray">
+  <div class="banner-img">
+    <img src="{{ url_for('static', filename='img/banner-bg-right.jpeg') }}" alt="" />
+  </div>
+</div>
+<!--====== Banner Area End ======-->
+
+<!--====== History Area Start ======-->
+<div class="history-area bg-dark">
+  <div class="container">
+    <div class="row">
+      <div class="banner-detail py-5 text-center">
+        <h1 class="banner-heading">{{ event.name }}</h1>
+        {% if event.can_register() %}
+        {#<p class="banner-text">Starts in 3 days : 2 hours : 15 minutes</p>#}
+        <a href="{{ url_for('public.register', event_id=event.id) }}" class="btn btn-custom-primary xs-100">Register today</a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-12">
+        <div class="card-history text-center mb-3 mb-sm-0">
+          <h3>{{ event.team_size }} player{% if event.team_size > 1 %}s{% endif %}</h3>
+          <p>per team</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-12">
+        <div class="card-history active text-center mb-3 mb-sm-0">
+          <h3>{{ "${:,.0f}".format(event.prize_pool) }}</h3>
+          <p>prize pool</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-12">
+        <div class="card-history text-center mb-3 mb-sm-0">
+          <h3>{{ event.start_time|timedelta(event.end_time) }}</h3>
+          <p>tournament duration</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--====== History Area End ======-->
+
+<!--====== Teams Area End ======-->
+<div class="teams-area bg-dark">
+  <h2 class="heading">Registered Teams</h2>
+  <div class="container" style="overflow-x: auto">
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th scope="col">Team Name</th>
+          <th scope="col">Rank Placement</th>
+          <th scope="col">Player #1</th>
+          <th scope="col">Player #2</th>
+          <th scope="col">Winnings</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for team in event.get_teams(sort='leaderboard') %}
+          <tr>
+            <td>
+              <div class="rank-box">
+                {% if loop.index == 1 %}
+                  <img src="{{ url_for('static', filename='img/cup1.png') }}" alt="Icon" />
+                  <span>First Place</span>
+                {% elif loop.index == 2 %}
+                  <img src="{{ url_for('static', filename='img/cup2.png') }}" alt="Icon" />
+                  <span>Second Place</span>
+                {% elif loop.index == 3 %}
+                  <img src="{{ url_for('static', filename='img/cup3.png') }}" alt="Icon" />
+                  <span>Third Place</span>
+                {% else %}
+                  <span>{{ loop.index }}</span>
+                {% endif %}
+              </div>
+            </td>
+            <td scope="row">
+              <div class="team-box">
+                {#<img src="{{ url_for('static', filename='img/team1.jpeg') }}" alt="Icon" />#}
+                <span>{{ team.players[0].email }}</span>
+              </div>
+            </td>
+            <td scope="row">
+              <div class="team-box">
+                {#<img src="{{ url_for('static', filename='img/team1.jpeg') }}" alt="Icon" />#}
+                <span>{{ team.players[1].email }}</span>
+              </div>
+            </td>
+            <td>{% if event.flexible_start_ind and event.status == "Closed" %}{{ team.rating }}{% endif %}</td>
+            <td>
+              {% if loop.index == 1 %}
+                $500
+              {% elif loop.index == 2 %}
+                $150
+              {% elif loop.index == 3 %}
+                $100
+              {% elif loop.index == 4 %}
+                $50
+              {% elif loop.index == 5 %}
+                $25
+              {% elif loop.index > 5 and loop.index < 11 %}
+                $20
+              {% elif loop.index > 10 and loop.index < 21 %}
+                $10
+              {% endif %}
+            </td>
+          </tr>
+        {% else %}
+        <tr>
+          <td colspan="4" class="text-center">No teams are registered</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {#<div class="pagination mt-5">
+    <a href="#" class="active">1</a>
+    <a href="#">2</a>
+    <a href="#">3</a>
+  </div>#}
+</div>
+<!--====== Teams Area End ======-->
+
+{% include 'public/connect.html' %}
+{% endblock %}

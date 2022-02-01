@@ -1,0 +1,89 @@
+{% extends "layout/layout.html" %}
+{% from "macros/_horizontal_form.html" import render_simple_field, render_field_with_errors %}
+{% block content %}
+<!-- ========== MAIN CONTENT ========== -->
+<main id="content" role="main">
+  <!-- Breadcrumb -->
+  <div class="navbar-dark">
+    <div class="container content-space-1 content-space-b-lg-3">
+      <div class="row align-items-center">
+        {#<div class="col">
+          <div class="d-none d-lg-block">
+            <h1 class="h2 text-white">Personal info</h1>
+          </div>
+
+          <!-- Breadcrumb -->
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light mb-0">
+              <li class="breadcrumb-item">Account</li>
+              <li class="breadcrumb-item active" aria-current="page">Personal Info</li>
+            </ol>
+          </nav>
+          <!-- End Breadcrumb -->
+        </div>
+        <!-- End Col -->
+
+        <div class="col-auto">
+          <div class="d-none d-lg-block">
+            <a class="btn btn-custom-primary btn-sm text-white" href="">Log out</a>
+          </div>
+
+          <!-- Responsive Toggle Button -->
+          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-default">
+              <i class="bi-list"></i>
+            </span>
+            <span class="navbar-toggler-toggled">
+              <i class="bi-x"></i>
+            </span>
+          </button>
+          <!-- End Responsive Toggle Button -->
+        </div>
+        <!-- End Col -->#}
+      </div>
+      <!-- End Row -->
+    </div>
+  </div>
+  <!-- End Breadcrumb -->
+
+  <!-- Content -->
+  <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10 text-white">
+
+      <div class="col-lg-12">
+        <h2 class="text-primary text-center">You must confirm your player info before continuing.</h2>
+        <div class="d-grid gap-3 gap-lg-5">
+          <!-- Card -->
+          <div class="card card-dark text-white">
+
+            <!-- Body -->
+            <div class="card-body">
+              <form method="POST" class="register-form">
+                {{ form.hidden_tag() }}
+                <h3 class="regiter-heading">Player Info</h3>
+                {{ render_field_with_errors(form.email, class="form-control mb-3 form-custom-color", required=True) }}
+                <div class="col-12">
+                  <h3 class="regiter-heading">Your Warzone Info</h3>
+                  {{ render_field_with_errors(form.platform, class="form-control form-select-custom mb-3", required=True, **{'aria-label': '.form-control' }) }}
+                  {{ render_field_with_errors(form.username, class="form-control mb-3 form-custom-color", placeholder="Username On Platform", required=True) }}
+                  {#<p class="text-white"><span class="text-primary">Warzone Account Status:</span> {% if current_user.warzone_player_id is none or current_user.warzone_player_id == "" %}Not{% endif%} Connected.</p>#}
+                </div>
+                <div class="col-12 bm-5">
+                  <button class="btn-custom-primary w-100" type="submit">
+                    Save
+                  </button>
+                </div>
+              </form>
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
+        </div>
+      </div>
+      <!-- End Col -->
+    </div>
+    <!-- End Row -->
+  </div>
+  <!-- End Content -->
+</main>
+<!-- ========== END MAIN CONTENT ========== -->
+{% endblock %}

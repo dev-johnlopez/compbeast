@@ -10,6 +10,11 @@ def leaderboard(event_id):
     event = Event.query.get_or_404(event_id)
     return render_template("public/leaderboard.html", event=event)
 
+@blueprint.route('/<event_id>/leaderboard/winnings')
+def winnings(event_id):
+    event = Event.query.get_or_404(event_id)
+    return render_template("public/winnings.html", event=event)
+
 @blueprint.route('/<event_id>/<division_num>/leaderboard')
 def division_leaderboard(event_id, division_num):
     event = Event.query.get_or_404(event_id)
