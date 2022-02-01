@@ -1,7 +1,7 @@
 #from app import discord_bp
 from app.database import db, PkModel
 import flask
-from flask import Blueprint, flash, render_template, url_for, current_app
+from flask import Blueprint, flash, render_template, url_for, current_app, request
 from flask_security import current_user, login_user
 from flask_dance.consumer import oauth_authorized
 from flask_dance.contrib.discord import make_discord_blueprint
@@ -93,8 +93,12 @@ def discord_logged_in(blueprint, token):
             account = DiscordAccount.query.filter_by(username=discord_info_username,discriminator=discord_info_discriminator).one()
             user = account.user
             if user is None:
+                referrer = None
+                if request.cookies.get('referralID') is not None:
+                    referrer = request.cookies.get('referralID')
                 user = User(
-                    email=discord_info_email
+                    email=discord_info_email,
+                    referrer=referrer
                 )
                 user.add_account(account)
         except NoResultFound:
@@ -106,9 +110,12 @@ def discord_logged_in(blueprint, token):
             )
             user = User.query.filter_by(email=discord_info_email).first()
             if user is None:
+                referrer = None
+                if request.cookies.get('referralID') is not None:
+                    referrer = request.cookies.get('referralID')
                 user = User(
                     email=discord_info_email,
-                    active=True
+                    referrer=referrer
                 )
             user.add_account(account)
 

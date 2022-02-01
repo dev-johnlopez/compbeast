@@ -32,6 +32,7 @@ class User(db.Model, UserMixin):
     warzone_avatarUrl = db.Column(db.String(2000))
     warzone_connected = db.Column(db.Boolean, nullable=True)
     teams = db.relationship('Team', secondary=teams_users, backref=db.backref('users', lazy='dynamic'))
+    referrer = db.Column(db.String(255))
 
     def __repr__(self):
         return f"User<{self.email}>"

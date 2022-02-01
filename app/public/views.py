@@ -9,7 +9,8 @@ from flask import (
     session,
     request,
     url_for,
-    abort
+    abort,
+    make_response
 )
 from app.events.models import Event, Team, Player
 from app.events.forms import TeamForm, ConfirmPlayerForm
@@ -47,7 +48,10 @@ def home():
     print("*** CURRENT USER: {}".format(current_user))
     events = EventQuery.get_open_events(limit=3)
     quick_register_event = EventQuery.get_highlighted_event()
-    return render_template("public/index.html", event=quick_register_event, events=events)
+    resp = make_response(render_template("public/index.html", event=quick_register_event, events=events))
+    if request.args.get("ref") is not None:
+        resp.set_cookie('referralID', request.args.get("ref"))
+    return resp
 
 @blueprint.route('/<event_id>/register', methods=['GET', 'POST'])
 def register(event_id):
