@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="" class="h-100">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="facebook-domain-verification" content="9xox47fdt5r5gl537c5xg0n113x0bp" />
+
+  <!-- Title  -->
+  <title>CompBeast.gg</title>
+
+  <!-- Favicon  -->
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" />
+
+  <!-- CSS Implementing Plugins -->
+  <!-- bundlecss:vendor [@@autopath] -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='img/bootstrap-icons/font/bootstrap-icons.css') }}">
+
+  <!-- ***** All CSS Files ***** -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-datetimepicker.min.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}" />
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N2K0NVXWEM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-N2K0NVXWEM');
+  </script>
+
+  <!-- Facebook Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window,document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+   fbq('init', '1057051328439175');
+  fbq('track', 'PageView');
+  </script>
+  <noscript>
+   <img height="1" width="1"
+  src="https://www.facebook.com/tr?id=1057051328439175&ev=PageView
+  &noscript=1"/>
+  </noscript>
+  <!-- End Facebook Pixel Code -->
+
+  <!-- Start TikTok Pixel Code -->
+  <script>
+    !function (w, d, t) {
+      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+
+      ttq.load('C43V39MI9NESIEHLP1P0');
+      ttq.page();
+    }(window, document, 'ttq');
+  </script>
+  <!-- End TikTok Pixel Code -->
+</head>
+
+<body class="d-flex align-items-center min-h-100"><script id="__bs_script__">//<![CDATA[
+    document.write("<script async src='/browser-sync/browser-sync-client.js?v=2.27.7'><\/script>".replace("HOST", location.hostname));
+//]]></script>
+
+  <!-- ========== HEADER ========== -->
+  <header id="header" class="navbar navbar-expand navbar-light navbar-absolute-top">
+    <div class="container-fluid">
+      <nav class="navbar-nav-wrap">
+        <a class="navbar-brand" href="{{ url_for('public.home') }}">
+          <div class="logo-image">
+            <img src="{{ url_for('static', filename='img/logoicon.svg') }}" alt="" />
+          </div>
+          <div class="logo-text">comp<span>beast</span></div>
+        </a>
+
+        <div class="ms-auto">
+          <a class="link link-sm link-secondary" href="./index.html">
+            <i class="bi-chevron-left small ms-1"></i> Go to main
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <!-- ========== END HEADER ========== -->
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main id="content" role="main" class="flex-grow-1">
+    <!-- Form -->
+    <div class="container-fluid">
+      <div class="row">
+
+        <!-- End Col -->
+
+        <div class="col-12 d-flex justify-content-center align-items-center min-vh-lg-100">
+          <div class="flex-grow-1 mx-auto" style="max-width: 28rem;">
+            <!-- Heading -->
+            <div class="text-center mb-5 mb-md-7">
+              <h1 class="h2 text-primary">Welcome back</h1>
+              <p>Login to compete.</p>
+            </div>
+            <!-- End Heading -->
+
+            <!-- Form -->
+            <form class="js-validate needs-validation" novalidate>
+              <!-- Form -->
+              <div class="mb-4">
+                <label class="form-label" for="signupModalFormLoginEmail">Your email</label>
+                <input type="email" class="form-control form-control-lg" name="email" id="signupModalFormLoginEmail" placeholder="email@site.com" aria-label="email@site.com" required>
+                <span class="invalid-feedback">Please enter a valid email address.</span>
+              </div>
+              <!-- End Form -->
+
+              <!-- Form -->
+              <div class="mb-4">
+                <div class="d-flex justify-content-between align-items-center">
+                  <label class="form-label" for="signupModalFormLoginPassword">Password</label>
+
+                  <a class="form-label-link" href="./page-reset-password.html">Forgot Password?</a>
+                </div>
+
+                <div class="input-group input-group-merge" data-hs-validation-validate-class>
+                  <input type="password" class="js-toggle-password form-control form-control-lg" name="password" id="signupModalFormLoginPassword" placeholder="8+ characters required" aria-label="8+ characters required" required minlength="8"
+                        data-hs-toggle-password-options='{
+                         "target": "#changePassTarget",
+                         "defaultClass": "bi-eye-slash",
+                         "showClass": "bi-eye",
+                         "classChangeTarget": "#changePassIcon"
+                       }'>
+                  <a id="changePassTarget" class="input-group-append input-group-text" href="javascript:;">
+                    <i id="changePassIcon" class="bi-eye"></i>
+                  </a>
+                </div>
+
+                <span class="invalid-feedback">Please enter a valid password.</span>
+              </div>
+              <!-- End Form -->
+
+              <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-primary btn-lg">Log in</button>
+              </div>
+
+              <div class="d-grid text-center">
+                <p class="text-primary">OR</p>
+              </div>
+
+              <div class="d-grid mb-3">
+                <a href="{{ url_for('discord.login')}}" class="btn btn-outline-info">Login with Discord</a>
+              </div>
+
+              <div class="text-center">
+                <p>Don't have an account yet? <a class="link" href="./page-signup.html">Sign up here</a></p>
+              </div>
+            </form>
+            <!-- End Form -->
+          </div>
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Form -->
+  </main>
+  <!-- ========== END MAIN CONTENT ========== -->
+
+  <!-- JS Global Compulsory hs-builder:build-delete -->
+  <script src="{{ url_for('static', filename='js/jquery/jquery-3.5.1.slim.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+</body>
+</html>
